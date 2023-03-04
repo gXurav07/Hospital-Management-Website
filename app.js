@@ -11,10 +11,11 @@ app.listen(5001);
 // connect to databsae
 const {Client} = require('pg');
 const client = new Client({
-    user: 'gaurav',
-    host: 'localhost',
-    database: 'covid_hm',
-    password: 'gaurav'
+    user: '20CS30042',
+    host: '10.5.18.72',
+    database: '20CS30042',
+    password: '20CS30042',
+    port: 5432,
   });
 client.connect();
 
@@ -28,5 +29,3 @@ const loginRouter = require('./login');
 // Provide Routes
 app.use('/doctor', doctorRouter);
 app.use('/login', loginRouter);
-
-
