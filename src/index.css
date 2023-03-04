@@ -139,23 +139,6 @@ button:hover {
 /* LOGIN END */
 
 /* DOCTOR DASHBOARD START */
-.doctor_dashboard {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0px;
-}
-
-.doc_head {
-  text-align: center;
-  margin: 30px;
-  font-size: 50px;
-}
-
-.doc_head2 {
-  text-align: left;
-  font-size: 20px;
-}
-
 .patient_list {
   border-radius: 10px;
   padding: 10px;
@@ -179,72 +162,54 @@ tr:hover {
   background: #6d44b8;
 }
 
-.doc_details {
-  font-size: 15px;
-  width: 300px;
+.doctor_dashboard .form_wrapper {
+  width: 1000px;
+  margin: 50px auto;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.doctor_dashboard h1{
+  margin-top: 100px;
+  margin-bottom: 50px;
+}
+
+.doctor_dashboard form {
+  display: flex;
+  flex-direction: column;
+}
+
+.doctor_dashboard label {
+  font-size: 30px;
+  margin: 0px;
+  font-weight: bold;
+}
+
+.doctor_dashboard input[type="text"] {
+  padding: 20px;
+  font-size: 20px;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.doctor_dashboard .button_row {
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.doctor_dashboard button {
+  margin: auto 20px;
+  padding: 0px 20px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 /* DOCTOR DASHBOARD END */
-
-
-/* MANAGE DOCS START */
-/* .managedocs{
-  width: 1000px;
-}
-.managedocs h1{
-  font-size: 50px;
-}
-
-.managedocs form{
-  font-size: 10px;
-  vertical-align: bottom;
-  float: left;
-}
-
-.managedocs form label{
-  text-align: left;
-  flex-direction: column;
-  width: 200px;
-}
-
-.managedocs form input{
-  text-align: left;
-  flex-direction: column;
-}
-.managedocs form select{
-  height: 30px;
-} */
-
-/* .managedocs form .lab_inp{ */
-/* height: 50px; */
-/* display: flex; */
-/* justify-content: center; */
-/* display: inline-block; */
-/* } */
-
-/* .managedocs input,
-.managedocs textarea,
-.managedocs select {
-  width: 100%;
-  padding: 6px 10px;
-  margin: 10px 0;
-  border: 10px solid #ddd;
-  box-sizing: border-box;
-  display: block;
-}
-
-.managedocs button {
-  background: #573b8a;
-  color: #fff;
-  border: 0;
-  padding: 8px;
-  border-radius: 8px;
-  cursor: pointer;
-} */
-
-/* MANAGE DOCS END */
-
-/* flex-direction: column; */
 
 .managedocs form {
   /* background-color: #fff; */
