@@ -1,7 +1,8 @@
 function Table({ data }) {
-    const headers = Object.keys(data[0] || {});
-  
-    return (
+  const headers = Object.keys(data[0] || {});
+
+  return (
+    <div className="patient_list">
       <table>
         <thead>
           <tr>
@@ -20,6 +21,7 @@ function Table({ data }) {
           ))}
         </tbody>
       </table>
-    );
-  }
+    </div>
+  );
+}
 export default Table;
