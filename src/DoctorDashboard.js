@@ -2,18 +2,20 @@ import React, { useState, useEffect } from 'react';
 import Table from './Table';
 import jsonData from './db.json';
 
-function DoctorDashboard() {
+function DoctorDashboard(props) {
   const [patients, setPatients] = useState();
   const [result, setResult] = useState([]);
   const [did, setDid] = useState(1);
   const [pid, setPid] = useState();
+
+  const server_addr = props.server_addr;
 
 //   useEffect(() => {
 //     setData(jsonData['doctors']);
 //   }, []);
 
   useEffect( () => {
-    fetch('http://10.147.235.193:3000/doctor/'+did)
+    fetch('http://'+server_addr+'/doctor/'+did)
     .then(res => {
         return res.json();
     })
@@ -25,7 +27,7 @@ function DoctorDashboard() {
 
   const handleQuery = (e, qno) => {
     e.preventDefault();
-    fetch('http://10.147.235.193:3000/doctor/'+did+'?query='+qno+'&patient='+pid)
+    fetch('http://'+server_addr+'/doctor/'+did+'?query='+qno+'&patient='+pid)
     .then(res => {
         return res.json();
     })

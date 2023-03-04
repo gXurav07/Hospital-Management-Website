@@ -1,14 +1,16 @@
 import { useState } from "react";
 
-function ManageOps() {
+function ManageOps(props) {
   const [name, setName] = useState('');
   const [role, setRole] = useState('');
+
+  const server_addr = props.server_addr;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const op = {name, role};
 
-    fetch('http://localhost:8000/operator',{
+    fetch('http://'+server_addr+'/operator',{
         method: 'POST',
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(op)
