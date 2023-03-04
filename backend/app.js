@@ -21,10 +21,12 @@ client.connect();
 
 // Import Routers
 const doctorRouter = require('./doctor');
+const loginRouter = require('./login');
 
 
 
 // Provide Routes
 app.use('/doctor', doctorRouter);
+app.use('/login', loginRouter);
 
 
