@@ -10,9 +10,9 @@ function DoctorDashboard(props) {
 
   const server_addr = props.server_addr;
 
-//   useEffect(() => {
-//     setData(jsonData['doctors']);
-//   }, []);
+  // useEffect(() => {
+  //   setData(jsonData['doctors']);
+  // }, []);
 
   useEffect( () => {
     fetch('http://'+server_addr+'/doctor/'+did)
