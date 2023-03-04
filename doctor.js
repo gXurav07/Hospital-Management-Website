@@ -1,3 +1,6 @@
+const express = require('express');
+const cors = require('cors');
+
 // Route for doctor
 
 const doctorRouter = express.Router();
