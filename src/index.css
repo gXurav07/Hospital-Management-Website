@@ -138,24 +138,77 @@ button:hover {
 
 /* LOGIN END */
 
+/* DOCTOR DASHBOARD START */
+.doctor_dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0px;
+}
+
+.doc_head {
+  text-align: center;
+  margin: 30px;
+  font-size: 50px;
+}
+
+.doc_head2 {
+  text-align: left;
+  font-size: 20px;
+}
+
+.patient_list {
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: large;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 6px 30px;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+  background: #6d44b8;
+}
+
+.doc_details {
+  font-size: 15px;
+  width: 300px;
+}
+
+/* DOCTOR DASHBOARD END */
+
+
 /* MANAGE DOCS START */
 .managedocs {
   max-width: 400px;
   margin: 0 auto;
   text-align: center;
 }
-.managedocs label {
+
+/* .managedocs label {
   text-align: left;
   display: block;
   color: #573b8a;
   font-size: 20px;
-}
+} */
 .managedocs h2 {
   font-size: 36px;
   color: #573b8a;
   margin-bottom: 30px;
 }
-.managedocs input, .managedocs textarea, .managedocs select {
+
+.managedocs input,
+.managedocs textarea,
+.managedocs select {
   width: 100%;
   padding: 6px 10px;
   margin: 10px 0;
@@ -163,6 +216,7 @@ button:hover {
   box-sizing: border-box;
   display: block;
 }
+
 .managedocs button {
   background: #573b8a;
   color: #fff;
@@ -171,4 +225,5 @@ button:hover {
   border-radius: 8px;
   cursor: pointer;
 }
+
 /* MANAGE DOCS END */
