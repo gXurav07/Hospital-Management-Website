@@ -188,25 +188,41 @@ tr:hover {
 
 
 /* MANAGE DOCS START */
-.managedocs {
-  max-width: 400px;
-  margin: 0 auto;
-  text-align: center;
+/* .managedocs{
+  width: 1000px;
+}
+.managedocs h1{
+  font-size: 50px;
 }
 
-/* .managedocs label {
+.managedocs form{
+  font-size: 10px;
+  vertical-align: bottom;
+  float: left;
+}
+
+.managedocs form label{
   text-align: left;
-  display: block;
-  color: #573b8a;
-  font-size: 20px;
-} */
-.managedocs h2 {
-  font-size: 36px;
-  color: #573b8a;
-  margin-bottom: 30px;
+  flex-direction: column;
+  width: 200px;
 }
 
-.managedocs input,
+.managedocs form input{
+  text-align: left;
+  flex-direction: column;
+}
+.managedocs form select{
+  height: 30px;
+} */
+
+/* .managedocs form .lab_inp{ */
+/* height: 50px; */
+/* display: flex; */
+/* justify-content: center; */
+/* display: inline-block; */
+/* } */
+
+/* .managedocs input,
 .managedocs textarea,
 .managedocs select {
   width: 100%;
@@ -224,6 +240,54 @@ tr:hover {
   padding: 8px;
   border-radius: 8px;
   cursor: pointer;
-}
+} */
 
 /* MANAGE DOCS END */
+
+/* flex-direction: column; */
+
+.managedocs form {
+  /* background-color: #fff; */
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.managedocs label {
+  /* text-align: left; */
+  /* height: 20px; */
+  font-size: 20px;
+  display: block;
+  margin-bottom: 0px;
+  /* font-weight: bold; */
+}
+
+.managedocs input[type="text"] {
+  width: 300px;
+  padding: 20px;
+  font-size: 15px;
+  margin-bottom: 0px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.managedocs select {
+  width: 300px;
+  padding: 10px;
+  font-size: 15px;
+  margin-bottom: 0px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.managedocs select {
+  height: 45px;
+}
+
+.managedocs button {
+  font-size: 20px;
+  width: 200px;
+}

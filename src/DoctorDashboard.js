@@ -2,33 +2,31 @@ import React, { useState, useEffect } from 'react';
 import Table from './Table';
 import jsonData from './db.json';
 
-function DoctorDashboard(props) {
+function DoctorDashboard() {
   const [patients, setPatients] = useState();
   const [result, setResult] = useState([]);
   const [did, setDid] = useState(1);
   const [pid, setPid] = useState();
 
-  const server_addr = props.server_addr;
+  useEffect(() => {
+    setPatients(jsonData['doctors']);
+  }, []);
 
-//   useEffect(() => {
-//     setData(jsonData['doctors']);
-//   }, []);
-
-  useEffect( () => {
-    fetch('http://'+server_addr+'/doctor/'+did)
-    .then(res => {
-        return res.json();
-    })
-    .then(data => {
-        console.log("doctor's patients", data['Patients']);
-        setPatients(data['Patients']);
-    });
-  }, [])
+  // useEffect(() => {
+  //   fetch('http://10.147.235.193:3000/doctor/' + did)
+  //     .then(res => {
+  //       return res.json();
+  //     })
+  //     .then(data => {
+  //       console.log("doctor's patients", data['Patients']);
+  //       setPatients(data['Patients']);
+  //     });
+  // }, [])
 
   const handleQuery = (e, qno) => {
     e.preventDefault();
-    fetch('http://'+server_addr+'/doctor/'+did+'?query='+qno+'&patient='+pid)
-    .then(res => {
+    fetch('http://10.147.235.193:3000/doctor/' + did + '?query=' + qno + '&patient=' + pid)
+      .then(res => {
         return res.json();
       })
       .then(data => {
