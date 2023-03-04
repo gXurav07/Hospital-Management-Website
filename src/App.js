@@ -10,7 +10,7 @@ import ManageDocs from "./ManageDocs";
 import ManageOps from "./ManageOps";
 
 function App() {
-  const server_addr = "172.20.10.1:5001";//"10.147.143.201:5001";
+  const server_addr = "10.147.143.201:5001";
   return (
     <BrowserRouter>
         <Routes>
