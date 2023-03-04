@@ -34,7 +34,7 @@ export default function Login(props) {
   const handleLogin = (e) => {
     e.preventDefault();
     console.log("Sent login details!", login)
-    fetch('http://'+server_addr+'/login/?type='+type+'&empid='+empid+'&pass='+password)
+    fetch('http://'+server_addr+'/login/?type='+type+'&email='+email+'&pass='+password)
     .then(res => {
       return res.json();
     })
