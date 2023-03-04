@@ -1,15 +1,17 @@
 // Route for login
 const express = require('express');
 const loginRouter = express.Router();
-const mysql = require('mysql');
+const {createPool} = require('mysql');
+const {encrypt, decrypt} = require('./encryptionhandler');
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'user',
-  password: 'Random@07',
-  database: 'hms'
-});
-connection.connect();
+const pool = createPool({
+    host: 'localhost',
+    user: 'root',
+    password: 'G@urav2002',
+    database: 'hms',
+    connectionLimit: 10
+})
+//connection.connect();
 
 // Post request done while sign up
 loginRouter
@@ -44,16 +46,17 @@ function createUser(req, res){
     console.log(req.body);
     const transformedObj = transformKeys(req.body);
     //insert transformedObj into database hms 
-    const iv = transformedObj.Password; // Use the password as the IV
-
-    const sql = `INSERT INTO user (Name, Email, employee_id, Password, iv, type) VALUES ('${transformedObj.Name}', '${transformedObj.Email}', '${transformedObj.employee_id}', '${transformedObj.Password}', '${iv}', '${transformedObj.type}')`;
-
-    connection.query(sql, (error, results, fields) => {
-    if (error) throw error;
-    console.log('Inserted row:', results);
+    const encrypted = encrypt(transformedObj.Password);
+   
+    const sqll = `INSERT INTO user (Name, Email, employee_id, Password, iv, type) VALUES ('${transformedObj.Name}', '${transformedObj.Email}', '${transformedObj.employee_id}', '${encrypted.encrypted_password}', '${encrypted.iv}', '${transformedObj.type}')`;
+    pool.query(sqll, (err, result)=>{
+        if(err) throw err;
+        console.log(result)
+        res.send(JSON.stringify({ message: 'Signup successful' }));
     });
+    // send a response to the client as json
+    // res.send('Post request received');
     
-    res.send('Login confirmed');
 }
 
 function getLogin(req, res){
