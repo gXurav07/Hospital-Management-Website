@@ -11,7 +11,6 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-
 /* HOME START */
 .container_home {
   margin: 20px auto;
@@ -138,3 +137,38 @@ button:hover {
 }
 
 /* LOGIN END */
+
+/* MANAGE DOCS START */
+.managedocs {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+.managedocs label {
+  text-align: left;
+  display: block;
+  color: #573b8a;
+  font-size: 20px;
+}
+.managedocs h2 {
+  font-size: 36px;
+  color: #573b8a;
+  margin-bottom: 30px;
+}
+.managedocs input, .managedocs textarea, .managedocs select {
+  width: 100%;
+  padding: 6px 10px;
+  margin: 10px 0;
+  border: 10px solid #ddd;
+  box-sizing: border-box;
+  display: block;
+}
+.managedocs button {
+  background: #573b8a;
+  color: #fff;
+  border: 0;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+/* MANAGE DOCS END */
