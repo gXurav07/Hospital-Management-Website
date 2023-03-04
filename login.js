@@ -41,6 +41,19 @@ function transformKeys(obj) {
     }
     return transformedObj;
   }
+  function transformloginKeys(obj) {
+    const transformedObj = {};
+    for (const key in obj) {
+      if (key === 'email') {
+        transformedObj['Email'] = obj[key];
+      } if (key === 'pass') {
+        transformedObj['Password'] = obj[key];
+      } else if (key === 'type') {
+        transformedObj['type'] = obj[key];
+      }
+    }
+    return transformedObj;
+  }
 
 function createUser(req, res){
     console.log(req.body);
@@ -54,14 +67,45 @@ function createUser(req, res){
         console.log(result)
         res.send(JSON.stringify({ message: 'Signup successful' }));
     });
-    // send a response to the client as json
-    // res.send('Post request received');
+
     
 }
 
 function getLogin(req, res){
-    res.send('Get Login request received');
+    //res.send('Get Login request received');
     console.log(req.query);
+
+    const transformedObj = transformloginKeys(req.query);
+    pool.query(`SELECT * FROM user WHERE Email = '${transformedObj.Email}' and type='${transformedObj.type}'`, (err, result)=>{
+      if(err){
+        throw err;
+      }
+      console.log(result);
+
+      // if result is an empty object send login failed
+      if(result.length === 0){
+        res.send(JSON.stringify({ message: 'Login failed' }));
+      }
+      else{
+
+        const data = JSON.parse(JSON.stringify(result[0])); // Parse the string and extract the first object
+        console.log(data);
+        const password = data.Password;
+        const iv = data.iv;
+        const decrypted = decrypt({encrypted_password: password, iv: iv});
+        if(decrypted === transformedObj.Password){
+          console.log('Login successful');
+          //res.send(JSON.stringify({ message: 'Signup successful' }));
+          res.json({ message: 'Login successful' });
+        } 
+        else
+        {
+          console.log('Login failed');
+          res.json({ message: 'Login failed' });
+        }
+      }
+    });
+
 }
 
 
