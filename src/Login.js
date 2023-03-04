@@ -6,6 +6,7 @@ export default function Login(props) {
   const [email, setEmail] = useState('');
   const [empid, setEmpid] = useState('');
   const [password, setPassword] = useState('');
+  const [status, setStatus] = useState('');
 
   const type = props.type;
   const server_addr = props.server_addr;
@@ -15,19 +16,33 @@ export default function Login(props) {
 
   const handleSignup = (e) => {
     e.preventDefault();
-    console.log("Sent signup details!", login)
+    console.log("Sent signup details!", signup)
     fetch('http://'+server_addr+'/login',{
       method: 'POST',
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(signup)
-  }).then(() => console.log("Sent signup details!", signup) );
+  })
+  .then(res => {
+    return res.json();
+  })
+  .then(data => {
+    console.log("signup status ", data);
+    setStatus(data);
+  });
   }
 
   const handleLogin = (e) => {
     e.preventDefault();
     console.log("Sent login details!", login)
     fetch('http://'+server_addr+'/login/?type='+type+'&empid='+empid+'&pass='+password)
-    .then(() => console.log("Sent login details!", login) );
+    .then(res => {
+      return res.json();
+    })
+    .then(data => {
+      console.log("login status ", data);
+      setStatus(data);
+    });
+
   }
 
   return (
