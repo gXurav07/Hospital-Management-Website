@@ -5,11 +5,7 @@ const {createPool} = require('mysql');
 const {encrypt, decrypt} = require('./encryptionhandler');
 
 const pool = createPool({
-    host: 'localhost',
-    user: 'root',
-    password: 'G@urav2002',
-    database: 'hms',
-    connectionLimit: 10
+
 })
 //connection.connect();
 
