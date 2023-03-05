@@ -67,8 +67,6 @@ function createUser(req, res){
         console.log(result)
         res.send(JSON.stringify({ message: 'Signup successful' }));
     });
-
-    
 }
 
 function getLogin(req, res){

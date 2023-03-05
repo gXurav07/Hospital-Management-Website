@@ -9,14 +9,14 @@ app.use(cors());
 app.listen(5001);
 
 // connect to databsae
-// const {Client} = require('mysql');
-// const client = new Client({
-//     user: 'user',
-//     host: 'localhost',
-//     database: 'hms',
-//     password: 'Random@07'
-//   });
-// client.connect();
+const {Client} = require('mysql');
+const client = new Client({
+    user: 'user',
+    host: 'localhost',
+    database: 'hms',
+    password: 'Random@07'
+  });
+client.connect();
 
 
 // Import Routers
