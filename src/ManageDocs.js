@@ -1,20 +1,22 @@
 import { useState } from "react";
 
-function ManageDocs() {
+function ManageDocs(props) {
   const [name, setName] = useState('');
   const [dep, setDep] = useState('');
   const [position, setPosition] = useState('hod');
   const [trainedIn, setTrainedIn] = useState('bypass');
 
+  const server_addr = props.server_addr;
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const doc = { name, dep, position, trainedIn };
+    const doc = {name, dep, position, trainedIn};
 
-    fetch('http://localhost:8000/doctors', {
-      method: 'POST',
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(doc)
-    }).then(() => console.log("Added doctor!", doc));
+    fetch('http://'+server_addr+'/doctors',{
+        method: 'POST',
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(doc)
+    }).then(() => console.log("Added doctor!", doc) );
   }
 
   return (

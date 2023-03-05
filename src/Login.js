@@ -95,8 +95,8 @@ export default function Login(props) {
               name="empid"
               required 
               placeholder="Employee ID"
-              value={empid}
-              onChange={(e) => setEmpid(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               />
 					    <input type="password" 
               name="password"
