@@ -162,12 +162,12 @@ CREATE TABLE Stay(
 DROP TABLE IF EXISTS Undergoes;
 
 CREATE TABLE Undergoes(
-    U_id int NOT NULL AUTO_INCREMENT,
+    Undergoes_id int NOT NULL AUTO_INCREMENT,
     Patient int NOT NULL,
     `Procedure` int NOT NULL,
     `Date` DATETIME NULL,
     Physician varchar(255) NOT NULL,
-    PRIMARY KEY (U_id),
+    PRIMARY KEY (Undergoes_id),
     FOREIGN KEY (Patient) REFERENCES Patient(SSN),
     FOREIGN KEY (`Procedure`) REFERENCES `Procedure`(Code),
     FOREIGN KEY (Physician) REFERENCES Physician(EmployeeID)
@@ -184,13 +184,13 @@ CREATE TABLE Test
 
 DROP TABLE IF EXISTS Test_instance;
 CREATE TABLE Test_instance(
-    Test_Number int NOT NULL AUTO_INCREMENT,
+    Test_id int NOT NULL AUTO_INCREMENT,
     Patient int NOT NULL,
     Physician varchar(255) NOT NULL,
     Test_code int NOT NULL,
     `Date` DATETIME NULL,
     Result varchar(255) NULL,
-    PRIMARY KEY(Test_Number),
+    PRIMARY KEY(Test_id),
     FOREIGN KEY (Patient) REFERENCES Patient(SSN),
     FOREIGN KEY (Physician) REFERENCES Physician(EmployeeID),
     FOREIGN KEY(Test_code) REFERENCES Test(Code)
