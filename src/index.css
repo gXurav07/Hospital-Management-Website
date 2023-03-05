@@ -185,8 +185,8 @@ tr:hover {
   font-weight: bold;
 }
 
-.doctor_dashboard input[type="text"] {
-  padding: 20px;
+.doctor_dashboard input{
+  padding: 10px;
   font-size: 20px;
   border: none;
   border-radius: 5px;
@@ -209,10 +209,19 @@ tr:hover {
   cursor: pointer;
 }
 
+.doctor_dashboard .but_{
+  margin: auto;
+  font-size: 20px;
+  width: 200px;
+}
+
 /* DOCTOR DASHBOARD END */
 
+.managedocs h1{
+  margin-top: 100px;
+}
+
 .managedocs form {
-  /* background-color: #fff; */
   padding: 20px;
   max-width: 600px;
   margin: 0 auto;
@@ -220,15 +229,12 @@ tr:hover {
 }
 
 .managedocs label {
-  /* text-align: left; */
-  /* height: 20px; */
   font-size: 20px;
   display: block;
-  margin-bottom: 0px;
-  /* font-weight: bold; */
+  margin-bottom: -5px;
 }
 
-.managedocs input[type="text"] {
+.managedocs input {
   width: 300px;
   padding: 20px;
   font-size: 15px;
@@ -242,6 +248,7 @@ tr:hover {
   width: 300px;
   padding: 10px;
   font-size: 15px;
+  margin-top: 20px;
   margin-bottom: 0px;
   border: 1px solid #ccc;
   border-radius: 4px;
