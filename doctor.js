@@ -38,7 +38,7 @@ function getDoctorByID(req, res){
             if(type == 'treatment')
                 sql_query = `SELECT * FROM Undergoes WHERE Patient=${patient_id}`;
             else if(type == 'medication')
-                sql_query = `SELECT * FROM Prescribes WHERE Patient=${patient_id}`;
+                sql_query = `SELECT Physician,Patient,Medication.Name,Medication.Brand,Date,Appointment FROM Prescribes,Medication WHERE Patient=${patient_id} and Medication.Code=Prescribes.Medication`;
             else if(type == 'appointment')
                 sql_query = `SELECT * FROM Appointment WHERE Patient=${patient_id}`;
             else{
