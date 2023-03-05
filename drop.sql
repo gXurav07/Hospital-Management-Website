@@ -1,0 +1,22 @@
+
+DROP TABLE IF EXISTS Test_instance;
+DROP TABLE IF EXISTS Test;
+DROP TABLE IF EXISTS Undergoes;
+DROP TABLE IF EXISTS Stay;
+DROP TABLE IF EXISTS Prescribes;
+
+DROP TABLE IF EXISTS Appointment;
+
+DROP TABLE IF EXISTS Medication;
+DROP TABLE IF EXISTS Room;
+DROP TABLE IF EXISTS Affiliated_with;
+DROP TABLE IF EXISTS `Procedure`;
+DROP TABLE IF EXISTS Department;
+
+DROP TABLE IF EXISTS Patient;
+DROP TABLE IF EXISTS Physician;
+DROP TABLE IF EXISTS database_administrator;
+DROP TABLE IF EXISTS data_entry_operator;
+DROP TABLE IF EXISTS front_desk_operator;
+DROP TABLE IF EXISTS user;
+
