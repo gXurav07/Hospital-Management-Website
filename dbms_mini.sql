@@ -6,8 +6,9 @@ CREATE TABLE user(
     Password varchar(255) NOT NULL,
     iv varchar(255) NOT NULL,
     type int NOT NULL,
-    PRIMARY KEY (employee_id)
+    PRIMARY KEY (employee_id,type)
 );
+
 
 DROP TABLE IF EXISTS front_desk_operator;
 CREATE TABLE front_desk_operator(
@@ -49,9 +50,11 @@ CREATE TABLE Physician(
 DROP TABLE IF EXISTS Patient;
 
 CREATE TABLE Patient(
-   SSN int NOT NULL,
+   SSN int NOT NULL AUTO_INCREMENT,
    Name varchar(255) NOT NULL,
    Address varchar(255) NOT NULL,
+   Age int NOT NULL,
+   Gender varchar(255) NOT NULL,
    Phone varchar(255) NOT NULL,
    InsuranceID int NOT NULL,
    PCP varchar(255) NOT NULL,
@@ -144,11 +147,11 @@ DROP TABLE IF EXISTS Stay;
 
 
 CREATE TABLE Stay(
-   StayID int NOT NULL,
+   StayID int NOT NULL AUTO_INCREMENT,
     Patient int NOT NULL,
     Room int NOT NULL,
-    `Start` DATETIME NOT NULL,
-    `End` DATETIME NOT NULL,
+    `Start` DATETIME ,
+    `End` DATETIME,
     PRIMARY KEY (StayID),
     FOREIGN KEY (Patient) REFERENCES Patient(SSN),
     FOREIGN KEY (Room) REFERENCES Room(Number)
@@ -159,7 +162,7 @@ CREATE TABLE Stay(
 DROP TABLE IF EXISTS Undergoes;
 
 CREATE TABLE Undergoes(
-    U_id int NOT NULL,
+    U_id int NOT NULL AUTO_INCREMENT,
     Patient int NOT NULL,
     `Procedure` int NOT NULL,
     `Date` DATETIME NULL,
@@ -181,7 +184,7 @@ CREATE TABLE Test
 
 DROP TABLE IF EXISTS Test_instance;
 CREATE TABLE Test_instance(
-    Test_Number int NOT NULL,
+    Test_Number int NOT NULL AUTO_INCREMENT,
     Patient int NOT NULL,
     Physician varchar(255) NOT NULL,
     Test_code int NOT NULL,
