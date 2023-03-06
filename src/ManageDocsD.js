@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Table from './Table';
 import jsonData from './db.json';
 
-function DoctorDashboard(props) {
+function ManageDocsD(props) {
   const [patients, setPatients] = useState();
   const [result, setResult] = useState([]);
   const [did, setDid] = useState(1);
@@ -47,9 +47,7 @@ function DoctorDashboard(props) {
             <form>
               <label>Get Details:</label>
               <input type="text" placeholder="Enter Doctor ID...." required value={pid} onChange={(e) => setPid(e.target.value)} />
-              {/* <div className='but_'> */}
-                <button  className='but_' onClick={(e) => handleQuery(e, 1)}>Delete Doctor</button>
-              {/* </div> */}
+              <button className='but_'>Delete Doctor</button>
             </form>
           </div>
           {result ? <Table data={result} /> : <br />}
@@ -58,4 +56,4 @@ function DoctorDashboard(props) {
     </div >
   );
 }
-export default DoctorDashboard;
+export default ManageDocsD;

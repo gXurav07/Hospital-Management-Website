@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function ManageOps(props) {
+function ManageOpsD(props) {
   const [name, setName] = useState('');
   const [role, setRole] = useState('');
 
@@ -37,4 +37,4 @@ function ManageOps(props) {
     </div>
   );
 }
-export default ManageOps;
+export default ManageOpsD;
