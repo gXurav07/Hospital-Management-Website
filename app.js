@@ -38,11 +38,13 @@ app.use((req, res, next) => {
 // Import Routers
 const doctorRouter = require('./doctor');
 const loginRouter = require('./login');
+const adminRouter = require('./admin');
 
 
 
 // Provide Routes
 app.use('/doctor', doctorRouter);
 app.use('/login', loginRouter);
+app.use('/admin', adminRouter);
 
 
