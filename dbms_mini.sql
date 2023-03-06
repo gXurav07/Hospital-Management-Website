@@ -6,9 +6,8 @@ CREATE TABLE User(
    Password varchar(255) NOT NULL,
    Pass_iv varchar(255) NOT NULL,
    Type int NOT NULL,
-   PRIMARY KEY (EmployeeID,type)
+   PRIMARY KEY (EmployeeID, type)
 );
-
 DROP TABLE IF EXISTS Front_desk_operator;
 CREATE TABLE Front_desk_operator(
    EmployeeID varchar(255) NOT NULL,
@@ -17,7 +16,6 @@ CREATE TABLE Front_desk_operator(
    PRIMARY KEY(EmployeeID),
    FOREIGN KEY(EmployeeID) REFERENCES user(EmployeeID)
 );
-
 DROP TABLE IF EXISTS Data_entry_operator;
 CREATE TABLE Data_entry_operator(
    EmployeeID varchar(255) NOT NULL,
@@ -26,7 +24,6 @@ CREATE TABLE Data_entry_operator(
    PRIMARY KEY(EmployeeID),
    FOREIGN KEY(EmployeeID) REFERENCES user(EmployeeID)
 );
-
 DROP TABLE IF EXISTS Database_administrator;
 CREATE TABLE Database_administrator(
    EmployeeID varchar(255) NOT NULL,
@@ -35,7 +32,6 @@ CREATE TABLE Database_administrator(
    PRIMARY KEY(EmployeeID),
    FOREIGN KEY(EmployeeID) REFERENCES user(EmployeeID)
 );
-
 DROP TABLE IF EXISTS Physician;
 CREATE TABLE Physician(
    EmployeeID varchar(255) NOT NULL,
@@ -44,7 +40,6 @@ CREATE TABLE Physician(
    SSN int NOT NULL,
    PRIMARY KEY (EmployeeID)
 );
-
 DROP TABLE IF EXISTS Patient;
 CREATE TABLE Patient(
    SSN int NOT NULL AUTO_INCREMENT,
@@ -56,9 +51,8 @@ CREATE TABLE Patient(
    InsuranceID int NOT NULL,
    PCP varchar(255) NOT NULL,
    PRIMARY KEY (SSN),
-   FOREIGN KEY (PCP) REFERENCES Physician(EmployeeID) 
+   FOREIGN KEY (PCP) REFERENCES Physician(EmployeeID)
 );
-
 DROP TABLE IF EXISTS Department;
 CREATE TABLE Department(
    DepartmentID int NOT NULL,
@@ -67,16 +61,13 @@ CREATE TABLE Department(
    PRIMARY KEY (DepartmentID),
    FOREIGN KEY (Head) REFERENCES Physician(EmployeeID)
 );
-
 DROP TABLE IF EXISTS `Procedure`;
-CREATE TABLE `Procedure`
-(
+CREATE TABLE `Procedure` (
    Code int NOT NULL,
    Name varchar(255) NOT NULL,
    Cost int NOT NULL,
    PRIMARY KEY (Code)
 );
-
 DROP TABLE IF EXISTS Affiliated_with;
 CREATE TABLE Affiliated_with(
    Physician varchar(255) NOT NULL,
@@ -86,14 +77,12 @@ CREATE TABLE Affiliated_with(
    FOREIGN KEY (Physician) REFERENCES Physician(EmployeeID),
    FOREIGN KEY (Department) REFERENCES Department(DepartmentID)
 );
-
 DROP TABLE IF EXISTS Room;
 CREATE TABLE Room(
-   Number int  NOT NULL,
+   Number int NOT NULL,
    Unavailable boolean NOT NULL,
    PRIMARY KEY (Number)
 );
-
 DROP TABLE IF EXISTS Medication;
 CREATE TABLE Medication(
    Code int NOT NULL,
@@ -102,7 +91,6 @@ CREATE TABLE Medication(
    Description varchar(255) NOT NULL,
    PRIMARY KEY (Code)
 );
-
 DROP TABLE IF EXISTS Appointment;
 CREATE TABLE Appointment(
    AppointmentID int NOT NULL,
@@ -115,7 +103,6 @@ CREATE TABLE Appointment(
    FOREIGN KEY (Patient) REFERENCES Patient(SSN),
    FOREIGN KEY (Physician) REFERENCES Physician(EmployeeID)
 );
-
 DROP TABLE IF EXISTS Prescribes;
 CREATE TABLE Prescribes(
    Physician varchar(255) NOT NULL,
@@ -130,19 +117,17 @@ CREATE TABLE Prescribes(
    FOREIGN KEY (Medication) REFERENCES Medication(Code),
    FOREIGN KEY (Appointment) REFERENCES Appointment(AppointmentID)
 );
-
 DROP TABLE IF EXISTS Stay;
 CREATE TABLE Stay(
    StayID int NOT NULL AUTO_INCREMENT,
    Patient int NOT NULL,
    Room int NOT NULL,
-   `Start` DATETIME ,
+   `Start` DATETIME,
    `End` DATETIME,
    PRIMARY KEY (StayID),
    FOREIGN KEY (Patient) REFERENCES Patient(SSN),
    FOREIGN KEY (Room) REFERENCES Room(Number)
 );
-
 DROP TABLE IF EXISTS Undergoes;
 CREATE TABLE Undergoes(
    Undergoes_id int NOT NULL AUTO_INCREMENT,
@@ -155,16 +140,13 @@ CREATE TABLE Undergoes(
    FOREIGN KEY (`Procedure`) REFERENCES `Procedure`(Code),
    FOREIGN KEY (Physician) REFERENCES Physician(EmployeeID)
 );
-
 DROP TABLE IF EXISTS Test;
-CREATE TABLE Test
-(
+CREATE TABLE Test (
    Code int NOT NULL,
    Name varchar(255) NOT NULL,
    Cost int NOT NULL,
    PRIMARY KEY (Code)
 );
-
 DROP TABLE IF EXISTS Test_instance;
 CREATE TABLE Test_instance(
    Test_id int NOT NULL AUTO_INCREMENT,
