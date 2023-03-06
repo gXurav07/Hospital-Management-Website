@@ -1,12 +1,13 @@
 import { useState } from "react";
+import useToken from "./useToken";
 
 export default function Login(props) {
-
+  // console.log("l",props)
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [empid, setEmpid] = useState('');
   const [password, setPassword] = useState('');
-  const [status, setStatus] = useState('');
+  // const { token, setToken } = useToken();
 
   const type = props.type;
   const server_addr = props.server_addr;
@@ -27,22 +28,22 @@ export default function Login(props) {
   })
   .then(data => {
     console.log("signup status ", data);
-    setStatus(data);
+    // setStatus(data);
   });
   }
 
   const handleLogin = (e) => {
     e.preventDefault();
     console.log("Sent login details!", login)
-    fetch('http://'+server_addr+'/login/?type='+type+'&email='+email+'&pass='+password)
-    .then(res => {
-      return res.json();
-    })
-    .then(data => {
-      console.log("login status ", data);
-      setStatus(data);
-    });
-
+    // fetch('http://'+server_addr+'/login/?type='+type+'&email='+email+'&pass='+password)
+    // .then(res => {
+    //   return res.json();
+    // })
+    // .then(data => {
+    //   status = data;
+    // });
+    sessionStorage.setItem('token', JSON.stringify(true));
+    props.setToken(true);//this will redirect to AdminDashboard
   }
 
   return (

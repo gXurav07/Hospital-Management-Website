@@ -1,7 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import useToken from "./useToken";
+import Login from "./Login";
+import { useEffect, useState } from 'react';
+import { checkAuth } from './useToken';
 
-function AdminDashboard() {
+function AdminDashboard(props) {
+  const server_addr = props.server_addr;
+  const [token, setToken] = useState(JSON.parse(sessionStorage.getItem('token'))); 
+  // useEffect(() => {
+  //   checkAuth();
+  // }, [])
+  // if(!token)
+  //   return <Login name="Database Administrator" type={4} server_addr={server_addr} setToken={setToken}/>;
+
   return (
     <div className="App">
       <header className="App-header">
