@@ -14,7 +14,7 @@ CREATE TABLE Front_desk_operator(
    Name varchar(255) NOT NULL,
    Address varchar(255) NOT NULL,
    PRIMARY KEY(EmployeeID),
-   FOREIGN KEY(EmployeeID) REFERENCES user(EmployeeID)
+   FOREIGN KEY(EmployeeID) REFERENCES User(EmployeeID)
 );
 DROP TABLE IF EXISTS Data_entry_operator;
 CREATE TABLE Data_entry_operator(
@@ -22,7 +22,7 @@ CREATE TABLE Data_entry_operator(
    Name varchar(255) NOT NULL,
    Address varchar(255) NOT NULL,
    PRIMARY KEY(EmployeeID),
-   FOREIGN KEY(EmployeeID) REFERENCES user(EmployeeID)
+   FOREIGN KEY(EmployeeID) REFERENCES User(EmployeeID)
 );
 DROP TABLE IF EXISTS Database_administrator;
 CREATE TABLE Database_administrator(
@@ -30,28 +30,35 @@ CREATE TABLE Database_administrator(
    Name varchar(255) NOT NULL,
    Address varchar(255) NOT NULL,
    PRIMARY KEY(EmployeeID),
-   FOREIGN KEY(EmployeeID) REFERENCES user(EmployeeID)
+   FOREIGN KEY(EmployeeID) REFERENCES User(EmployeeID)
 );
 DROP TABLE IF EXISTS Physician;
 CREATE TABLE Physician(
-   EmployeeID varchar(255) NOT NULL,
+   PhysicianID varchar(255) NOT NULL,
    Name varchar(255) NOT NULL,
    Position varchar(255) NOT NULL,
-   SSN int NOT NULL,
-   PRIMARY KEY (EmployeeID)
+   PRIMARY KEY (PhysicianID),
+   FOREIGN KEY (PhysicianID) REFERENCES User(EmployeeID)
 );
 DROP TABLE IF EXISTS Patient;
 CREATE TABLE Patient(
-   SSN int NOT NULL AUTO_INCREMENT,
+   Patient_SSN int NOT NULL,
    Name varchar(255) NOT NULL,
    Address varchar(255) NOT NULL,
    Age int NOT NULL,
    Gender varchar(255) NOT NULL,
    Phone varchar(255) NOT NULL,
+   Email varchar(255) NOT NULL,
+   Status varchar(255) NOT NULL,
    InsuranceID int NOT NULL,
-   PCP varchar(255) NOT NULL,
-   PRIMARY KEY (SSN),
-   FOREIGN KEY (PCP) REFERENCES Physician(EmployeeID)
+   PRIMARY KEY (Patient_SSN)
+);
+DROP TABLE IF EXISTS Slot;
+CREATE TABLE Slot(
+   SlotID int NOT NULL ,
+   `Start` DATETIME NOT NULL,
+   `End` DATETIME NOT NULL,
+   PRIMARY KEY (SlotID)
 );
 DROP TABLE IF EXISTS Department;
 CREATE TABLE Department(
@@ -59,104 +66,107 @@ CREATE TABLE Department(
    Name varchar(255) NOT NULL,
    Head varchar(255) NOT NULL,
    PRIMARY KEY (DepartmentID),
-   FOREIGN KEY (Head) REFERENCES Physician(EmployeeID)
+   FOREIGN KEY (Head) REFERENCES Physician(PhysicianID)
 );
-DROP TABLE IF EXISTS `Procedure`;
-CREATE TABLE `Procedure` (
-   Code int NOT NULL,
+DROP TABLE IF EXISTS Treatment_Description;
+CREATE TABLE Treatment_Description (
+   Treatment_DescriptionID int NOT NULL,
    Name varchar(255) NOT NULL,
    Cost int NOT NULL,
-   PRIMARY KEY (Code)
+   PRIMARY KEY (Treatment_DescriptionID)
 );
 DROP TABLE IF EXISTS Affiliated_with;
 CREATE TABLE Affiliated_with(
-   Physician varchar(255) NOT NULL,
+   PhysicianID varchar(255) NOT NULL,
    Department int NOT NULL,
-   PrimaryAffiliation BOOLEAN NOT NULL,
-   PRIMARY KEY (Physician, Department),
-   FOREIGN KEY (Physician) REFERENCES Physician(EmployeeID),
+   PRIMARY KEY (PhysicianID, Department),
+   FOREIGN KEY (PhysicianID) REFERENCES Physician(PhysicianID),
    FOREIGN KEY (Department) REFERENCES Department(DepartmentID)
 );
 DROP TABLE IF EXISTS Room;
 CREATE TABLE Room(
-   Number int NOT NULL,
+   RoomID int NOT NULL,
    Unavailable boolean NOT NULL,
-   PRIMARY KEY (Number)
+   PRIMARY KEY (RoomID)
 );
 DROP TABLE IF EXISTS Medication;
 CREATE TABLE Medication(
-   Code int NOT NULL,
+   MedicationID int NOT NULL,
    Name varchar(255) NOT NULL,
    Brand varchar(255) NOT NULL,
    Description varchar(255) NOT NULL,
-   PRIMARY KEY (Code)
+   PRIMARY KEY (MedicationID)
 );
 DROP TABLE IF EXISTS Appointment;
 CREATE TABLE Appointment(
    AppointmentID int NOT NULL,
-   Patient int NOT NULL,
-   Physician varchar(255) NOT NULL,
-   `Start` DATETIME NOT NULL,
-   `End` DATETIME NOT NULL,
+   Patient_SSN int NOT NULL,
+   PhysicianID varchar(255) NOT NULL,
+   Date DATETIME NOT NULL,
+   SlotID int NOT NULL,
    ExaminationRoom varchar(255) NOT NULL,
    PRIMARY KEY (AppointmentID),
-   FOREIGN KEY (Patient) REFERENCES Patient(SSN),
-   FOREIGN KEY (Physician) REFERENCES Physician(EmployeeID)
+   FOREIGN KEY (Patient_SSN) REFERENCES Patient(Patient_SSN),
+   FOREIGN KEY (PhysicianID) REFERENCES Physician(PhysicianID),
+   FOREIGN KEY (SlotID) REFERENCES Slot(SlotID)
 );
-DROP TABLE IF EXISTS Prescribes;
-CREATE TABLE Prescribes(
-   Physician varchar(255) NOT NULL,
-   Patient int NOT NULL,
-   Medication int NOT NULL,
+DROP TABLE IF EXISTS Prescribes_Medication;
+CREATE TABLE Prescribes_Medication(
+   PhysicianID varchar(255) NOT NULL,
+   Patient_SSN int NOT NULL,
+   MedicationID int NOT NULL,
    `Date` DATETIME NOT NULL,
    Appointment int,
    Dose varchar(255) NOT NULL,
-   PRIMARY KEY (Physician, Patient, Medication, `Date`),
-   FOREIGN KEY (Physician) REFERENCES Physician(EmployeeID),
-   FOREIGN KEY (Patient) REFERENCES Patient(SSN),
-   FOREIGN KEY (Medication) REFERENCES Medication(Code),
+   PRIMARY KEY (PhysicianID, Patient_SSN, MedicationID, `Date`),
+   FOREIGN KEY (PhysicianID) REFERENCES Physician(PhysicianID),
+   FOREIGN KEY (Patient_SSN) REFERENCES Patient(Patient_SSN),
+   FOREIGN KEY (MedicationID) REFERENCES Medication(MedicationID),
    FOREIGN KEY (Appointment) REFERENCES Appointment(AppointmentID)
 );
 DROP TABLE IF EXISTS Stay;
 CREATE TABLE Stay(
    StayID int NOT NULL AUTO_INCREMENT,
-   Patient int NOT NULL,
-   Room int NOT NULL,
+   Patient_SSN int NOT NULL,
+   RoomID int NOT NULL,
    `Start` DATETIME,
    `End` DATETIME,
    PRIMARY KEY (StayID),
-   FOREIGN KEY (Patient) REFERENCES Patient(SSN),
-   FOREIGN KEY (Room) REFERENCES Room(Number)
+   FOREIGN KEY (Patient_SSN) REFERENCES Patient(Patient_SSN),
+   FOREIGN KEY (RoomID) REFERENCES Room(RoomID)
 );
-DROP TABLE IF EXISTS Undergoes;
-CREATE TABLE Undergoes(
-   Undergoes_id int NOT NULL AUTO_INCREMENT,
-   Patient int NOT NULL,
-   `Procedure` int NOT NULL,
-   `Date` DATETIME NULL,
-   Physician varchar(255) NOT NULL,
-   PRIMARY KEY (Undergoes_id),
-   FOREIGN KEY (Patient) REFERENCES Patient(SSN),
-   FOREIGN KEY (`Procedure`) REFERENCES `Procedure`(Code),
-   FOREIGN KEY (Physician) REFERENCES Physician(EmployeeID)
+DROP TABLE IF EXISTS Treatment;
+CREATE TABLE Treatment(
+   TreatmentID int NOT NULL AUTO_INCREMENT,
+   Patient_SSN int NOT NULL,
+   Treatment_DescriptionID int NOT NULL,
+   SlotID int,
+   PhysicianID varchar(255) NOT NULL,
+   PRIMARY KEY (TreatmentID),
+   FOREIGN KEY (Patient_SSN) REFERENCES Patient(Patient_SSN),
+   FOREIGN KEY (Treatment_DescriptionID) REFERENCES Treatment_Description(Treatment_DescriptionID),
+   FOREIGN KEY (PhysicianID) REFERENCES Physician(PhysicianID),
+   FOREIGN KEY (SlotID) REFERENCES Slot(SlotID)
 );
 DROP TABLE IF EXISTS Test;
 CREATE TABLE Test (
-   Code int NOT NULL,
+   TestID int NOT NULL,
    Name varchar(255) NOT NULL,
    Cost int NOT NULL,
-   PRIMARY KEY (Code)
+   PRIMARY KEY (TestID)
 );
 DROP TABLE IF EXISTS Test_instance;
 CREATE TABLE Test_instance(
-   Test_id int NOT NULL AUTO_INCREMENT,
-   Patient int NOT NULL,
-   Physician varchar(255) NOT NULL,
-   Test_code int NOT NULL,
-   `Date` DATETIME NULL,
+   Test_instanceID int NOT NULL AUTO_INCREMENT,
+   Patient_SSN int NOT NULL,
+   PhysicianID varchar(255) NOT NULL,
+   TestID int NOT NULL,
+   SlotID int ,
    Result varchar(255) NULL,
-   PRIMARY KEY(Test_id),
-   FOREIGN KEY (Patient) REFERENCES Patient(SSN),
-   FOREIGN KEY (Physician) REFERENCES Physician(EmployeeID),
-   FOREIGN KEY(Test_code) REFERENCES Test(Code)
+   Test_image LONGBLOB NULL,
+   PRIMARY KEY (Test_instanceID),
+   FOREIGN KEY (Patient_SSN) REFERENCES Patient(Patient_SSN),
+   FOREIGN KEY (PhysicianID) REFERENCES Physician(PhysicianID),
+   FOREIGN KEY (TestID) REFERENCES Test(TestID),
+   FOREIGN KEY (SlotID) REFERENCES Slot(SlotID)
 );
