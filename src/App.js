@@ -18,7 +18,7 @@ import Appointment from "./Appointment";
 import useToken, { checkAuth } from "./useToken";
 
 function App() {
-  const server_addr = "10.147.164.51:3000"//"10.147.225.114:3000";
+  const server_addr = "10.145.210.227:3000"//"10.147.225.114:3000";
   const { token, setToken } = useToken();
   return (
     <BrowserRouter>
