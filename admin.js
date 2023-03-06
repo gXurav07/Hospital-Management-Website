@@ -8,7 +8,7 @@ adminRouter
 //.delete(deleteEntity);
 
 function createEntity(req, res){
-
+    console.log('Hi\n', req.body);
     const entity = req.body;
     const type = req.body.type;
     let sql_query = '';
@@ -22,10 +22,13 @@ function createEntity(req, res){
 
 
         if(type == 'doctor'){
-            sql_query = `INSERT INTO Physician(EmployeeID, Name, Position, SSN)`+
-                         `VALUES('${entity.employeeid}', '${entity.name}', '${entity.position}', ${entity.ssn}); `
-                        //  `INSERT INTO Affiliated_with(Physician, Department, PrimaryAffiliation)`+
-                        //  `VALUES('${entity.employeeid}', ${entity.department}, False);`;
+            sql_query =  `INSERT INTO Physician(EmployeeID, Name, Position, SSN) `+
+                         `VALUES('${entity.employeeid}', '${entity.name}', '${entity.position}', 23213); `;
+            executeQuery(sql_query, res, connection);
+
+            sql_query  = `INSERT INTO Affiliated_with(Physician, Department, PrimaryAffiliation) `+
+                         `VALUES('${entity.employeeid}', ${entity.department}, False);`;
+            executeQuery(sql_query, res, connection);
                             
         }
 
@@ -35,7 +38,7 @@ function createEntity(req, res){
             return;
         }
         
-    executeQuery(sql_query, res, connection);
+    res.status(200).send({message: 'Successfuly created entity!'});
     connection.release();
 
     //res.status(200).send({message: `Successfuly created ${type}!`});
@@ -52,13 +55,11 @@ function createUser(entity, res, connection){
 }
 
 function executeQuery(sql_query, res, connection){
+
     connection.query(sql_query, (err, rows, fields) => {
         if(err){
             res.status(500).send('Internal Server Error');
             console.log(err);
-        }
-        else{
-            res.status(200).send({message: 'Successfuly created entity!'});
         }
     });
 }
