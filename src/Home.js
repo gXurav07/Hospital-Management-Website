@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import style from './css/home.module.css';
 
 export default function Home() {
   return (
@@ -11,11 +12,11 @@ export default function Home() {
           <br/>
           <h2>Login or Sign Up As.....</h2>
         </div>
-        <div className="container_home">
-          <Link to="user1" className="box"><button>Front Desk Operator</button></Link>
-          <Link to="user2" className="box"><button>Data Entry Operator</button></Link>
-          <Link to="user3" className="box"><button>Doctor</button></Link>
-          <Link to="user4" className="box"><button>Database Administrator</button></Link>
+        <div className={style.container}>
+          <Link to="user1" className={style.box}><button className={style.but}>Front Desk Operator</button></Link>
+          <Link to="user2" className={style.box}><button className={style.but}>Data Entry Operator</button></Link>
+          <Link to="user3" className={style.box}><button className={style.but}>Doctor</button></Link>
+          <Link to="user4" className={style.box}><button className={style.but}>Database Administrator</button></Link>
         </div>
       </header>
     </div>
