@@ -39,6 +39,7 @@ app.use((req, res, next) => {
 const doctorRouter = require('./doctor');
 const loginRouter = require('./login');
 const adminRouter = require('./admin');
+const frontDeskRouter = require('./front-desk');
 
 
 
@@ -46,5 +47,6 @@ const adminRouter = require('./admin');
 app.use('/doctor', doctorRouter);
 app.use('/login', loginRouter);
 app.use('/admin', adminRouter);
+app.use('/front-desk', frontDeskRouter);
 
 
