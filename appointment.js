@@ -20,9 +20,9 @@ function getDoctorsToSchedule(req, res){
         let sql_query = 'SELECT * FROM Physician;'
         executeQueryResp(sql_query, res, connection);
 
+ 
 
-
-
+ 
         connection.release();
     });
 
