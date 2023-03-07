@@ -11,7 +11,6 @@ CREATE TABLE User(
 DROP TABLE IF EXISTS Front_desk_operator;
 CREATE TABLE Front_desk_operator(
    EmployeeID varchar(255) NOT NULL,
-   Name varchar(255) NOT NULL,
    Address varchar(255) NOT NULL,
    PRIMARY KEY(EmployeeID),
    FOREIGN KEY(EmployeeID) REFERENCES User(EmployeeID)
@@ -19,7 +18,6 @@ CREATE TABLE Front_desk_operator(
 DROP TABLE IF EXISTS Data_entry_operator;
 CREATE TABLE Data_entry_operator(
    EmployeeID varchar(255) NOT NULL,
-   Name varchar(255) NOT NULL,
    Address varchar(255) NOT NULL,
    PRIMARY KEY(EmployeeID),
    FOREIGN KEY(EmployeeID) REFERENCES User(EmployeeID)
@@ -27,7 +25,6 @@ CREATE TABLE Data_entry_operator(
 DROP TABLE IF EXISTS Database_administrator;
 CREATE TABLE Database_administrator(
    EmployeeID varchar(255) NOT NULL,
-   Name varchar(255) NOT NULL,
    Address varchar(255) NOT NULL,
    PRIMARY KEY(EmployeeID),
    FOREIGN KEY(EmployeeID) REFERENCES User(EmployeeID)
@@ -35,7 +32,6 @@ CREATE TABLE Database_administrator(
 DROP TABLE IF EXISTS Physician;
 CREATE TABLE Physician(
    PhysicianID varchar(255) NOT NULL,
-   Physician_Name varchar(255) NOT NULL,
    Position varchar(255) NOT NULL,
    PRIMARY KEY (PhysicianID),
    FOREIGN KEY (PhysicianID) REFERENCES User(EmployeeID)
