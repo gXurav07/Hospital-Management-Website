@@ -8,5 +8,262 @@ body {
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* HOME START */
+.container_home {
+  margin: 20px auto;
+  width: 400px;
+  height: 400px;
+  display: grid;
+  grid-template-columns: 200px 200px;
+  grid-row: auto auto;
+  grid-column-gap: 40px;
+}
+
+.box>button {
+  height: 25vh;
+  width: 100%;
+  background-color: #333;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: sans-serif;
+  color: white;
+  font-size: x-large;
+  font-weight: bolder;
+}
+
+.container_home>.box {
+  text-decoration: none;
+}
+
+/* HOME END */
+
+/* LOGIN START */
+.main {
+  font-size: medium;
+  width: 50vh;
+  height: 500px;
+  background: red;
+  overflow: hidden;
+  background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38") no-repeat center/ cover;
+  border-radius: 10px;
+  box-shadow: 5px 20px 50px #000;
+}
+
+#chk {
+  display: none;
+}
+
+.signup {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+label {
+  color: #fff;
+  font-size: 2.3em;
+  justify-content: center;
+  display: flex;
+  margin: 60px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .5s ease-in-out;
+}
+
+input {
+  width: 60%;
+  height: 20px;
+  background: #e0dede;
+  justify-content: center;
+  display: flex;
+  margin: 20px auto;
+  padding: 15px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+}
+
+button {
+  width: 60%;
+  height: 40px;
+  margin: 10px auto;
+  justify-content: center;
+  display: block;
+  color: #fff;
+  background: #573b8a;
+  font-size: 1em;
+  font-weight: bold;
+  margin-top: 20px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  transition: .2s ease-in;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #6d44b8;
+}
+
+.login {
+  height: 460px;
+  background: #eee;
+  border-radius: 60% / 10%;
+  transform: translateY(-180px);
+  transition: .8s ease-in-out;
+}
+
+.login label {
+  color: #573b8a;
+  transform: scale(.6);
+}
+
+#chk:checked~.login {
+  transform: translateY(-500px);
+}
+
+#chk:checked~.login label {
+  transform: scale(1);
+}
+
+#chk:checked~.signup label {
+  transform: scale(.6);
+}
+
+/* LOGIN END */
+
+/* DOCTOR DASHBOARD START */
+.patient_list {
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: large;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 6px 30px;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+  background: #6d44b8;
+}
+
+tr.selected, tr.selected:hover {
+  background: #651dec;
+}
+
+.doctor_dashboard .form_wrapper {
+  width: 1000px;
+  margin: 50px auto;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.doctor_dashboard h1{
+  margin-top: 100px;
+  margin-bottom: 50px;
+}
+
+.doctor_dashboard form {
+  display: flex;
+  flex-direction: column;
+}
+
+.doctor_dashboard label {
+  font-size: 30px;
+  margin: 0px;
+  font-weight: bold;
+}
+
+.doctor_dashboard input{
+  padding: 20px;
+  font-size: 20px;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.doctor_dashboard .button_row {
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.doctor_dashboard button {
+  margin: auto 20px;
+  padding: 0px 20px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.doctor_dashboard .but_{
+  margin: auto;
+  font-size: 20px;
+  width: 200px;
+}
+
+/* DOCTOR DASHBOARD END */
+
+.managedocs h1{
+  margin-top: 100px;
+}
+
+.managedocs form {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.managedocs label {
+  font-size: 20px;
+  display: block;
+  margin-bottom: -5px;
+}
+
+.managedocs input {
+  width: 300px;
+  padding: 20px;
+  font-size: 15px;
+  margin-bottom: 0px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.managedocs select {
+  width: 300px;
+  padding: 10px;
+  font-size: 15px;
+  margin-top: 20px;
+  margin-bottom: 0px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.managedocs select {
+  height: 45px;
+}
+
+.managedocs button {
+  font-size: 20px;
+  width: 200px;
 }
