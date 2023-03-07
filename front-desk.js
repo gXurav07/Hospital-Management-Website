@@ -11,11 +11,12 @@ frontDeskRouter
 
 function addPatient(req, res){
     const patient = req.body;
-    let sql_query = `INSERT INTO Patient(Patient_SSN, Name, Address, Age, Gender, Phone, Email, Status, InsuranceID) `+
-                    `VALUES (${patient.patient_ssn}, '${patient.name}',  '${patient.address}', ${patient.age}, `+
+    let sql_query = `INSERT INTO Patient(Patient_SSN, Patient_Name, Address, Age, Gender, Phone, Email, Status, InsuranceID) `+
+                    `VALUES (${patient.patient_ssn}, '${patient.patient_name}',  '${patient.address}', ${patient.age}, `+
                     `'${patient.gender}', '${patient.phone}', '${patient.email}', '${patient.status}', ${patient.insuranceid});`
                     
     executeQuery(sql_query, req, res); // do async
+    
     // console.log("dd: ", result);
     // res.status(result.status).send(result.message);
 }
@@ -28,6 +29,7 @@ function executeQuery(sql_query, req, res){
             console.error('Error connecting to MySQL database: ', err);
             status = 500;
             message = 'Internal Server Error';
+            res.status(status).send({message});
             return;
         }
         
@@ -38,10 +40,11 @@ function executeQuery(sql_query, req, res){
                 console.log(err);
             }
            data = {...rows};
+           res.status(status).send({message});
+           console.log({status, message});
         });
 
         connection.release();
-        res.status(status).send(message);
         //return {status: status, message: message, data: data};
     });
 }
