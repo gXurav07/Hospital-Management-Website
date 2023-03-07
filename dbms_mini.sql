@@ -6,7 +6,7 @@ CREATE TABLE User(
    Password varchar(255) NOT NULL,
    Pass_iv varchar(255) NOT NULL,
    Type int NOT NULL,
-   PRIMARY KEY (EmployeeID, type)
+   PRIMARY KEY (EmployeeID, Type)
 );
 DROP TABLE IF EXISTS Front_desk_operator;
 CREATE TABLE Front_desk_operator(
