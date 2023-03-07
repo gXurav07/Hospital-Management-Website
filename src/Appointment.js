@@ -110,7 +110,7 @@ function Appointment(props) {
                     {patients ? <Table columns={patientColumns} data={patients} selectedRow={pid} setSelectedRow={setPid} TableName="Patients"/> : <br />}
                     <br/><br/>
                     <Col sm={{offset: 3, size: 6}}> Select{(pid!=='')?"ed":""} Doctor ID: {did}</Col>
-                    {doctors ? <Table columns={doctorColumns} data={doctors} selectedRow={did} setSelectedRow={setDid} TableName="Patients"/> : <br />}
+                    {patients ? <Table columns={patientColumns} data={patients} selectedRow={did} setSelectedRow={setDid} TableName="Patients"/> : <br />}
                     <div className='form_wrapper'>
                         <form>
                             {/* <input type="text" placeholder="Enter Patient ID...." required controlled="true" value={pid} onChange={(e) => setPid(e.target.value)} />
