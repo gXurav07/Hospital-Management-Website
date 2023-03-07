@@ -93,8 +93,8 @@ function executeQuery(sql_query, res, connection){
 
 
 
-// const prescribesRouter = require('./prescribes');
-// doctorRouter.use('/:id/prescribes', prescribesRouter);
+const prescribesRouter = require('./prescribes');
+doctorRouter.use('/:id/prescribes', prescribesRouter);
 
 
 module.exports = doctorRouter;
