@@ -7,6 +7,12 @@ const appointmentRouter = require('./appointment');
 frontDeskRouter
 .route('/register')
 .post(addPatient);
+function schedule_appointment(req,res)
+{
+    const req_date=req.body.date;
+    const doc_id=req.body.physician_id;
+    let sql_query = `SELECT  Start,End FROM Appointment NATURAL JOIN WHERE PhysicianID=${doc_id} AND Date='${req_date}' AND SlotID NOT IN (SELECT SlotID FROM Appointment WHERE Date='${req_date}' and PhysicianID='${doc_id}') INTERSECT SELECT Start,End FROM Slot WHERE PhysicianID=${doc_id} AND Date='${req_date}' AND SlotID NOT IN (SELECT SlotID FROM Treatment WHERE Date='${req_date}' and PhysicianID='${doc_id}')`;
+}
 
 
 function addPatient(req, res){
