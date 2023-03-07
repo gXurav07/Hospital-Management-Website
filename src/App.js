@@ -10,30 +10,33 @@ import ManageDocs from "./ManageDocs";
 import ManageOps from "./ManageOps";
 import ManageDocsD from "./ManageDocsD";
 import ManageOpsD from "./ManageOpsD";
-import EDOps from "./FDOps";
+import FDOps from "./FDOps";
+import DEOps from "./DEOps";
 import AddPatient from "./AddPatient";
-import AdmitPatient from "./AdmitPatient";
+import ImplementPrescription from "./ImplementPrescription";
+// import TestResult from "./TestResult";
+// import TreatmentResult from "./TreatmentResult";
 import DischargePatient from "./DischargePatient";
 import Appointment from "./Appointment";
+import AdmitPatient from "./AdmitPatient";
 import useToken, { checkAuth } from "./useToken";
 
 function App() {
-  const server_addr = "10.145.210.227:3000"//"10.147.225.114:3000";
+  const server_addr = "127.0.0.1:3000"//"10.147.225.114:3000";
   const { token, setToken } = useToken();
   return (
     <BrowserRouter>
         <Routes>
             {/* <Route index element={<Home />} /> */}
-            <Route path="user1" element={<EDOps server_addr={server_addr}/>} />
+            <Route path="user1" element={<FDOps server_addr={server_addr}/>} />
             <Route path="user1" element={<Login name="Front End Operator"  type={1} server_addr={server_addr}/>} />
+            <Route path="user2" element={<DEOps server_addr={server_addr}/>} />
             <Route path="user2" element={<Login name="Data Entry Operator" type={2} server_addr={server_addr}/>} />
             {/* <Route path="user3" element={<Login name="Doctor"/>} /> */}
             {/* <Route path="user4" element={<Login name="Database Administrator"/>} /> */}
 
             <Route path="user3" element={<DoctorDashboard type={3} server_addr={server_addr}/>} />
-            <Route exact 
-            
-            path="user4" element={<AdminDashboard type={4} server_addr={server_addr}/>} />
+            <Route exact path="user4" element={<AdminDashboard type={4} server_addr={server_addr}/>} />
 
             {/* Secondary Routes */}
             <Route exact path="user4/managedocs" element={<ManageDocs server_addr={server_addr}/>} render={()=>console.log('checking...')} />
@@ -42,6 +45,11 @@ function App() {
             <Route path="user4/manageops" element={<ManageOps server_addr={server_addr}/>} />
             <Route path="user4/manageopsd" element={<ManageOpsD server_addr={server_addr}/>} />
             <Route path="user1/addpatient" element={<AddPatient server_addr={server_addr}/>} />
+            <Route path="user1/admitpatient" element={<AdmitPatient server_addr={server_addr}/>} />
+            <Route path="user1/dischargepatient" element={<DischargePatient server_addr={server_addr}/>} />
+            <Route path="user1/appointment" element={<Appointment server_addr={server_addr}/>} />
+            <Route path="user2/appointment" element={<Appointment server_addr={server_addr}/>} />
+            <Route path="user2/implementprescription" element={<ImplementPrescription server_addr={server_addr}/>} />
             {/* <Route path="user1/admitpatient" element={<AdmitPatient server_addr={server_addr}/>} /> */}
             {/* <Route path="user1/dischargepatient" element={<DischargePatient server_addr={server_addr}/>} /> */}
             {/* <Route path="user1/appointment" element={<Appointment server_addr={server_addr}/>} /> */}

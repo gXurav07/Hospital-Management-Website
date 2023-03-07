@@ -162,6 +162,10 @@ tr:hover {
   background: #6d44b8;
 }
 
+tr.selected, tr.selected:hover {
+  background: #651dec;
+}
+
 .doctor_dashboard .form_wrapper {
   width: 1000px;
   margin: 50px auto;
