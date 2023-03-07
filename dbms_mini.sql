@@ -35,7 +35,7 @@ CREATE TABLE Database_administrator(
 DROP TABLE IF EXISTS Physician;
 CREATE TABLE Physician(
    PhysicianID varchar(255) NOT NULL,
-   Name varchar(255) NOT NULL,
+   Physician_Name varchar(255) NOT NULL,
    Position varchar(255) NOT NULL,
    PRIMARY KEY (PhysicianID),
    FOREIGN KEY (PhysicianID) REFERENCES User(EmployeeID)
@@ -43,7 +43,7 @@ CREATE TABLE Physician(
 DROP TABLE IF EXISTS Patient;
 CREATE TABLE Patient(
    Patient_SSN int NOT NULL,
-   Name varchar(255) NOT NULL,
+   Patient_Name varchar(255) NOT NULL,
    Address varchar(255) NOT NULL,
    Age int NOT NULL,
    Gender varchar(255) NOT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE Slot(
 DROP TABLE IF EXISTS Department;
 CREATE TABLE Department(
    DepartmentID int NOT NULL,
-   Name varchar(255) NOT NULL,
+   Dep_Name varchar(255) NOT NULL,
    Head varchar(255) NOT NULL,
    PRIMARY KEY (DepartmentID),
    FOREIGN KEY (Head) REFERENCES Physician(PhysicianID)
@@ -71,7 +71,7 @@ CREATE TABLE Department(
 DROP TABLE IF EXISTS Treatment_Description;
 CREATE TABLE Treatment_Description (
    Treatment_DescriptionID int NOT NULL,
-   Name varchar(255) NOT NULL,
+   Desc_Name varchar(255) NOT NULL,
    Cost int NOT NULL,
    PRIMARY KEY (Treatment_DescriptionID)
 );
