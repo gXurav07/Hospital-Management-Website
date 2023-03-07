@@ -116,13 +116,13 @@ CREATE TABLE Prescribes_Medication(
    Patient_SSN int NOT NULL,
    MedicationID int NOT NULL,
    `Date` DATETIME NOT NULL,
-   Appointment int,
+   AppointmentID int,
    Dose varchar(255) NOT NULL,
    PRIMARY KEY (PhysicianID, Patient_SSN, MedicationID, `Date`),
    FOREIGN KEY (PhysicianID) REFERENCES Physician(PhysicianID),
    FOREIGN KEY (Patient_SSN) REFERENCES Patient(Patient_SSN),
    FOREIGN KEY (MedicationID) REFERENCES Medication(MedicationID),
-   FOREIGN KEY (Appointment) REFERENCES Appointment(AppointmentID)
+   FOREIGN KEY (AppointmentID) REFERENCES Appointment(AppointmentID)
 );
 DROP TABLE IF EXISTS Stay;
 CREATE TABLE Stay(
