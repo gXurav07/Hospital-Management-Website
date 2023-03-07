@@ -102,7 +102,7 @@ CREATE TABLE Appointment(
    AppointmentID int NOT NULL,
    Patient_SSN int NOT NULL,
    PhysicianID varchar(255) NOT NULL,
-   Date DATETIME NOT NULL,
+   Date DATE NOT NULL,
    SlotID int NOT NULL,
    ExaminationRoom varchar(255) NOT NULL,
    PRIMARY KEY (AppointmentID),
