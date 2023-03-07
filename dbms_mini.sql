@@ -92,7 +92,7 @@ CREATE TABLE Room(
 DROP TABLE IF EXISTS Medication;
 CREATE TABLE Medication(
    MedicationID int NOT NULL,
-   Name varchar(255) NOT NULL,
+   Medication_Name varchar(255) NOT NULL,
    Brand varchar(255) NOT NULL,
    Description varchar(255) NOT NULL,
    PRIMARY KEY (MedicationID)
@@ -151,7 +151,7 @@ CREATE TABLE Treatment(
 DROP TABLE IF EXISTS Test;
 CREATE TABLE Test (
    TestID int NOT NULL,
-   Name varchar(255) NOT NULL,
+   Test_Name varchar(255) NOT NULL,
    Cost int NOT NULL,
    PRIMARY KEY (TestID)
 );
