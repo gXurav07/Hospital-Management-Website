@@ -18,7 +18,7 @@ function getDoctorsToSchedule(req, res){
             return;
         }
         let sql_query = 'SELECT * FROM Physician;'
-        let rows = executeQueryResp(sql_query, res, connection);
+        executeQueryResp(sql_query, res, connection);
 
 
 
@@ -44,7 +44,7 @@ function getSlots(req, res){
         let sql_query = 'SELECT * FROM Physician;'  // write query here
 
 
-        let rows = executeQueryResp(sql_query, res, connection);
+        executeQueryResp(sql_query, res, connection);
         connection.release();
     });
 }
