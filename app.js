@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
-
+ 
 const {pool} = require('./db');
-
+  
 // create express app and start server
 const app = express();
 app.use(express.json());

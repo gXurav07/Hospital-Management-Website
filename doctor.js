@@ -2,57 +2,61 @@
 // Route for doctor
 const express = require('express');
 const doctorRouter = express.Router();
+const {executeQuery} = require('./db');
 
 doctorRouter
 .route('/:id')
 .get(getDoctorByID)
  
 
-function getDoctorByID(req, res){
+async function getDoctorByID(req, res){
     let id = req.params.id;
     let query = req.query;
 
-    req.db.getConnection((err, connection) => {
-        if (err) {
-            console.error('Error connecting to MySQL database: ', err);
-            res.status(500).send('Internal Server Error');
+
+    let sql_query = '';
+
+    if(Object.keys(query).length == 0){
+        sql_query = `SELECT * FROM Patient NATURAL JOIN Appointment WHERE PhysicianID=${id}`;
+    }
+    else{
+        const type = query.type;
+        const patient_id = query.patient;
+        console.log(type);
+        console.log(patient_id);
+
+        if(patient_id == undefined){
+            res.status(400).send({message: 'Invalid query'});
             return;
         }
-
-        let sql_query = '';
-
-        if(Object.keys(query).length == 0)
-            sql_query = `SELECT * FROM Patient NATURAL JOIN Appointment WHERE PhysicianID=${id}`;
+        else if(type == 'treatment')
+            sql_query = 'SELECT Patient_Name as "Patient Name",Desc_Name as "Treatment Name",Physician_Name as "Physician Name",Start as "Start Time",End as "End Time" FROM Treatment_Description NATURAL JOIN Treatment NATURAL JOIN Patient NATURAL JOIN Physician NATURAL JOIN Slot WHERE Patient_SSN='+patient_id+";";
+        else if(type == 'medication')
+            sql_query = `SELECT Physician_Name as 'Physician Name',Patient_Name as 'Patient Name',Medication_Name as 'Medication Name',Brand as Brand,Date,AppointmentID as 'Appointment ID' FROM Prescribes_Medication NATURAL JOIN Medication NATURAL JOIN Physician NATURAL JOIN Patient WHERE Patient_SSN=${patient_id}`;
+        else if(type == 'appointment')
+            sql_query = `SELECT AppointmentID as 'Appointment ID',Patient_Name as 'Patient Name',Physician_Name as 'Physician Name',Start as 'Start Time',End as 'End Time' FROM Appointment NATURAL JOIN Patient NATURAL JOIN Physician NATURAL JOIN Slot WHERE Patient_SSN=${patient_id} `;
         else{
-            
-            const type = query.type;
-            const patient_id = query.patient;
-            console.log(type);
-            console.log(patient_id);
-
-            if(patient_id == undefined){
-                res.status(400).send('Invalid query');
-                connection.release();
-                return;
-            }
-
-            if(type == 'treatment')
-                sql_query = 'SELECT Patient_Name as "Patient Name",Desc_Name as "Treatment Name",Physician_Name as "Physician Name",Start as "Start Time",End as "End Time" FROM Treatment_Description NATURAL JOIN Treatment NATURAL JOIN Patient NATURAL JOIN Physician NATURAL JOIN Slot WHERE Patient_SSN='+patient_id;
-            else if(type == 'medication')
-                sql_query = `SELECT Physician_Name as 'Physician Name',Patient_Name as 'Patient Name',Medication_Name as 'Medication Name',Brand as Brand,Date,AppointmentID as 'Appointment ID' FROM Prescribes_Medication NATURAL JOIN Medication NATURAL JOIN Physician NATURAL JOIN Patient WHERE Patient_SSN=${patient_id}`;
-            else if(type == 'appointment')
-                sql_query = `SELECT AppointmentID as 'Appointment ID',Patient_Name as 'Patient Name',Physician_Name as 'Physician Name',Start as 'Start Time',End as 'End Time' FROM Appointment NATURAL JOIN Patient NATURAL JOIN Physician NATURAL JOIN Slot WHERE Patient_SSN=${patient_id} `;
-            else{
-                res.status(400).send('Invalid query type');
-                connection.release();
-                return;
-            }
-            
+            res.status(400).send({message: 'Invalid query type'});
+            return;
         }
-        executeQuery(sql_query, res, connection);
-        connection.release();
-    
-    });
+        
+    }
+    let result = await executeQuery(sql_query, req);
+    let rows = result.rows;
+    // format date
+    for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        for (const key in row) {
+            if (row.hasOwnProperty(key)) {
+                const value = row[key];
+                if (value instanceof Date) {
+                    row[key] = formatDate(value);
+                }   
+            }
+        }
+    }
+    res.status(result.status).send(result);
+
 }
 
 function formatDate(dateTimeStr) {
@@ -61,34 +65,6 @@ function formatDate(dateTimeStr) {
     const formattedTime = date.toTimeString().slice(0, 8);
     return `${formattedDate} ${formattedTime}`;
   }
-function executeQuery(sql_query, res, connection){
-    connection.query(sql_query, (err, rows, fields) => {
-        if(err){
-            res.status(500).send('Internal Server Error');
-            console.log(err);
-        }
-        else{
-            console.log(rows);
-            // iterate through rows and format date
-            for (let i = 0; i < rows.length; i++) {
-                const row = rows[i];
-                for (const key in row) {
-                    if (row.hasOwnProperty(key)) {
-                        const value = row[key];
-                        if (value instanceof Date) {
-                            row[key] = formatDate(value);
-                        }   
-                    }
-                }
-            }
-            
-            //console.log(fields);
-            res.status(200).send({data: rows});
-            // console.log(result);
-            // res.status(200).send({data: result});
-        }
-    });
-}
 
 
 
