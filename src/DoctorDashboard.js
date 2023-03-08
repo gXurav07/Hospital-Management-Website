@@ -110,7 +110,7 @@ function DoctorDashboard(props) {
                 <button onClick={(e) => handleQuery(e, 'treatment')}>Treatment</button>
                 <button onClick={(e) => handleQuery(e, 'medication')}>Medicine Prescribed</button>
                 <button onClick={(e) => handleQuery(e, 'appointment')}>Appointment History</button>
-                <button onClick={(e) => handleQuery(e, 'test')}>Tes tResult</button>
+                <button onClick={(e) => handleQuery(e, 'test')}>Test Result</button>
               </div>
             </form>
             {result ? <Table data={result}/> : console.log('no entry found')}
