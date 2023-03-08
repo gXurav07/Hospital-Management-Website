@@ -33,9 +33,11 @@ async function getDoctorByID(req, res){
         else if(type == 'treatment')
             sql_query = 'SELECT User.Name as"Physician Name",Desc_Name as "Treatment Name",Date FROM Treatment_Description NATURAL JOIN Treatment NATURAL JOIN Patient NATURAL JOIN Physician NATURAL JOIN Slot,User WHERE User.EmployeeID=PhysicianID and Patient_SSN='+patient_id+";";
         else if(type == 'medication')
-            sql_query = `SELECT User.Name as 'Physician Name', Medication_Name as 'Medication Name',Brand as Brand,Date,AppointmentID as 'Appointment ID' FROM Prescribes_Medication NATURAL JOIN Medication NATURAL JOIN Physician NATURAL JOIN Patient,User WHERE Patient_SSN=${patient_id} and User.EmployeeID=PhysicianID;`
+            sql_query = `SELECT User.Name as 'Physician Name', Medication_Name as 'Medication Name',Brand as Brand,Date,AppointmentID as 'Appointment ID' FROM Prescribes_Medication NATURAL JOIN Medication NATURAL JOIN Physician NATURAL JOIN Patient,User WHERE Patient_SSN=${patient_id} and User.EmployeeID=PhysicianID;`;
         else if(type == 'appointment')
-            sql_query = `SELECT AppointmentID as 'Appointment ID', User.Name as 'Physician Name', Date FROM Appointment NATURAL JOIN Patient NATURAL JOIN Physician NATURAL JOIN Slot,User WHERE Patient_SSN=${patient_id} and  User.EmployeeID=PhysicianID;`
+            sql_query = `SELECT AppointmentID as 'Appointment ID', User.Name as 'Physician Name', Date FROM Appointment NATURAL JOIN Patient NATURAL JOIN Physician NATURAL JOIN Slot,User WHERE Patient_SSN=${patient_id} and  User.EmployeeID=PhysicianID;`;
+        else if(type == 'test')
+            sql_query = `SELECT Test_Name, Result, Date, Age, Gender FROM Test_instance NATURAL JOIN Test NATURAL JOIN Patient WHERE Patient_SSN=${patient_id};`;   
         else{
             res.status(400).send({message: 'Invalid query type'});
             return;
