@@ -23,3 +23,12 @@ INSERT INTO Treatment (TreatmentID, Patient_SSN, Treatment_DescriptionID, SlotID
 INSERT INTO Appointment()
 // query for test of a patient_id
 SELECT   Test_Name as "Test Name",Result,Date,Age,Gender FROM Test_instance NATURAL JOIN Test NATURAL JOIN Patient WHERE Patient_SSN=${patient_id};
+// query for getting available room numbers
+SELECT RoomID FROM Room WHERE RoomID NOT IN (SELECT RoomID FROM Room WHERE Unavailable=true);
+// Admitting a patient
+UPDATE Room SET Unavailable=true WHERE RoomID=${RoomID};
+INSERT INTO Stay(Patient_SSN,RoomID,Start,End) VALUES(${Patient_SSN},${Room_id},${Start},NULL);
+//Discharging a patient 
+UPDATE Stay SET End=${End} WHERE Patient_SSN=${Patient_SSN} and End is NULL
+
+
