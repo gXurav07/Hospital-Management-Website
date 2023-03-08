@@ -53,6 +53,39 @@ function Appointment(props) {
         }
     }, [docId, patientId, date]);
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log("Submit clicked:", ['docId:', docId, 'patientId:', patientId, 'date:', date, 'slotId:', slotId]);
+        if (docId !== '' && patientId !== '' && date !== '' && slotId !== '') {
+            // post to db
+            fetch('http://'+server_addr+'/front-desk/appointment/slots', {
+                method: 'POST',
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    docID: docId,
+                    patientSSN: patientId,
+                    date: date,
+                    slotID: slotId
+                })
+            })
+            .then(res => {
+                return res.json();
+            })
+            .then(data => {
+                console.log("Appointment data: ", data);
+                if(data['message']=='OK') {
+                    alert("Appointment created successfully");
+                }
+                else {
+                    alert("Appointment creation failed");
+                }
+            });
+        }
+        else {
+            alert("Please fill all the fields");
+        }
+    }
+
     const patientColumns = [
         {
             Header: 'Patient SSN',
@@ -113,19 +146,19 @@ function Appointment(props) {
     const slotColumns = [
         {
             Header: 'Slot ID',
-            accessor: 'id',
+            accessor: 'SlotID',
             Cell: ({ cell: { value } }) => value || "-",
             Filter: SelectColumnFilter,
         },
         {
             Header: 'Start time',
-            accessor: 'start',
+            accessor: 'Start',
             Cell: ({ cell: { value } }) => value || "-",
             Filter: SelectColumnFilter,
         },
         {
             Header: 'End time',
-            accessor: 'end',
+            accessor: 'End',
             Cell: ({ cell: { value } }) => value || "-",
             Filter: SelectColumnFilter,
         }
@@ -148,21 +181,20 @@ function Appointment(props) {
                         <hr/>
                         <Row className='align-items-center'>
                             <Col sm={{offset: 2, size: 3}} className="justify-content-end"><Label for="app_date"> Select Date: </Label></Col>
-                            <Col sm={4}><Input type="date" id="app_date" sm="8" onChange={(e) => setDate(e.target.value)}></Input></Col>
+                            <Col sm={4}><Input type="date" id="app_date" sm="8" value={date} onChange={(e) => setDate(e.target.value)}></Input></Col>
                         </Row>
                         {
                             showSlots && (
                             <>
                                 <br/>
                                 <hr/>
-                                <Col sm={{offset: 3, size: 6}}> Select{(slotId!=='')?"ed":""} Slot ID: {patientId}</Col>
-                                {(slots.length > 0) ? <TableContainer columns={slotColumns} data={slots} selectedRow={slotId} setSelectedRow={setSlotId} TableName="Slots" identifierColumn={'id'} requiredValue='id'/> : <><p>Sorry! No matching slots found.</p><br/></>}
+                                <Col sm={{offset: 3, size: 6}}> Select{(slotId!=='')?"ed":""} Slot ID: {slotId}</Col>
+                                {(slots.length > 0) ? <TableContainer columns={slotColumns} data={slots} controlled={true} selectedRow={slotId} setSelectedRow={setSlotId} TableName="Slots" identifierColumn={'SlotID'} requiredValue='SlotID'/> : <><p>Sorry! No matching slots found.</p><br/></>}
                                 <br/>
-                                <button type='submit' className='but_'>Schedule</button>
+                                {(slotId !== '') ? <button type='submit' className='but_' onClick={(e) => handleSubmit(e)}>Schedule</button> : ''}
                             </>
                             )
                         }
-                        
                     </div>
                 </form>
             </header>
