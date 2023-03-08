@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Table from './Table';
-import jsonData from './db.json';
+import jsonData from './prescribe_list.json';
 
 function Prescribe(props) {
   const server_addr = props.server_addr;
@@ -11,7 +11,7 @@ function Prescribe(props) {
   const [listItems, setListItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState('');
   const [prescription, setPrescription] = useState([]);
-  const [remarks, setRemarks] = useState('');
+  const [remarks, setRemarks] = useState("");
 
   const types = ['Medication', 'Test', 'Treatment'];
   const items = ['item1', 'item2', 'item3'];
@@ -27,54 +27,38 @@ function Prescribe(props) {
   const appendPrescription = (e) => {
     e.preventDefault();
     let list = prescription;
-    list.push({selectedType, selectedItem, remarks});
+    const type = selectedType;
+    const id = selectedItem;
+    list.push({type, id, remarks, did, pid});
     setPrescription(list);
+    // setSelectedType('');
+    console.log("updated prescription ",prescription);
   };
 
   const sendPrescription = (e) => {
     e.preventDefault();
     console.log("Final Prescription", JSON.stringify(prescription));
+    // const sent_prescription = {did, pid, prescription};
+
+    // fetch('http://' + server_addr + '/doctor/' + did + '/prescribes/',{
+    //     method: 'POST',
+    //     headers: {"Content-Type": "application/json"},
+    //     body: JSON.stringify(sent_prescription)
+    // }).then(() => console.log("Added Operator!", sent_prescription) );
     setPrescription([]);
   };
 
   useEffect(() => {
-    fetch('http://' + server_addr + '/doctor/' + did + '/prescribes/')
-      .then(res => {
-        return res.json();
-      })
-      .then(data => {
-        console.log("query result :", data);
-        setListItems(data);
-      });
+    setListItems(jsonData);
+    // fetch('http://' + server_addr + '/doctor/' + did + '/prescribes/')
+    //   .then(res => {
+    //     return res.json();
+    //   })
+    //   .then(data => {
+    //     console.log("query result :", data);
+    //     setListItems(data);
+    //   });
     }, [])
-
-  // useEffect(() => {
-  //   setPatients(jsonData['doctors']);
-  // }, []);
-
-//   useEffect(() => {
-//     console.log("requesting all patient data");
-//     fetch('http://' + server_addr + '/doctor/' + did)
-//       .then(res => {
-//         return res.json();
-//       })
-//       .then(data => {
-//         console.log("doctor's patients", data['data']);
-//         setPatients(data['data']);
-//       });
-//   }, [])
-
-//   const handleQuery = (e, qno) => {
-//     e.preventDefault();
-//     fetch('http://' + server_addr + '/doctor/' + did + '?type=' + qno + '&patient=' + pid)
-//       .then(res => {
-//         return res.json();
-//       })
-//       .then(data => {
-//         console.log("query result", data['data']);
-//         setResult(data['data']);
-//       });
-//   }
 
   function ListItems(props){
     const type = props.type; 
@@ -82,19 +66,19 @@ function Prescribe(props) {
         <div className="doctor_dashboard">
           <div className='form_wrapper'>
             <form>
-              <label>{type}</label>
-              <select value={selectedType} onChange={handleItemChange}>
+              <label>Prescribe a {type}</label>
+              <select value={selectedItem} onChange={handleItemChange}>
                 <option value="">Select {type}</option>
-                {listItems[type].map((type, index) => (
-                <option key={index} value={type}>
-                    {type}
+                {listItems[type].map((item, index) => (
+                <option key={index} value={index}>
+                    {item['name']}
                 </option>
                 ))}
             </select>
             <label>Remarks:</label>
             <input type="text" placeholder="Enter Remarks..." value={remarks} onChange={(e) => setRemarks(e.target.value)} />
             <button onClick={(e) => appendPrescription(e)}>Add to Prescription</button>
-            <button onClick={(e) => sendPrescription(e)}>Prescribe</button>
+            {prescription===[] ? <hr/> : <button onClick={(e) => sendPrescription(e)}>Prescribe</button>}
             </form>
           </div>
         </div>
@@ -119,11 +103,11 @@ function Prescribe(props) {
             </select>
             </form>
           </div>
-          {/* {result ? <Table data={result}/> : console.log('no entry found')} */}
         </div>
         {(selectedType==='Medication' ? <ListItems type="medication"/> : <br></br>)}
         {(selectedType==='Test' ? <ListItems type="test"/> : <br></br>)}
         {(selectedType==='Treatment' ? <ListItems type="treatment"/> : <br></br>)}
+        {prescription ? <Table data={prescription}/> : console.log('no entry found')}
       </header>
     </div >
   );

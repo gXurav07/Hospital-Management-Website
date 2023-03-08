@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Row } from 'reactstrap';
-import Table from './TableContainer';
+import TableContainer from './TableContainer';
 import { SelectColumnFilter } from './Filter';
 import jsonData from './db.json';
 
@@ -107,10 +107,10 @@ function Appointment(props) {
                 <div className="doctor_dashboard">
                     <h1>Schedule an Appointment</h1>
                     <Col sm={{offset: 3, size: 6}}> Select{(pid!=='')?"ed":""} Patient ID: {pid}</Col>
-                    {patients ? <Table columns={patientColumns} data={patients} selectedRow={pid} setSelectedRow={setPid} TableName="Patients"/> : <br />}
+                    {patients ? <TableContainer columns={patientColumns} data={patients} selectedRow={pid} setSelectedRow={setPid} TableName="Patients"/> : <br />}
                     <br/><br/>
                     <Col sm={{offset: 3, size: 6}}> Select{(pid!=='')?"ed":""} Doctor ID: {did}</Col>
-                    {patients ? <Table columns={patientColumns} data={patients} selectedRow={did} setSelectedRow={setDid} TableName="Patients"/> : <br />}
+                    {patients ? <TableContainer columns={patientColumns} data={patients} selectedRow={did} setSelectedRow={setDid} TableName="Patients"/> : <br />}
                     <div className='form_wrapper'>
                         <form>
                             {/* <input type="text" placeholder="Enter Patient ID...." required controlled="true" value={pid} onChange={(e) => setPid(e.target.value)} />
