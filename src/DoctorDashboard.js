@@ -75,12 +75,6 @@ function DoctorDashboard(props) {
         Filter: SelectColumnFilter,
     },
     {
-        Header: 'Status',
-        accessor: 'Status',
-        Cell: ({ cell: { value } }) => value || "-",
-        Filter: SelectColumnFilter
-    },
-    {
       Header: 'Date',
       accessor: 'Date',
       Cell: ({ cell: { value } }) => value || "-",
