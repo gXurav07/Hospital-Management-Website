@@ -193,6 +193,7 @@ tr.selected, tr.selected:hover {
 }
 
 .doctor_dashboard label {
+  color: #683B2B;
   font-size: 30px;
   margin: 0px;
   font-weight: bold;

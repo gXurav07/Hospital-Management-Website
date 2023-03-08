@@ -158,7 +158,7 @@ function Appointment(props) {
                                 <Col sm={{offset: 3, size: 6}}> Select{(slotId!=='')?"ed":""} Slot ID: {patientId}</Col>
                                 {(slots.length > 0) ? <TableContainer columns={slotColumns} data={slots} selectedRow={slotId} setSelectedRow={setSlotId} TableName="Slots"/> : <><p>Sorry! No matching slots found.</p><br/></>}
                                 <br/>
-                                <button className='but_'>Confirm</button>
+                                <button type='submit' className='but_'>Schedule</button>
                             </>
                             )
                         }
