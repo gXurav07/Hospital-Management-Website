@@ -1,0 +1,8 @@
+SELECT  SlotID, Start, End FROM Appointment, Slot 
+WHERE PhysicianID=7 AND Date='2023-03-15' AND SlotID NOT IN (
+(SELECT SlotID FROM Appointment WHERE Date='2023-03-15' and PhysicianID='7') 
+INTERSECT 
+(SELECT Start,End FROM Slot WHERE PhysicianID=7 AND Date='2023-03-15' AND SlotID NOT IN 
+(SELECT SlotID FROM Treatment WHERE Date='2023-03-15' and PhysicianID='7')
+)
+);
