@@ -17,7 +17,7 @@ async function getDoctorByID(req, res){
     let sql_query = '';
 
     if(Object.keys(query).length == 0){
-        sql_query = `SELECT * FROM Patient NATURAL JOIN Appointment WHERE PhysicianID=${id}`;
+        sql_query = `SELECT AppointmentID AS id, Patient_SSN, Patient_Name, Age, Gender, Date, Start, End FROM Patient NATURAL JOIN Appointment NATURAL JOIN Slot WHERE PhysicianID=${id}`;
     }
     else{
         console.log(query);
@@ -31,11 +31,11 @@ async function getDoctorByID(req, res){
             return;
         }
         else if(type == 'treatment')
-            sql_query = 'SELECT Patient_Name as "Patient Name",Desc_Name as "Treatment Name",Physician_Name as "Physician Name",Start as "Start Time",End as "End Time" FROM Treatment_Description NATURAL JOIN Treatment NATURAL JOIN Patient NATURAL JOIN Physician NATURAL JOIN Slot WHERE Patient_SSN='+patient_id+";";
+            sql_query = 'SELECT User.Name as"Physician Name",Desc_Name as "Treatment Name",Date FROM Treatment_Description NATURAL JOIN Treatment NATURAL JOIN Patient NATURAL JOIN Physician NATURAL JOIN Slot,User WHERE User.EmployeeID=PhysicianID and Patient_SSN='+patient_id+";";
         else if(type == 'medication')
-            sql_query = `SELECT Physician_Name as 'Physician Name',Patient_Name as 'Patient Name',Medication_Name as 'Medication Name',Brand as Brand,Date,AppointmentID as 'Appointment ID' FROM Prescribes_Medication NATURAL JOIN Medication NATURAL JOIN Physician NATURAL JOIN Patient WHERE Patient_SSN=${patient_id}`;
+            sql_query = `SELECT User.Name as 'Physician Name', Medication_Name as 'Medication Name',Brand as Brand,Date,AppointmentID as 'Appointment ID' FROM Prescribes_Medication NATURAL JOIN Medication NATURAL JOIN Physician NATURAL JOIN Patient,User WHERE Patient_SSN=${patient_id} and User.EmployeeID=PhysicianID;`
         else if(type == 'appointment')
-            sql_query = `SELECT AppointmentID as 'Appointment ID',Patient_Name as 'Patient Name',Physician_Name as 'Physician Name',Start as 'Start Time',End as 'End Time' FROM Appointment NATURAL JOIN Patient NATURAL JOIN Physician NATURAL JOIN Slot WHERE Patient_SSN=${patient_id} `;
+            sql_query = `SELECT AppointmentID as 'Appointment ID', User.Name as 'Physician Name', Date FROM Appointment NATURAL JOIN Patient NATURAL JOIN Physician NATURAL JOIN Slot,User WHERE Patient_SSN=${patient_id} and  User.EmployeeID=PhysicianID;`
         else{
             res.status(400).send({message: 'Invalid query type'});
             return;
@@ -43,30 +43,58 @@ async function getDoctorByID(req, res){
         
     }
     let result = await executeQuery(sql_query, req);
-    console.log(result);
+    if(result.status!=200){
+        res.status(result.status).send(result);
+        return;
+    }
+
     let rows = result.rows;
-    // format date
+    formatDate(rows);
+    if(Object.keys(query).length == 0){
+        let past_appointments = [], upcoming_appointments = [];
+        const currentTime = new Date();
+        for(let i = 0; i < rows.length; i++){
+            const row = rows[i];
+            const appointmentStart = new Date(row['Date'] + ' ' + row['Start']);
+            const appointmentEnd = new Date(row['Date'] + ' ' + row['End']);
+
+            
+            if(appointmentEnd < currentTime)
+                past_appointments.push(row);
+            else{
+                if(appointmentStart < currentTime)
+                    row['Appointment Status'] = 'On going';
+                else
+                    row['Appointment Status'] = 'Not Started';
+
+                upcoming_appointments.push(row);
+            }
+        }
+        result['past_appointments'] = past_appointments;
+        result['upcoming_appointments'] = upcoming_appointments;
+        result['rows'] = undefined;
+    }
+
+    res.status(200).send(result);
+
+}
+
+function formatDate(rows){
     for (let i = 0; i < rows.length; i++) {
         const row = rows[i];
         for (const key in row) {
             if (row.hasOwnProperty(key)) {
                 const value = row[key];
                 if (value instanceof Date) {
-                    row[key] = formatDate(value);
+                    const date = new Date(value);
+                    const formattedDate = date.toISOString().slice(0, 10);
+                    row[key] = `${formattedDate}`;
                 }   
             }
         }
     }
-    res.status(result.status).send(result);
-
 }
 
-function formatDate(dateTimeStr) {
-    const date = new Date(dateTimeStr);
-    const formattedDate = date.toISOString().slice(0, 10);
-    const formattedTime = date.toTimeString().slice(0, 8);
-    return `${formattedDate} ${formattedTime}`;
-}
 
 
 
