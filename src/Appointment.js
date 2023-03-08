@@ -45,6 +45,7 @@ function Appointment(props) {
                 if(data.hasOwnProperty('slots')) {
                     setSlots(data['slots']);
                     setShowSlots(true);
+                    setSlotId('');
                 }
             });
         }
@@ -80,6 +81,11 @@ function Appointment(props) {
                     alert("Appointment creation failed");
                 }
             });
+            setDate('');
+            setDocId('');
+            setPatientId('');
+            setSlotId('');
+            setShowSlots(false);
         }
         else {
             alert("Please fill all the fields");
@@ -188,8 +194,8 @@ function Appointment(props) {
                             <>
                                 <br/>
                                 <hr/>
-                                <Col sm={{offset: 3, size: 6}}> Select{(slotId!=='')?"ed":""} Slot ID: {patientId}</Col>
-                                {(slots.length > 0) ? <TableContainer columns={slotColumns} data={slots} selectedRow={slotId} setSelectedRow={(row) => setSlotId(row.values['id'])} TableName="Slots" identifierColumn={'id'}/> : <><p>Sorry! No matching slots found.</p><br/></>}
+                                <Col sm={{offset: 3, size: 6}}> Select{(slotId!=='')?"ed":""} Slot ID: {slotId}</Col>
+                                {(slots.length > 0) ? <TableContainer columns={slotColumns} data={slots} selectedRow={slotId} setSelectedRow={(row) => setSlotId(row.values['SlotID'])} TableName="Slots" identifierColumn={'SlotID'}/> : <><p>Sorry! No matching slots found.</p><br/></>}
                                 <br/>
                                 {(slotId !== '') ? <button type='submit' className='but_' onClick={(e) => handleSubmit(e)}>Schedule</button> : ''}
                             </>
