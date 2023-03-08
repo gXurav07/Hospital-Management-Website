@@ -18,7 +18,7 @@ pool.getConnection((err, connection) => {
     connection.release();
 });
 
-function executeQuery(sql_query, req){  
+function executeQuery(sql_query, req, res){  
     return new Promise((resolve, reject) => {
         let status = 200, message = 'OK';
         req.db.getConnection((err, connection) => {
@@ -44,4 +44,3 @@ function executeQuery(sql_query, req){
 }
 
 module.exports = {executeQuery, pool};
-

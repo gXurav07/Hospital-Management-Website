@@ -37,20 +37,18 @@ function discharge_patient(req,res)
     let sql_query=`UPDATE Stay SET End=${date} WHERE PatientID=${patient}`;
     executeQuery(sql_query, req, res);
 }
-
-
-
-async function addPatient(req, res){
+function addPatient(req, res){
     const patient = req.body;
     let sql_query = `INSERT INTO Patient(Patient_SSN, Patient_Name, Address, Age, Gender, Phone, Email, Status, InsuranceID) `+
                     `VALUES (${patient.patient_ssn}, '${patient.patient_name}',  '${patient.address}', ${patient.age}, `+
                     `'${patient.gender}', '${patient.phone}', '${patient.email}', '${patient.status}', ${patient.insuranceid});`
                     
-    let result = await executeQuery(sql_query, req); 
+    executeQuery(sql_query, req, res); // do async
     
-    
-    res.status(result.status).send({message: result.message});
+    // console.log("dd: ", result);
+    // res.status(result.status).send(result.message);
 }
+
 
 
 
