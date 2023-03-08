@@ -5,7 +5,9 @@ import jsonData from './prescribe_list.json';
 function Prescribe(props) {
   const server_addr = props.server_addr;
   const did = props.did;
-  const pid = props.pid;
+  const pssn = props.pid;
+  const appointmentid = props.appointmentid;
+  const date = props.date;
 
   const [selectedType, setSelectedType] = useState('');
   const [listItems, setListItems] = useState([]);
@@ -29,35 +31,35 @@ function Prescribe(props) {
     let list = prescription;
     const type = selectedType;
     const id = selectedItem;
-    list.push({type, id, remarks, did, pid});
+    list.push({type, id, remarks});
     setPrescription(list);
     // setSelectedType('');
     console.log("updated prescription ",prescription);
   };
 
   const sendPrescription = (e) => {
+    const packed_prescription = {prescription, did, pssn, appointmentid, date};
     e.preventDefault();
-    console.log("Final Prescription", JSON.stringify(prescription));
-    // const sent_prescription = {did, pid, prescription};
+    console.log("Final Prescription", packed_prescription);
 
-    // fetch('http://' + server_addr + '/doctor/' + did + '/prescribes/',{
-    //     method: 'POST',
-    //     headers: {"Content-Type": "application/json"},
-    //     body: JSON.stringify(sent_prescription)
-    // }).then(() => console.log("Added Operator!", sent_prescription) );
+    fetch('http://' + server_addr + '/doctor/' + did + '/prescribes/',{
+        method: 'POST',
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(packed_prescription)
+    }).then(() => console.log("Added Prescription!", packed_prescription) );
     setPrescription([]);
   };
 
   useEffect(() => {
-    setListItems(jsonData);
-    // fetch('http://' + server_addr + '/doctor/' + did + '/prescribes/')
-    //   .then(res => {
-    //     return res.json();
-    //   })
-    //   .then(data => {
-    //     console.log("query result :", data);
-    //     setListItems(data);
-    //   });
+    // setListItems(jsonData);
+    fetch('http://' + server_addr + '/doctor/' + did + '/prescribes/')
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        console.log("query result :", data);
+        setListItems(data);
+      });
     }, [])
 
   function ListItems(props){
@@ -70,7 +72,7 @@ function Prescribe(props) {
               <select value={selectedItem} onChange={handleItemChange}>
                 <option value="">Select {type}</option>
                 {listItems[type].map((item, index) => (
-                <option key={index} value={index}>
+                <option key={index} value={item['id']}>
                     {item['name']}
                 </option>
                 ))}

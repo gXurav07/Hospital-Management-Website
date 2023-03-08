@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import TableContainer from './TableContainer';
 import { SelectColumnFilter } from './Filter';
 import { Col, Row } from 'reactstrap';
+import Prescribe from './Prescribe';
 import jsonData from './db.json';
 
 function DoctorDashboard(props) {
@@ -12,6 +13,8 @@ function DoctorDashboard(props) {
   const [result, setResult] = useState([]);
   const [did, setDid] = useState(1);
   const [pid, setPid] = useState();
+  const [appointmentid, setAppointmentid] = useState();
+  const [date, setDate] = useState();
 
   const server_addr = props.server_addr;
 
@@ -45,12 +48,18 @@ function DoctorDashboard(props) {
       });
   }
 
+  const handleTableSelect = (row) => {
+    setPid(row.values['Patient_SSN']);
+    setAppointmentid(row.values['id']);
+    setDate(row.values['Date']);
+  }
+
   const patient_columns = [
     {
       Header: 'Appointment ID',
       accessor: 'id',
       Cell: ({ cell: { value } }) => value || "-",
-      Filter: SelectColumnFilter
+      // Filter: SelectColumnFilter
     },
     {
         Header: 'Patient ID',
@@ -66,13 +75,13 @@ function DoctorDashboard(props) {
         Header: 'Age',
         accessor: 'Age',
         Cell: ({ cell: { value } }) => value || "-",
-        Filter: SelectColumnFilter,
+        // Filter: SelectColumnFilter,
     },
     {
         Header: 'Gender',
         accessor: 'Gender',
         Cell: ({ cell: { value } }) => value || "-",
-        Filter: SelectColumnFilter,
+        // Filter: SelectColumnFilter,
     },
     {
       Header: 'Date',
@@ -91,7 +100,7 @@ function DoctorDashboard(props) {
           {/* {patients ? <Table data={patients} /> : <br />} */}
           <h1>Your Patients' Appointment History</h1>
           <Col sm={{offset: 3, size: 6}}> Select{(pid!=='')?"ed":""} Patient ID: {pid}</Col>
-          {patients ? <TableContainer columns={patient_columns} data={patients} selectedRow={pid} setSelectedRow={setPid} requiredValue="Patient_SSN" identifierColumn="id" TableName="Patients"/> : <br />}
+          {patients ? <TableContainer columns={patient_columns} data={patients} selectedRow={pid} setSelectedRow={handleTableSelect} identifierColumn="id" TableName="Patients"/> : <br />}
 
           <div className='form_wrapper'>
             <form>
@@ -101,10 +110,12 @@ function DoctorDashboard(props) {
                 <button onClick={(e) => handleQuery(e, 'treatment')}>Treatment</button>
                 <button onClick={(e) => handleQuery(e, 'medication')}>Medicine Prescribed</button>
                 <button onClick={(e) => handleQuery(e, 'appointment')}>Appointment History</button>
+                <button onClick={(e) => handleQuery(e, 'test')}>Tes tResult</button>
               </div>
             </form>
             {result ? <Table data={result}/> : console.log('no entry found')}
-            <Link to="prescribe"><button align='center'>Prescribe</button></Link>
+            {pid ? <Prescribe server_addr={server_addr} pid={pid} did={did} appointmentid={appointmentid} date={date}/> : console.log('no patient selected')}
+            {/* <Link to="prescribe"><button align='center'>Prescribe</button></Link> */}
           </div>
           <h1>Future Appointments</h1>
           {upcoming ? <Table data={upcoming}/> : console.log('no entry found')}

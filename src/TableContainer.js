@@ -58,7 +58,7 @@ export default function TableContainer({ columns, data, TableName , selectedRow,
         {rows.map((row, i) => {
           prepareRow(row);
           return (
-            <tr {...row.getRowProps()} onClick={()=> setSelectedRow(row.values[requiredValue])}
+            <tr {...row.getRowProps()} onClick={()=> setSelectedRow(row)}
               className={selectedRow === row.values[identifierColumn]? "selected": ""}>
               {row.cells.map((cell) => {
                 return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
