@@ -165,6 +165,11 @@ td {
 }
 
 tbody tr:hover{
+  background-color: #D49E8D;
+  color: #fff;
+}
+
+tr.selected, tr.selected:hover {
   background-color: #B08401;
   color: #fff;
 }
