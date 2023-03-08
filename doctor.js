@@ -8,7 +8,6 @@ doctorRouter
 .get(getDoctorByID)
  
 
-
 function getDoctorByID(req, res){
     let id = req.params.id;
     let query = req.query;
@@ -23,11 +22,13 @@ function getDoctorByID(req, res){
         let sql_query = '';
 
         if(Object.keys(query).length == 0)
-            sql_query = `SELECT * FROM Patient WHERE PCP=${id}`;
+            sql_query = `SELECT * FROM Patient NATURAL JOIN Appointment WHERE PhysicianID=${id}`;
         else{
             
             const type = query.type;
             const patient_id = query.patient;
+            console.log(type);
+            console.log(patient_id);
 
             if(patient_id == undefined){
                 res.status(400).send('Invalid query');
@@ -36,11 +37,11 @@ function getDoctorByID(req, res){
             }
 
             if(type == 'treatment')
-                sql_query = 'SELECT Patient_Name as Patient Name",Desc_Name as "Treatment Name",Date,Physician_Name as "Physician Name" FROM Treatment_Description NATURAL JOIN Treatment NATURAL JOIN Patient NATURAL JOIN Physician WHERE Patient=${patient_id}';
+                sql_query = 'SELECT Patient_Name as "Patient Name",Desc_Name as "Treatment Name",Physician_Name as "Physician Name",Start as "Start Time",End as "End Time" FROM Treatment_Description NATURAL JOIN Treatment NATURAL JOIN Patient NATURAL JOIN Physician NATURAL JOIN Slot WHERE Patient_SSN='+patient_id;
             else if(type == 'medication')
-                sql_query = `SELECT Physician_Name as 'Physician Name',Patient_Name as 'Patient Name',Medication_Name as 'Medication Name',Brand as Brand,Date,AppointmentID as 'Appointment ID' FROM Prescribes_Medication NATURAL JOIN Medication NATURAL JOIN Physician NATURAL JOIN Patient WHERE Patient=${patient_id}`;
+                sql_query = `SELECT Physician_Name as 'Physician Name',Patient_Name as 'Patient Name',Medication_Name as 'Medication Name',Brand as Brand,Date,AppointmentID as 'Appointment ID' FROM Prescribes_Medication NATURAL JOIN Medication NATURAL JOIN Physician NATURAL JOIN Patient WHERE Patient_SSN=${patient_id}`;
             else if(type == 'appointment')
-                sql_query = `SELECT AppointmentID as 'Appointment ID',Patient_Name as 'Patient Name',Physician_Name as 'Physician Name',Start as 'Start Time',End as 'End Time' FROM Appointment NATURAL JOIN Patient NATURAL JOIN Physician NATURAL JOIN Slot WHERE Patient=${patient_id} `;
+                sql_query = `SELECT AppointmentID as 'Appointment ID',Patient_Name as 'Patient Name',Physician_Name as 'Physician Name',Start as 'Start Time',End as 'End Time' FROM Appointment NATURAL JOIN Patient NATURAL JOIN Physician NATURAL JOIN Slot WHERE Patient_SSN=${patient_id} `;
             else{
                 res.status(400).send('Invalid query type');
                 connection.release();
