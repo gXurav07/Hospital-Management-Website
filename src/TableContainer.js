@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import { useTable, useFilters, useGlobalFilter } from "react-table";
 import { GlobalFilter, DefaultFilterForColumn } from "./Filter";
 
-export default function Table({ columns, data, TableName , selectedRow, setSelectedRow}) {
+export default function TableContainer({ columns, data, TableName , selectedRow, setSelectedRow}) {
   const {
     getTableProps,
     getTableBodyProps,
