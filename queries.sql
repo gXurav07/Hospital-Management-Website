@@ -9,3 +9,13 @@ SELECT SlotID,Start,End FROM Slot WHERE  SlotID NOT IN (SELECT SlotID FROM Appoi
 SELECT User.Name as 'Physician Name',Patient_Name as 'Patient Name',Medication_Name as 'Medication Name',Brand as Brand,Date,AppointmentID as 'Appointment ID' FROM Prescribes_Medication NATURAL JOIN Medication NATURAL JOIN Physician NATURAL JOIN Patient,User WHERE Patient_SSN=${patient_id} and User.EmployeeID=PhysicianID;
 // query for Medication
 SELECT AppointmentID as 'Appointment ID',Patient_Name as 'Patient Name',User.Name as 'Physician Name',Start as 'Start Time',End as 'End Time' FROM Appointment NATURAL JOIN Patient NATURAL JOIN Physician NATURAL JOIN Slot,User WHERE Patient_SSN=${patient_id} and  User.EmployeeID=PhysicianID;
+
+// query for Test 
+INSERT INTO Test_instance (Test_instanceID,  Patient_SSN,PhysicianID,TestID,SlotID,Result,Test_image ) `+
+                    `VALUES (${body.Test_instanceID}, ${body.Patient_SSN}, ${body.PhysicianID}, '${body.TestID}', NULL,NULL,NULL);
+INSERT INTO Test_instance (Test_instanceID, Patient_SSN,PhysicianID,TestID,SlotID,Result,Test_image ) VALUES (1,100000004, 1, 1, NULL,NULL,NULL);                    
+
+// query for Treatment
+INSERT INTO Treatment (TreatmentID, Patient_SSN, Treatment_DescriptionID, SlotID, PhysicianID, Date ) `+
+                    `VALUES (${body.TreatmentID}, ${body.Patient_SSN}, ${body.Treatment_DescriptionID},NULL, ${body.PhysicianID}, NULL);
+INSERT INTO Treatment (TreatmentID, Patient_SSN, Treatment_DescriptionID, SlotID, PhysicianID, Date ) VALUES (7,100000003,3,NULL, 2, NULL);
