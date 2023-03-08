@@ -32,8 +32,12 @@ async function getDoctorsToSchedule(req, res){
 async function getSlots(req, res){
     const req_date=req.query.date;
     const doc_id=req.query.docId;
-    let sql_query = `SELECT * FROM Patient;`;
+    let sql_query = `SELECT SlotID,Start,End FROM Slot WHERE  SlotID NOT IN `+
+                    `(SELECT SlotID FROM Appointment WHERE Date='${req_date}' and PhysicianID='${doc_id}') `+
+                    `AND SlotID NOT IN (SELECT SlotID FROM Treatment WHERE Date='${req_date}' and PhysicianID='${doc_id}');`;
+
     const result = await executeQuery(sql_query, req, res);
+    result['slots'] = result['rows']; result['rows'] = undefined;
     res.status(result.status).send(result);
 }
 
