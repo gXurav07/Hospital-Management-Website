@@ -11,11 +11,15 @@ SELECT User.Name as 'Physician Name',Patient_Name as 'Patient Name',Medication_N
 SELECT AppointmentID as 'Appointment ID',Patient_Name as 'Patient Name',User.Name as 'Physician Name',Start as 'Start Time',End as 'End Time' FROM Appointment NATURAL JOIN Patient NATURAL JOIN Physician NATURAL JOIN Slot,User WHERE Patient_SSN=${patient_id} and  User.EmployeeID=PhysicianID;
 
 // query for Test 
-INSERT INTO Test_instance (Test_instanceID,  Patient_SSN,PhysicianID,TestID,SlotID,Result,Test_image ) `+
-                    `VALUES (${body.Test_instanceID}, ${body.Patient_SSN}, ${body.PhysicianID}, '${body.TestID}', NULL,NULL,NULL);
-INSERT INTO Test_instance (Test_instanceID, Patient_SSN,PhysicianID,TestID,SlotID,Result,Test_image ) VALUES (1,100000004, 1, 1, NULL,NULL,NULL);                    
+INSERT INTO Test_instance (Test_instanceID,  Patient_SSN,PhysicianID,TestID,SlotID,Result,Test_image,Date ) `+
+                    `VALUES (${body.Test_instanceID}, ${body.Patient_SSN}, ${body.PhysicianID}, '${body.TestID}', NULL,NULL,NULL,NULL);
+INSERT INTO Test_instance (Test_instanceID, Patient_SSN,PhysicianID,TestID,SlotID,Result,Test_image,Date ) VALUES (1,100000004, 1, 1, NULL,NULL,NULL,NULL);                    
 
 // query for Treatment
 INSERT INTO Treatment (TreatmentID, Patient_SSN, Treatment_DescriptionID, SlotID, PhysicianID, Date ) `+
                     `VALUES (${body.TreatmentID}, ${body.Patient_SSN}, ${body.Treatment_DescriptionID},NULL, ${body.PhysicianID}, NULL);
 INSERT INTO Treatment (TreatmentID, Patient_SSN, Treatment_DescriptionID, SlotID, PhysicianID, Date ) VALUES (7,100000003,3,NULL, 2, NULL);
+// query for Appointment
+INSERT INTO Appointment()
+// query for test of a patient_id
+SELECT   Test_Name,Result,Date,Age,Gender FROM Test_instance NATURAL JOIN Test NATURAL JOIN Patient WHERE Patient_SSN=${patient_id};
