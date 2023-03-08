@@ -172,11 +172,11 @@ function Appointment(props) {
                         <h1>Schedule an Appointment</h1>
                         <hr/>
                         <Col sm={{offset: 3, size: 6}}> Select{(patientId!=='')?"ed":""} Patient ID: {patientId}</Col>
-                        {(patients.length >0) ? <TableContainer columns={patientColumns} data={patients} selectedRow={patientId} setSelectedRow={setPatientId} TableName="Patients" identifierColumn={'id'} requiredValue='id'/> : <><p>Sorry! Unable to fetch Patient data from server.</p><br/></>}
+                        {(patients.length >0) ? <TableContainer columns={patientColumns} data={patients} selectedRow={patientId} setSelectedRow={(row) => setPatientId(row.values['id'])} TableName="Patients" identifierColumn={'id'}/> : <><p>Sorry! Unable to fetch Patient data from server.</p><br/></>}
                         <br/>
                         <hr/>
                         <Col sm={{offset: 3, size: 6}}> Select{(patientId!=='')?"ed":""} Doctor ID: {docId}</Col>
-                        {(doctors.length > 0) ? <TableContainer columns={doctorColumns} data={doctors} selectedRow={docId} setSelectedRow={setDocId} TableName="Doctors" identifierColumn={'id'} requiredValue='id'/> : <><p>Sorry! Unable to fetch Doctor data from server.</p><br/></>}
+                        {(doctors.length > 0) ? <TableContainer columns={doctorColumns} data={doctors} selectedRow={docId} setSelectedRow={(row) => setDocId(row.values['id'])} TableName="Doctors" identifierColumn={'id'}/> : <><p>Sorry! Unable to fetch Doctor data from server.</p><br/></>}
                         <br/>
                         <hr/>
                         <Row className='align-items-center'>
@@ -188,8 +188,8 @@ function Appointment(props) {
                             <>
                                 <br/>
                                 <hr/>
-                                <Col sm={{offset: 3, size: 6}}> Select{(slotId!=='')?"ed":""} Slot ID: {slotId}</Col>
-                                {(slots.length > 0) ? <TableContainer columns={slotColumns} data={slots} controlled={true} selectedRow={slotId} setSelectedRow={setSlotId} TableName="Slots" identifierColumn={'SlotID'} requiredValue='SlotID'/> : <><p>Sorry! No matching slots found.</p><br/></>}
+                                <Col sm={{offset: 3, size: 6}}> Select{(slotId!=='')?"ed":""} Slot ID: {patientId}</Col>
+                                {(slots.length > 0) ? <TableContainer columns={slotColumns} data={slots} selectedRow={slotId} setSelectedRow={(row) => setSlotId(row.values['id'])} TableName="Slots" identifierColumn={'id'}/> : <><p>Sorry! No matching slots found.</p><br/></>}
                                 <br/>
                                 {(slotId !== '') ? <button type='submit' className='but_' onClick={(e) => handleSubmit(e)}>Schedule</button> : ''}
                             </>
