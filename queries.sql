@@ -22,4 +22,4 @@ INSERT INTO Treatment (TreatmentID, Patient_SSN, Treatment_DescriptionID, SlotID
 // query for Appointment
 INSERT INTO Appointment()
 // query for test of a patient_id
-SELECT   Test_Name,Result,Date,Age,Gender FROM Test_instance NATURAL JOIN Test NATURAL JOIN Patient WHERE Patient_SSN=${patient_id};
+SELECT   Test_Name as "Test Name",Result,Date,Age,Gender FROM Test_instance NATURAL JOIN Test NATURAL JOIN Patient WHERE Patient_SSN=${patient_id};
