@@ -44,15 +44,28 @@ async function addPrescribes(req, res){
     const body = req.body;
     const type = body.type;
 
-    if(type == undefined || id == undefined || remarks == undefined){
+    if(type == undefined){
         res.status(400).send({message: 'Invalid request'}); return;
     }
 
     let sql_query = '';
     if(type == 'Medication'){
-        sql_query = `INSERT INTO Prescribes_Medication (PhysicianID, Patient_SSN, MedicationID, Date, AppointmentID, Dose ) `+
+        sql_query = `INSERT INTO Prescribes_Medication (PhysicianID, Patient_SSN, MedicationID, Date, AppointmentID, Dose) `+
+                    `VALUES ('${body.PhysicianID}', ${body.Patient_SSN}, ${body.MedicationID}, '${body.Date}', ${body.AppointmentID}, '${body.Dose}');`;
+    }
+    else if(type == 'Test'){
+        sql_query = `INSERT INTO Test_Instance (Test_InstanceID, , Patient_SSN, MedicationID, Date, AppointmentID, Dose ) `+
                     `VALUES (${body.PhysicianID}, ${body.Patient_SSN}, ${body.MedicationID}, '${body.Date}', ${body.AppointmentID}, ${body.Dose});`;
     }
+    // else if(type == 'Treatment'){
+    //     sql_query = `INSERT INTO Prescribes_Medication (PhysicianID, Patient_SSN, MedicationID, Date, AppointmentID, Dose ) `+
+    //                 `VALUES (${body.PhysicianID}, ${body.Patient_SSN}, ${body.MedicationID}, '${body.Date}', ${body.AppointmentID}, ${body.Dose});`;
+    // }
+
+    let result = await executeQuery(sql_query, req);
+    console.log(sql_query);
+    console.log(result);
+    res.status(result.status).send(result);
 }
 
 
