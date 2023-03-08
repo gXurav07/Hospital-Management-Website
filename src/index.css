@@ -164,6 +164,11 @@ td {
   border-bottom: 1px solid #ddd;
 }
 
+tbody tr:hover{
+  background-color: #B08401;
+  color: #fff;
+}
+
 .doctor_dashboard .form_wrapper {
   color: #683B2B;
   width: 75rem;
