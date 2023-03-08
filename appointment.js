@@ -1,6 +1,6 @@
 const express = require('express');
 const appointmentRouter = express.Router();
-const {executeQuery} = require('./helper');
+const {executeQuery} = require('./db');
 
 appointmentRouter
 .route('/')

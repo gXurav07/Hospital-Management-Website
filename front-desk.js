@@ -2,6 +2,7 @@ const express = require('express');
 const frontDeskRouter = express.Router();
 
 const appointmentRouter = require('./appointment');
+const { executeQuery } = require('./db');
 
 
 frontDeskRouter
@@ -49,32 +50,6 @@ function addPatient(req, res){
 }
 
 
-function executeQuery(sql_query, req, res){  
-    let status = 200, message = 'OK', data = null;
-    req.db.getConnection((err, connection) => {
-        if (err) {
-            console.error('Error connecting to MySQL database: ', err);
-            status = 500;
-            message = 'Internal Server Error';
-            res.status(status).send({message});
-            return;
-        }
-        
-        connection.query(sql_query, (err, rows, fields) => {
-            if(err){
-                status= 500;
-                message = 'Internal Server Error';
-                console.log(err);
-            }
-           data = {...rows};
-           res.status(status).send({message});
-           console.log({status, message});
-        });
-
-        connection.release();
-        //return {status: status, message: message, data: data};
-    });
-}
 
 
 frontDeskRouter.use('/appointment', appointmentRouter);
