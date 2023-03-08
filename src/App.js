@@ -22,7 +22,7 @@ import AdmitPatient from "./AdmitPatient";
 import useToken, { checkAuth } from "./useToken";
 
 function App() {
-  const server_addr = "127.0.0.1:3000"//"10.147.225.114:3000";
+  const server_addr = "10.147.235.193:3000"//"10.147.225.114:3000";
   const { token, setToken } = useToken();
   return (
     <BrowserRouter>

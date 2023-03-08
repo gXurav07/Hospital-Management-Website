@@ -167,7 +167,7 @@ tr.selected, tr.selected:hover {
 }
 
 .doctor_dashboard .form_wrapper {
-  width: 1000px;
+  max-width: 150rem;
   margin: 50px auto;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

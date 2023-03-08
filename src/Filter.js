@@ -15,7 +15,7 @@ export function GlobalFilter({ globalFilter, setGlobalFilter, TableName }) {
       <Col sm={3}> 
         <Label for="GlobalFilter"> Search {TableName || ""}: </Label>
       </Col>
-      <Col sm={9}>
+      <Col sm={6}>
         <Input
           value={value || ""}
           onChange={(e) => {
@@ -51,7 +51,7 @@ export function DefaultFilterForColumn({
         setFilter(e.target.value || undefined);
       }}
       placeholder={`Search ${length} records...`}
-      style={{ marginTop: "0.5rem", maxWidth: "12rem" }}
+      style={{ margin: "0.5rem 0", maxWidth: "13rem" }}
     />
   );
 }
