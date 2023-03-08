@@ -35,8 +35,8 @@ function executeQuery(sql_query, req){
                     status= 400; message = 'SQL query error';
                     console.log(err);
                 }
-                resolve({status, message, rows});
                 connection.release();
+                resolve({status, message, rows});
             });
             
         });

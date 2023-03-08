@@ -20,12 +20,13 @@ async function getDoctorByID(req, res){
         sql_query = `SELECT * FROM Patient NATURAL JOIN Appointment WHERE PhysicianID=${id}`;
     }
     else{
+        console.log(query);
         const type = query.type;
         const patient_id = query.patient;
         console.log(type);
         console.log(patient_id);
 
-        if(patient_id == undefined){
+        if(patient_id == undefined || type == undefined){
             res.status(400).send({message: 'Invalid query'});
             return;
         }
@@ -42,6 +43,7 @@ async function getDoctorByID(req, res){
         
     }
     let result = await executeQuery(sql_query, req);
+    console.log(result);
     let rows = result.rows;
     // format date
     for (let i = 0; i < rows.length; i++) {
@@ -64,7 +66,7 @@ function formatDate(dateTimeStr) {
     const formattedDate = date.toISOString().slice(0, 10);
     const formattedTime = date.toTimeString().slice(0, 8);
     return `${formattedDate} ${formattedTime}`;
-  }
+}
 
 
 

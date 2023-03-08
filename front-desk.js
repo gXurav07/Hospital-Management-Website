@@ -43,10 +43,7 @@ function addPatient(req, res){
                     `VALUES (${patient.patient_ssn}, '${patient.patient_name}',  '${patient.address}', ${patient.age}, `+
                     `'${patient.gender}', '${patient.phone}', '${patient.email}', '${patient.status}', ${patient.insuranceid});`
                     
-    executeQuery(sql_query, req, res); // do async
-    
-    // console.log("dd: ", result);
-    // res.status(result.status).send(result.message);
+    executeQuery(sql_query, req, res); 
 }
 
 
