@@ -41,7 +41,8 @@ async function getMedTestTreatment(req, res){
 
 async function addPrescribes(req, res){
     console.log(req.body);
-    const type = req.body.type, id = req.body.id, remarks = req.body.remarks;
+    const body = req.body;
+    const type = body.type;
 
     if(type == undefined || id == undefined || remarks == undefined){
         res.status(400).send({message: 'Invalid request'}); return;
@@ -49,7 +50,8 @@ async function addPrescribes(req, res){
 
     let sql_query = '';
     if(type == 'Medication'){
-        sql_query = `INSERT INTO Prescribes_Medication (MedicationID, Remarks) VALUES (${id}, '${remarks}');`;
+        sql_query = `INSERT INTO Prescribes_Medication (PhysicianID, Patient_SSN, MedicationID, Date, AppointmentID, Dose ) `+
+                    `VALUES (${body.PhysicianID}, ${body.Patient_SSN}, ${body.MedicationID}, '${body.Date}', ${body.AppointmentID}, ${body.Dose});`;
     }
 }
 
