@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Login from "./Login";
 import AdminDashboard from "./AdminDashboard";
 import DoctorDashboard from "./DoctorDashboard";
+import Prescribe from "./Prescribe";
 import ManageDocs from "./ManageDocs";
 import ManageOps from "./ManageOps";
 import ManageDocsD from "./ManageDocsD";
@@ -22,12 +23,12 @@ import AdmitPatient from "./AdmitPatient";
 import useToken, { checkAuth } from "./useToken";
 
 function App() {
-  const server_addr = "10.147.235.193:3000"//"10.147.225.114:3000";
+  const server_addr = "10.147.225.114:3000";
   const { token, setToken } = useToken();
   return (
     <BrowserRouter>
         <Routes>
-            {/* <Route index element={<Home />} /> */}
+            {/* Primary Routes */}
             <Route path="user1" element={<FDOps server_addr={server_addr}/>} />
             <Route path="user1" element={<Login name="Front End Operator"  type={1} server_addr={server_addr}/>} />
             <Route path="user2" element={<DEOps server_addr={server_addr}/>} />
@@ -39,6 +40,7 @@ function App() {
             <Route exact path="user4" element={<AdminDashboard type={4} server_addr={server_addr}/>} />
 
             {/* Secondary Routes */}
+            <Route exact path="user3/prescribe" element={<Prescribe server_addr={server_addr}/>} />
             <Route exact path="user4/managedocs" element={<ManageDocs server_addr={server_addr}/>} render={()=>console.log('checking...')} />
 
             <Route path="user4/managedocsd" element={<ManageDocsD server_addr={server_addr}/>} />
@@ -50,9 +52,6 @@ function App() {
             <Route path="user1/appointment" element={<Appointment server_addr={server_addr}/>} />
             <Route path="user2/appointment" element={<Appointment server_addr={server_addr}/>} />
             <Route path="user2/implementprescription" element={<ImplementPrescription server_addr={server_addr}/>} />
-            {/* <Route path="user1/admitpatient" element={<AdmitPatient server_addr={server_addr}/>} /> */}
-            {/* <Route path="user1/dischargepatient" element={<DischargePatient server_addr={server_addr}/>} /> */}
-            {/* <Route path="user1/appointment" element={<Appointment server_addr={server_addr}/>} /> */}
 
           {/* <Route path="*" element={<NoPage />} /> */}
           <Route path="/" element={<Home server_addr={server_addr}/>}>
@@ -61,5 +60,4 @@ function App() {
     </BrowserRouter>
   );
 }
-
 export default App;
