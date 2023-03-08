@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import { useTable, useFilters, useGlobalFilter } from "react-table";
 import { GlobalFilter, DefaultFilterForColumn } from "./Filter";
 
-export default function TableContainer({ columns, data, TableName , selectedRow, setSelectedRow}) {
+export default function TableContainer({ columns, data, TableName , selectedRow, setSelectedRow, identifierColumn, requiredValue }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -58,8 +58,8 @@ export default function TableContainer({ columns, data, TableName , selectedRow,
         {rows.map((row, i) => {
           prepareRow(row);
           return (
-            <tr {...row.getRowProps()} onClick={()=> setSelectedRow(row.values["id"])}
-              className={selectedRow === row.values["id"]? "selected": ""}>
+            <tr {...row.getRowProps()} onClick={()=> setSelectedRow(row.values[requiredValue])}
+              className={selectedRow === row.values[identifierColumn]? "selected": ""}>
               {row.cells.map((cell) => {
                 return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
               })}

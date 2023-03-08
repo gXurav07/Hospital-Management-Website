@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import Table from './Table';
+import { Link } from "react-router-dom";
+import TableContainer from './TableContainer';
+import { SelectColumnFilter } from './Filter';
+import { Col, Row } from 'reactstrap';
 import jsonData from './db.json';
 
 function DoctorDashboard(props) {
   const [patients, setPatients] = useState();
+  const [upcoming, setUpcoming] = useState();
   const [result, setResult] = useState([]);
-  const [did, setDid] = useState(2);
+  const [did, setDid] = useState(1);
   const [pid, setPid] = useState();
 
   const server_addr = props.server_addr;
 
   // useEffect(() => {
   //   setPatients(jsonData['doctors']);
+  //   setUpcoming(jsonData['doctors']);
   // }, []);
 
   useEffect(() => {
@@ -21,8 +27,9 @@ function DoctorDashboard(props) {
         return res.json();
       })
       .then(data => {
-        console.log("doctor's patients", data['data']);
-        setPatients(data['data']);
+        console.log("doctor's patients", data['past_appointments']);
+        setPatients(data['past_appointments']);
+        setUpcoming(data['upcoming_appointments']);
       });
   }, [])
 
@@ -33,20 +40,62 @@ function DoctorDashboard(props) {
         return res.json();
       })
       .then(data => {
-        console.log("query result", data['data']);
-        setResult(data['data']);
+        console.log("query result", data['rows']);
+        setResult(data['rows']);
       });
   }
+
+  const patient_columns = [
+    {
+      Header: 'Appointment ID',
+      accessor: 'id',
+      Cell: ({ cell: { value } }) => value || "-",
+      Filter: SelectColumnFilter
+    },
+    {
+        Header: 'Patient ID',
+        accessor: 'Patient_SSN',
+        Cell: ({ cell: { value } }) => value || "-",
+    },
+    {
+        Header: 'Name',
+        accessor: 'Patient_Name',
+        Cell: ({ cell: { value } }) => value || "-",
+    },
+    {
+        Header: 'Age',
+        accessor: 'Age',
+        Cell: ({ cell: { value } }) => value || "-",
+        Filter: SelectColumnFilter,
+    },
+    {
+        Header: 'Gender',
+        accessor: 'Gender',
+        Cell: ({ cell: { value } }) => value || "-",
+        Filter: SelectColumnFilter,
+    },
+    {
+      Header: 'Date',
+      accessor: 'Date',
+      Cell: ({ cell: { value } }) => value || "-",
+      // Filter: SelectColumnFilter
+  }
+];
 
   return (
     <div className="App">
       <header className="App-header">
         <div className="doctor_dashboard">
+
           <h1>Doctor Dashboard</h1>
-          {patients ? <Table data={patients} /> : <br />}
+          {/* {patients ? <Table data={patients} /> : <br />} */}
+          <h1>Your Patients' Appointment History</h1>
+          <Col sm={{offset: 3, size: 6}}> Select{(pid!=='')?"ed":""} Patient ID: {pid}</Col>
+          {patients ? <TableContainer columns={patient_columns} data={patients} selectedRow={pid} setSelectedRow={setPid} requiredValue="Patient_SSN" identifierColumn="id" TableName="Patients"/> : <br />}
+
           <div className='form_wrapper'>
             <form>
-              <label>Get Details:</label>
+              <label>Get Patient Details:</label>
               <input type="text" placeholder="Enter Patient ID...." required value={pid} onChange={(e) => setPid(e.target.value)} />
               <div className='button_row'>
                 <button onClick={(e) => handleQuery(e, 'treatment')}>Treatment</button>
@@ -54,8 +103,11 @@ function DoctorDashboard(props) {
                 <button onClick={(e) => handleQuery(e, 'appointment')}>Appointment History</button>
               </div>
             </form>
+            {result ? <Table data={result}/> : console.log('no entry found')}
+            <Link to="prescribe"><button align='center'>Prescribe</button></Link>
           </div>
-          {result ? <Table data={result}/> : console.log('no entry found')}
+          <h1>Future Appointments</h1>
+          {upcoming ? <Table data={upcoming}/> : console.log('no entry found')}
         </div>
       </header>
     </div >
