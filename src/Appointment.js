@@ -35,7 +35,6 @@ function Appointment(props) {
     useEffect(() => {
         console.log(['docId:', docId, 'patientId:', patientId, 'date:', date]);
         if (docId !== '' && patientId !== '' && date !== '') {
-            setShowSlots(true);
             // get slots matching docId from db
             fetch('http://'+server_addr+'/front-desk/appointment/slots?docId='+docId+'&date='+date)
             .then(res => {
@@ -43,7 +42,10 @@ function Appointment(props) {
             })
             .then(data => {
                 console.log("Slot data: ", data);
-                setSlots(data['slots']);
+                if(data.hasOwnProperty('slots')) {
+                    setSlots(data['slots']);
+                    setShowSlots(true);
+                }
             });
         }
         else {
@@ -129,30 +131,7 @@ function Appointment(props) {
         }
     ];
 
-    // useEffect(() => {
-    //     fetch('http://' + server_addr + '/doctor/' + docId)
-    //         .then(res => {
-    //             return res.json();
-    //         })
-    //         .then(data => {
-    //             console.log("doctor's patients", data['Patients']);
-    //             setPatients(data['Patients']);
-    //         });
-    // }, [])
-
-    // const handleQuery = (e, qno) => {
-    //     e.preventDefault();
-    //     fetch('http://' + server_addr + '/doctor/' + docId + '?query=' + qno + '&patient=' + patientId)
-    //         .then(res => {
-    //             return res.json();
-    //         })
-    //         .then(data => {
-    //             console.log("query result", data);
-    //             setResult(data);
-    //         });
-    // }
-
-    return (
+    return ( 
         <div className="App">
             <header className="App-header">
                 <form className="doctor_dashboard">
@@ -160,13 +139,11 @@ function Appointment(props) {
                         <h1>Schedule an Appointment</h1>
                         <hr/>
                         <Col sm={{offset: 3, size: 6}}> Select{(patientId!=='')?"ed":""} Patient ID: {patientId}</Col>
-                        {(patients) ? <TableContainer columns={patientColumns} data={patients} selectedRow={patientId} setSelectedRow={setPatientId} TableName="Patients"/> : <><p>Sorry! Unable to fetch Patient data from server.</p><br/></>}
+                        {(patients.length >0) ? <TableContainer columns={patientColumns} data={patients} selectedRow={patientId} setSelectedRow={setPatientId} TableName="Patients"/> : <><p>Sorry! Unable to fetch Patient data from server.</p><br/></>}
                         <br/>
                         <hr/>
                         <Col sm={{offset: 3, size: 6}}> Select{(patientId!=='')?"ed":""} Doctor ID: {docId}</Col>
                         {(doctors.length > 0) ? <TableContainer columns={doctorColumns} data={doctors} selectedRow={docId} setSelectedRow={setDocId} TableName="Doctors"/> : <><p>Sorry! Unable to fetch Doctor data from server.</p><br/></>}
-                        {/* <input type="text" placeholder="Enter Patient ID...." required controlled="true" value={patientId} onChange={(e) => setPatientId(e.target.value)} />
-                        <input type="text" placeholder="Enter Doctor ID...." required value={docId} onChange={(e) => setDocId(e.target.value)} /> */}
                         <br/>
                         <hr/>
                         <Row className='align-items-center'>
