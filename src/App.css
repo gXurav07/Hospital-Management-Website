@@ -21,7 +21,7 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  /* color: white; */
   background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
   background: #FAF6F2;
 }
