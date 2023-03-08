@@ -8,7 +8,8 @@ appointmentRouter
 
 appointmentRouter
 .route('/slots')
-.get(getSlots);
+.get(getSlots)
+.post(addAppointment);
 
 async function getDoctorsToSchedule(req, res){
     
@@ -38,6 +39,13 @@ async function getSlots(req, res){
 
     const result = await executeQuery(sql_query, req, res);
     result['slots'] = result['rows']; result['rows'] = undefined;
+    res.status(result.status).send(result);
+}
+
+async function addAppointment(req, res){
+    const {date, slotID, docID, patientSSN} = req.body;
+    let sql_query = `INSERT INTO Appointment (Date, SlotID, PhysicianID, Patient_SSN) VALUES ('${date}', ${slotID}, '${docID}', ${patientSSN});`;
+    const result = await executeQuery(sql_query, req, res);
     res.status(result.status).send(result);
 }
 
