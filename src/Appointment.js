@@ -174,9 +174,9 @@ function Appointment(props) {
         <div className="App">
             <header className="App-header">
                 <form className="doctor_dashboard">
-                    <div className='form_wrapper'> 
                         <h1>Schedule an Appointment</h1>
                         <hr/>
+                    <div className='form_wrapper'> 
                         <Col sm={{offset: 3, size: 6}}> Select{(patientId!=='')?"ed":""} Patient ID: {patientId}</Col>
                         {(patients.length >0) ? <TableContainer columns={patientColumns} data={patients} selectedRow={patientId} setSelectedRow={(row) => setPatientId(row.values['id'])} TableName="Patients" identifierColumn={'id'}/> : <><p>Sorry! Unable to fetch Patient data from server.</p><br/></>}
                         <br/>

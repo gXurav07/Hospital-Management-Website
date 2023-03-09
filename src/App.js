@@ -15,9 +15,9 @@ import FDOps from "./FDOps";
 import DEOps from "./DEOps";
 import AddPatient from "./AddPatient";
 import ScheduleTest from "./ScheduleTest";
-// import ScheduleTreatment from "./ScheduleTreatment";
-// import TestResult from "./TestResult";
-// import TreatmentResult from "./TreatmentResult";
+import ScheduleTreatment from "./ScheduleTreatment";
+import TestResult from "./TestResult";
+import TreatmentResult from "./TreatmentResult";
 import DischargePatient from "./DischargePatient";
 import Appointment from "./Appointment";
 import AdmitPatient from "./AdmitPatient";
@@ -51,10 +51,10 @@ function App() {
             <Route path="user1/admitpatient" element={<AdmitPatient server_addr={server_addr}/>} />
             <Route path="user1/dischargepatient" element={<DischargePatient server_addr={server_addr}/>} />
             <Route path="user1/appointment" element={<Appointment server_addr={server_addr}/>} />
-            <Route path="user1/scheduleTest" element={<ScheduleTest server_addr={server_addr}/>} />
-            {/* <Route path="user2/scheduleTreatment" element={<ScheduleTreatment server_addr={server_addr}/>} />
+            <Route path="user2/scheduleTest" element={<ScheduleTest server_addr={server_addr}/>} />
+            <Route path="user2/scheduleTreatment" element={<ScheduleTreatment server_addr={server_addr}/>} />
             <Route path="user2/testResult" element={<TestResult server_addr={server_addr}/>} />
-            <Route path="user2/treatmentResult" element={<TreatmentResult server_addr={server_addr}/>} /> */}
+            <Route path="user2/treatmentResult" element={<TreatmentResult server_addr={server_addr}/>} />
             {/* <Route path="user2/appointment" element={<Appointment server_addr={server_addr}/>} /> */}
             {/* <Route path="user1/admitpatient" element={<AdmitPatient server_addr={server_addr}/>} /> */}
             {/* <Route path="user1/dischargepatient" element={<DischargePatient server_addr={server_addr}/>} /> */}

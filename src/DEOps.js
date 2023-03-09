@@ -11,8 +11,8 @@ function DEOps() {
                     <br />
                 </div>
                 <div className="container_home">
-                    <Link to="sheduleTest" className="box"><button>Schedule Tests</button></Link>
-                    <Link to="sheduleTreatment" className="box"><button>Schedule Treatments</button></Link>
+                    <Link to="scheduleTest" className="box"><button>Schedule Tests</button></Link>
+                    <Link to="scheduleTreatment" className="box"><button>Schedule Treatments</button></Link>
                     <Link to="testResult" className="box"><button>Test Results</button></Link>
                     <Link to="treatmentResult" className="box"><button>Treatment Results</button></Link>
                 </div>

@@ -13,7 +13,7 @@ function ScheduleTest(props) {
 
     useEffect(() => {
         // get all pending tests from db
-        fetch('http://'+server_addr+'/front-desk/test', {
+        fetch('http://'+server_addr+'/front-desk/schedule-test', {
             method: 'GET',
             headers: {"Content-Type": "application/json"}
         })
@@ -77,18 +77,18 @@ function ScheduleTest(props) {
         <div className='App'>
             <header className='App-header'>
                 <form className='doctor-dashboard'>
-                    <div className='form_wrapper'>
                         <h1>Schedule Test</h1>
                         <hr/>
+                    <div className='form_wrapper'>
                         <Col sm={{offset: 3, size: 6}}> Select{(testId!=='') ? 'ed' : ''} {testId} </Col>
-                        {(tests.length > 0) ? <TableContainer columns={testColumns} data={tests} setTestId={setTestId} /> : <div>No tests to schedule</div> }
+                        {(tests.length > 0) ? <TableContainer columns={testColumns} data={tests} selectedRow={testId} setSelectedRow={(row) => setTestId(row.values['id'])} identifierColumn={'id'}/> : <div>No tests to schedule</div> }
                         {
                             showSlots && (
                                 <>
                                     <br/>
                                     <hr/>
                                     <Col sm={{offset: 3, size: 6}}> Select{(slotId!=='') ? 'ed' : ''} {slotId} </Col>
-                                    {(slots.length > 0) ? <TableContainer columns={slotColumns} data={slots} setSlotId={setSlotId} /> : <div>Sorry! No matching slots found.</div> }
+                                    {(slots.length > 0) ? <TableContainer columns={slotColumns} data={slots} selectedRow={slotId} setSelectedRow={(row) => setSlotId(row.values['SlotID'])} TableName="Slots" identifierColumn={'SlotID'}/> : <div>Sorry! No matching slots found.</div> }
                                     <br/>
                                     <button type='submit' className='but_'>Schedule</button>
                                 </>
