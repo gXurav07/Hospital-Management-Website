@@ -39,6 +39,10 @@ async function addTest(req, res){
                     console.log(sql_query);
     const result = await executeQuery(sql_query, req);
     res.status(result.status).send(result);
+<<<<<<< Updated upstream
+=======
+    
+>>>>>>> Stashed changes
 }
 
 
