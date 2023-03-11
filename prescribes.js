@@ -60,12 +60,12 @@ async function addPrescribes(req, res){
                         `VALUES ('${docID}', ${Patient_SSN}, ${body.id}, '${date}', ${appointmentID}, '${body.remarks}');`;
         }
         else if(body.type == 'Test'){
-            sql_query = `INSERT INTO Test_instance (Test_instanceID, Patient_SSN, PhysicianID, TestID, SlotID, Result, Test_image, Date ) `+
-                        `VALUES (${body.Test_instanceID}, ${Patient_SSN}, ${docID}, '${body.TestID}', NULL, NULL, NULL, NULL);`;
+            sql_query = `INSERT INTO Test_instance (Patient_SSN, PhysicianID, TestID, SlotID, Result, Test_image, Date ) `+
+                        `VALUES (${Patient_SSN}, ${docID}, '${body.id}', NULL, NULL, NULL, NULL);`;
         }
         else if(body.type == 'Treatment'){
             sql_query = `INSERT INTO Prescribes_Medication (PhysicianID, Patient_SSN, MedicationID, Date, AppointmentID, Dose ) `+
-                        `VALUES (${docID}, ${Patient_SSN}, ${body.MedicationID}, '${body.Date}', ${appointmentID}, ${body.remarks});`;
+                        `VALUES (${docID}, ${Patient_SSN}, ${body.id}, '${body.Date}', ${appointmentID}, ${body.remarks});`;
         }
 
         let result = await executeQuery(sql_query, req);
