@@ -10,17 +10,19 @@ admitRouter
 
 function get_roomno(req, res)
 {
-    let sql_query= `SELECT RoomID as FROM Room WHERE Unavailable=false`;
-    executeQuery(sql_query, req, res);
-
+    const sql_query = `SELECT RoomID as FROM Room WHERE Unavailable=false;`;
+    const result = executeQuery(sql_query, req, res);
+    res.status(result.status).send(result);
 }
+
 function admit_patient(req,res)
 {
     const patient=req.body.patient_id;
     const room=req.body.room_id;
     const date=req.body.date;
-    let sql_query=`INSERT INTO Stay VALUES(${patient},${room},${date},NULL)`;
-    executeQuery(sql_query, req, res);
+    const sql_query=`INSERT INTO Stay VALUES(${patient},${room},${date},NULL)`;
+    const result = executeQuery(sql_query, req, res);
+    res.status(result.status).send(result);
 }
 
 module.exports = admitRouter;
