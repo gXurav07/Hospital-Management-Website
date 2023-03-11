@@ -4,6 +4,7 @@ const frontDeskRouter = express.Router();
 const appointmentRouter = require('./appointment');
 const admitRouter = require('./admit');
 const testRouter = require('./schedule-test');
+const treatmentRouter = require('./schedule-treatment');
 const { executeQuery } = require('./db');
 
 
@@ -35,5 +36,6 @@ function addPatient(req, res){
 frontDeskRouter.use('/appointment', appointmentRouter);
 frontDeskRouter.use('/admit', admitRouter);
 frontDeskRouter.use('/schedule-test', testRouter);
+frontDeskRouter.use('/schedule-treatment', treatmentRouter);
 
 module.exports = frontDeskRouter;

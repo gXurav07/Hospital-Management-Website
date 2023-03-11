@@ -44,7 +44,7 @@ function executeQuery(sql_query, pool){
 }
 
 async function test(){
-    let sql_query = "SHOW TABLES;";
+    let sql_query = "SELECT * FROM Test_instance;";
     let data = await executeQuery(sql_query, pool);
     console.log(data);
 } 
