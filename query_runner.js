@@ -44,7 +44,7 @@ function executeQuery(sql_query, pool){
 }
 
 async function test(){
-    let sql_query = "SELECT * FROM Test_instance;";
+    let sql_query = "Select * from Appointment;";
     let data = await executeQuery(sql_query, pool);
     console.log(data);
 } 

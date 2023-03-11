@@ -34,15 +34,13 @@ async function getTestsAndSlots(req, res){
 
 async function addTest(req, res){
     const {Test_instanceID, date, slotID} = req.body;
+
     const sql_query = `UPDATE Test_instance SET Date = '${date}', SlotID = ${slotID} `+
                       `WHERE Test_instanceID = ${Test_instanceID} `;
-                    console.log(sql_query);
+
     const result = await executeQuery(sql_query, req);
     res.status(result.status).send(result);
-<<<<<<< Updated upstream
-=======
     
->>>>>>> Stashed changes
 }
 
 
