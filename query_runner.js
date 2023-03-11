@@ -44,7 +44,7 @@ function executeQuery(sql_query, pool){
 }
 
 async function test(){
-    let sql_query = "SELECT SlotID, Date FROM Appointment WHERE DATE = '2023-03-17';"
+    let sql_query = "DESCRIBE Treatment;"
 
     let data = await executeQuery(sql_query, pool);
     console.log(data);

@@ -2,7 +2,7 @@
 const express = require('express');
 const loginRouter = express.Router();
 const {createPool} = require('mysql');
-const {encrypt, decrypt} = require('./encryptionhandler');
+const {encrypt, decrypt} = require('./encryption-handler');
 
 const pool = createPool({
 
