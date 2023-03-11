@@ -59,35 +59,35 @@ function DoctorDashboard(props) {
       Header: 'Appointment ID',
       accessor: 'id',
       Cell: ({ cell: { value } }) => value || "-",
-      // Filter: SelectColumnFilter
+            // Filter: SelectColumnFilter
     },
     {
-        Header: 'Patient ID',
-        accessor: 'Patient_SSN',
-        Cell: ({ cell: { value } }) => value || "-",
-    },
+      Header: 'Patient ID',
+      accessor: 'Patient_SSN',
+      Cell: ({ cell: { value } }) => value || "-",
+          },
     {
         Header: 'Name',
         accessor: 'Patient_Name',
         Cell: ({ cell: { value } }) => value || "-",
-    },
+            },
     {
         Header: 'Age',
         accessor: 'Age',
         Cell: ({ cell: { value } }) => value || "-",
-        // Filter: SelectColumnFilter,
+                Filter: SelectColumnFilter,
     },
     {
         Header: 'Gender',
         accessor: 'Gender',
         Cell: ({ cell: { value } }) => value || "-",
-        // Filter: SelectColumnFilter,
+                Filter: SelectColumnFilter,
     },
     {
       Header: 'Date',
       accessor: 'Date',
       Cell: ({ cell: { value } }) => value || "-",
-      // Filter: SelectColumnFilter
+            Filter: SelectColumnFilter
   }
 ];
 

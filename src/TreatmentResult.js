@@ -3,63 +3,63 @@ import TableContainer from './TableContainer';
 import { Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
 function TreatmentResult(props) {
-    const [tests, setTests] = useState([]);
-    const [testId, setTestId] = useState('');
+    const [treatments, setTreatments] = useState([]);
+    const [treatmentId, setTreatmentId] = useState('');
     const [showForm, setShowForm] = useState(false);
 
     const server_addr = props.server_addr;
 
     useEffect(() => {
-        // get all scheduled tests from db
-        fetch('http://' + server_addr + '/front-desk/test-result', {
+        // get all scheduled treatments from db
+        fetch('http://' + server_addr + '/front-desk/treatment-result', {
             method: 'GET',
             headers: { "Content-Type": "application/json" }
         })
-            .then(res => {
-                return res.json();
-            })
-            .then(data => {
-                console.log("Test data: ", data);
-                setTests(data['tests']);
-            });
+        .then(res => {
+            return res.json();
+        })
+        .then(data => {
+            console.log("Treatment data: ", data);
+            setTreatments(data['treatments']);
+        });
     }, []);
 
     useEffect(() => {
-        console.log(['testId:', testId]);
-        if (testId !== '') {
+        console.log(['treatmentId:', treatmentId]);
+        if (treatmentId !== '') {
             setShowForm(true);
         }
         else {
             setShowForm(true);
         }
-    }, [testId]);
+    }, [treatmentId]);
 
-    const testColumns = [
+    const treatmentColumns = [
         {
-            Header: 'Test ID',
+            Header: 'Treatment ID',
             accessor: 'id',
             Cell: ({ cell: { value } }) => value || "-",
-        },
+                    },
         {
             Header: 'Name',
-            accessor: 'Test_Name',
+            accessor: 'Treatment_Name',
             Cell: ({ cell: { value } }) => value || "-",
-        },
+                    },
         {
             Header: 'Patient',
             accessor: 'Patient_Name',
             Cell: ({ cell: { value } }) => value || "-",
-        }
+                    }
     ];
 
     return (
         <div className='App'>
             <header className='App-header'>
-                <div className='doctor-dashboard'>
-                    <h1>Upload Test results</h1>
+                <div className=''>
+                    <h1>Upload Treatment results</h1>
                     <hr />
-                    <Col sm={{ offset: 3, size: 6 }}> Select{(testId !== '') ? 'ed' : ''} {testId} </Col>
-                    {(tests.length > 0) ? <TableContainer columns={testColumns} data={tests} selectedRow={testId} setSelectedRow={(row) => setTestId(row.values['id'])} identifierColumn={'id'} /> : <div>No new tests scheduled</div>}
+                    <Col sm={{ offset: 3, size: 6 }}> Select{(treatmentId !== '') ? 'ed' : ''} {treatmentId} </Col>
+                    {(treatments.length > 0) ? <TableContainer columns={treatmentColumns} data={treatments} selectedRow={treatmentId} setSelectedRow={(row) => setTreatmentId(row.values['id'])} identifierColumn={'id'} /> : <div>No new treatments scheduled</div>}
                     {
                         showForm && (
                             <Form>
