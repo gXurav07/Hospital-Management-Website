@@ -10,7 +10,8 @@ testRouter
 
 async function getTestsAndSlots(req, res){
     let data = {tests: [], slots: [], status: 200, message: 'OK'};
-    let sql_query = 'SELECT * FROM Test;';
+    let sql_query = `SELECT * FROM Test NATURAL JOIN Test_instance NATURAL JOIN Patient WHERE SlotID IS NULL;`;
+
     let result = await executeQuery(sql_query, req);
     
     if(result.status > data.status){
@@ -33,7 +34,12 @@ async function getTestsAndSlots(req, res){
 }
 
 async function addTest(req, res){
-    console.log(req.body);
+    const {test_inst_id, date, slot_id} = req.body;
+    const sql_query = `UPDATE Test_instance SET Date = ${date}, SlotID = ${slot_id} `+
+                      `WHERE Test_instanceID = ${test_inst_id} `;
+    const result = await executeQuery(sql_query, req);
+    res.status(request.status).send(result);
+    
 }
 
 

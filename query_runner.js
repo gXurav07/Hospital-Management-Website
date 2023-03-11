@@ -44,7 +44,7 @@ function executeQuery(sql_query, pool){
 }
 
 async function test(){
-    let sql_query = "SHOW TABLES;";
+    let sql_query = "SELECT * FROM Test NATURAL JOIN Test_instance NATURAL JOIN Patient WHERE SlotID IS NULL;";
     let data = await executeQuery(sql_query, pool);
     console.log(data);
 } 
