@@ -8,10 +8,11 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.listen(3000, function(){
-    console.log('Server is running on port 3000...');
-});
+const port_no = 3000;
 
+app.listen(port_no, function(){
+    console.log('Server is running on port ', port_no, '...');
+});
 
 // Use the connection pool in your Express app
 app.use((req, res, next) => {

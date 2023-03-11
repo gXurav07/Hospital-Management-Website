@@ -10,7 +10,7 @@ testRouter
 
 async function getTestsAndSlots(req, res){
     let data = {tests: [], slots: [], status: 200, message: 'OK'};
-    let sql_query = 'SELECT * FROM Test;';
+    let sql_query = 'SELECT TestID, Test_Name, Patient_Name, Name AS Physician_Name FROM Test NATURAL JOIN Test_instance NATURAL JOIN Patient JOIN User ON User.EmployeeID = Test_instance.PhysicianID WHERE SlotID is NULL;';
     let result = await executeQuery(sql_query, req);
     
     if(result.status > data.status){
