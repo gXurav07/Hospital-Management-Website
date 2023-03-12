@@ -17,10 +17,10 @@ app.listen(port_no, function(){
 
 // Use the connection pool in your Express app
 app.use((req, res, next) => {
-    console.log('method: ', req.method);
+    console.log('\n\nmethod: ', req.method);
     console.log('body: ', req.body);
     console.log('query: ', req.query);
-    console.log('params: ', req.params);
+    console.log('params: ', req.params, '\n\n');
 
     req.db = pool;
     next();

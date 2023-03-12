@@ -18,8 +18,9 @@ async function createEntity(req, res){
 
     try{
         if(type == 'user'){
+            const iv = crypto.randomBytes(16).toString('hex');
             sql_query =  `INSERT INTO User(EmployeeID, Name, Email, Type, Password, Pass_iv) `+
-                            `VALUES('${entity.employeeid}', '${entity.name}', '${entity.email}', ${entity.user_type}, '${entity.password}', '${entity.iv}'); `;
+                            `VALUES('${entity.employeeid}', '${entity.name}', '${entity.email}', ${entity.user_type}, '${entity.password}', '${iv}'); `;
         }
         else if(type == 'doctor'){
             sql_query =  `INSERT INTO Physician(PhysicianID, Position) `+
