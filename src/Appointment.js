@@ -186,18 +186,18 @@ function Appointment(props) {
             </header>
             <div className="App-body">
                 <div className='form_wrapper'>
-                    <Col sm={{ offset: 3, size: 6 }}> Select{(patientId !== '') ? "ed" : ""} Patient ID: {patientId}</Col>
+                    <Col className='my-col' sm={{ offset: 3, size: 6 }}> Select{(patientId !== '') ? "ed" : ""} Patient ID: {patientId}</Col>
                     {(patients.length > 0) ? <TableContainer columns={patientColumns} data={patients} selectedRow={patientId} setSelectedRow={(row) => setPatientId(row.values['id'])} TableName="Patients" identifierColumn={'id'} /> : <><p>Sorry! Unable to fetch Patient data from server.</p><br /></>}
                     <br />
                     <hr />
-                    <Col sm={{ offset: 3, size: 6 }}> Select{(patientId !== '') ? "ed" : ""} Doctor ID: {docId}</Col>
+                    <Col className='my-col' sm={{ offset: 3, size: 6 }}> Select{(patientId !== '') ? "ed" : ""} Doctor ID: {docId}</Col>
                     {(doctors.length > 0) ? <TableContainer columns={doctorColumns} data={doctors} selectedRow={docId} setSelectedRow={(row) => setDocId(row.values['id'])} TableName="Doctors" identifierColumn={'id'} /> : <><p>Sorry! Unable to fetch Doctor data from server.</p><br /></>}
                     <br />
                     <hr />
                     <br />
                     <Row className='align-items-center'>
                     </Row>
-                    <Row className='align-items-center'>
+                    <Row className='my-col align-items-center'>
                         <Label sm={{ offset: 0.5, size: 3 }} for="app_date"> Select Date: </Label>
                         <Col sm={4}><Input type="date" id="app_date" sm="8" value={date} onChange={(e) => setDate(e.target.value)}></Input></Col>
                         <Label check sm={{ offset: 2, size: 3 }}>
@@ -210,7 +210,7 @@ function Appointment(props) {
                         showSlots && (
                             <>
                                 <hr />
-                                <Col sm={{ offset: 3, size: 6 }}> Select{(slotId !== '') ? "ed" : ""} Slot ID: {slotId}</Col>
+                                <Col className='my-col' sm={{ offset: 3, size: 6 }}> Select{(slotId !== '') ? "ed" : ""} Slot ID: {slotId}</Col>
                                 {(slots.length > 0) ? <TableContainer columns={slotColumns} data={slots} selectedRow={slotId} setSelectedRow={(row) => setSlotId(row.values['SlotID'])} TableName="Slots" identifierColumn={'SlotID'} /> : <><p>Sorry! No matching slots found.</p><br /></>}
                                 <br />
                                 {(slotId !== '') ? <button type='submit' className='but_' onClick={(e) => handleSubmit(e)}>Schedule</button> : ''}

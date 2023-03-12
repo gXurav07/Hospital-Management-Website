@@ -72,9 +72,8 @@ function AdmitPatient(props) {
             </header>
             <div className="App-body">
                 <div className="doctor_dashboard">
-                    <Col sm={{ offset: 3, size: 6 }}> Select{(patientId !== '') ? "ed" : ""} Patient ID: {patientId}</Col>
+                    <Col className='my-col' sm={{ offset: 3, size: 6 }}> Select{(patientId !== '') ? "ed" : ""} Patient ID: {patientId}</Col>
                     {(patients.length > 0) ? <TableContainer columns={patientColumns} data={patients} selectedRow={patientId} setSelectedRow={(row) => setPatientId(row.values['id'])} TableName="Patients" identifierColumn={'id'} /> : <><p>Sorry! Unable to fetch Patient data from server.</p><br /></>}
-                    <br />
                     <div className='form_wrapper'>
                         <form>
                             {/* <label>ID:</label> */}

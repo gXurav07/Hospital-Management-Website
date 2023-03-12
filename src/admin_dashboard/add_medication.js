@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 
 function AddMedication(props) {
     const [id, setID] = useState('');
@@ -34,17 +35,37 @@ function AddMedication(props) {
             </header>
             <div className="App-body">
                 <div className="managedocs">
-                    <form onSubmit={handleSubmit}>
-                        <label>Name:</label>
-                        <input type="text" placeholder="Enter name of medication....." required value={name} onChange={(e) => setName(e.target.value)} />
-                        <label>ID:</label>
-                        <input type="text" placeholder="Enter medication id...." required value={id} onChange={(e) => setID(e.target.value)} />
-                        <label>Brand:</label>
-                        <input type="text" placeholder="Enter brand name...." required value={brand} onChange={(e) => setBrand(e.target.value)} />
-                        <label>Description:</label>
-                        <input type="text" placeholder="Enter description....." required value={desc} onChange={(e) => setDesc(e.target.value)} />
-                        <button>Add Medication</button>
-                    </form>
+                    <Form onSubmit={handleSubmit}>
+                        <FormGroup row>
+                            <Label for="name" sm={3}>Name:</Label>
+                            <Col sm={9}>
+                                <Input type="text" name="name" id="name" placeholder="Enter name of medication....." required value={name} onChange={(e) => setName(e.target.value)} />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup row>
+                            <Label for="id" sm={3}>ID:</Label>
+                            <Col sm={9}>
+                                <Input type="text" name="id" id="id" placeholder="Enter medication id...." required value={id} onChange={(e) => setID(e.target.value)} />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup row>
+                            <Label for="brand" sm={3}>Brand:</Label>
+                            <Col sm={9}>
+                                <Input type="text" name="brand" id="brand" placeholder="Enter brand name...." required value={brand} onChange={(e) => setBrand(e.target.value)} />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup row>
+                            <Label for="desc" sm={3}>Description:</Label>
+                            <Col sm={9}>
+                                <Input type="text" name="desc" id="desc" placeholder="Enter description....." required value={desc} onChange={(e) => setDesc(e.target.value)} />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup row>
+                            <Col sm={{ size: 9, offset: 4 }}>
+                                <Button type="submit" color="primary">Add Medication</Button>
+                            </Col>
+                        </FormGroup>
+                    </Form>
                 </div>
             </div>
         </div>
