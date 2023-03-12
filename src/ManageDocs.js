@@ -47,7 +47,7 @@ function ManageDocs(props) {
             <FormGroup row>
               <Label for="employeeid" sm={3}>Employee ID:</Label>
               <Col sm={9}>
-                <Input type="text" name="employeeid" id="employeeid" placeholder="Enter employee number....." required value={employeeid} onChange={(e) => setEmpid(e.target.value)} />
+                <Input type="text" name="employeeid" id="employeeid" placeholder="Enter employee ID of doctor....." required value={employeeid} onChange={(e) => setEmpid(e.target.value)} />
               </Col>
             </FormGroup>
             <FormGroup row>
@@ -73,7 +73,7 @@ function ManageDocs(props) {
             <FormGroup row>
               <Label for="email" sm={3}>Email ID:</Label>
               <Col sm={9}>
-                <Input type="text" name="email" id="email" placeholder="Set email-ID....." required value={email} onChange={(e) => setEmail(e.target.value)} />
+                <Input type="text" name="email" id="email" placeholder="Enter email ID of doctor....." required value={email} onChange={(e) => setEmail(e.target.value)} />
               </Col>
             </FormGroup>
             <FormGroup row>

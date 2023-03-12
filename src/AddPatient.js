@@ -36,7 +36,7 @@ function AddPatient(props) {
                         <FormGroup row>
                             <Label for="ssn" sm={3}>SSN:</Label>
                             <Col sm={9}>
-                                <Input type="text" name="ssn" id="ssn" placeholder="Enter patient SSN....." required value={ssn} onChange={(e) => setSSN(e.target.value)} />
+                                <Input type="text" name="ssn" id="ssn" placeholder="Enter SSN of patient....." required value={ssn} onChange={(e) => setSSN(e.target.value)} />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
@@ -74,7 +74,7 @@ function AddPatient(props) {
                             </Col>
                         </FormGroup>
                         <FormGroup row>
-                            <Label for="insuranceID" sm={3}>InsuranceID:</Label>
+                            <Label for="insuranceID" sm={3}>Insurance ID:</Label>
                             <Col sm={9}>
                                 <Input type="text" name="insuranceID" id="insuranceID" placeholder="Enter insurance ID of patient...." required value={insuranceID} onChange={(e) => setInsuranceID(e.target.value)} />
                             </Col>
