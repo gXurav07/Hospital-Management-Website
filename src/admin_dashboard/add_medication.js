@@ -30,7 +30,7 @@ function AddMedication(props) {
     return (
         <div className="App">
             <header className="App-header">
-                <h1>Add Medication</h1>
+                <h1>Add a Medication</h1>
                 <hr />
             </header>
             <div className="App-body">
