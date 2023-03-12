@@ -29,7 +29,7 @@ function AdmitPatient(props) {
             Header: 'Name',
             accessor: 'Patient_Name',
             Cell: ({ cell: { value } }) => value || "-",
-        },
+                    },
         {
             Header: 'Age',
             accessor: 'Age',
@@ -68,19 +68,24 @@ function AdmitPatient(props) {
         e.preventDefault();
         const admit_patient = { patient: patientId, room: roomId };
         console.log(admit_patient);
-        fetch('http://' + server_addr + '/front-desk/admit', {
-            method: 'POST',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(admit_patient)
-        })
-            .then(res => {
-                return res.json();
-            })
-            .then(data => {
-                console.log(admit_patient);
-                setResult(data);
-                alert(result);
-            });
+        if(patientId !== '' && roomId !== '') {
+            console.log(admit_patient);
+            setResult(admit_patient);
+            alert(result);
+            // fetch('http://' + server_addr + '/front-desk/admit', {
+            //     method: 'POST',
+            //     headers: { "Content-Type": "application/json" },
+            //     body: JSON.stringify(admit_patient)
+            // })
+            // .then(res => {
+            //     return res.json();
+            // })
+            // .then(data => {
+            // });
+        }
+        else {
+            setResult("Please fill all the fields");
+        }
     }
 
     return (
@@ -93,17 +98,15 @@ function AdmitPatient(props) {
                 <div className="doctor_dashboard">
                     {/* {patients ? <Table data={patients} /> : <br />} */}
                     <div className='form_wrapper'>
-                        <form>
-                            {/* <label>ID:</label> */}
-                            {/* <input type="text" placeholder="Enter Patient ID...." required value={pid} onChange={(e) => setPid(e.target.value)} /> */}
-                            <Col sm={{ offset: 3, size: 6 }}> Select{(patientId !== '') ? "ed" : ""} Patient ID: {patientId}</Col>
-                            {(patients.length > 0) ? <TableContainer columns={patientColumns} data={patients} selectedRow={patientId} setSelectedRow={(row) => setPatientId(row.values['id'])} TableName="Patients" identifierColumn={'id'} /> : <><p>Sorry! Unable to fetch Patient data from server.</p><br /></>}
-                            <br />
-                            <Col sm={{ offset: 3, size: 6 }}> Select{(roomId !== '') ? "ed" : ""} Room ID: {roomId}</Col>
-                            {(rooms.length > 0) ? <TableContainer columns={roomColumns} data={rooms} selectedRow={roomId} setSelectedRow={(row) => setRoomId(row.values['id'])} TableName="Rooms" identifierColumn={'id'} /> : <><p>Sorry! Unable to fetch Room data from server.</p><br /></>}
-                            <br />
-                            <button className='box' onSubmit={(e) => handleAdmit(e)}>Admit</button>
-                        </form>
+                        {/* <label>ID:</label> */}
+                        {/* <input type="text" placeholder="Enter Patient ID...." required value={pid} onChange={(e) => setPid(e.target.value)} /> */}
+                        <Col sm={{offset: 3, size: 6}}> Select{(patientId!=='')?"ed":""} Patient ID: {patientId}</Col>
+                        {(patients.length >0) ? <TableContainer columns={patientColumns} data={patients} selectedRow={patientId} setSelectedRow={(row) => setPatientId(row.values['id'])} TableName="Patients" identifierColumn={'id'}/> : <><p>Sorry! Unable to fetch Patient data from server.</p><br/></>}
+                        <br/>
+                        <Col sm={{offset: 3, size: 6}}> Select{(roomId!=='')?"ed":""} Room ID: {roomId}</Col>
+                        {(rooms.length > 0) ? <TableContainer columns={roomColumns} data={rooms} selectedRow={roomId} setSelectedRow={(row) => setRoomId(row.values['id'])} TableName="Rooms" identifierColumn={'id'}/> : <><p>Sorry! Unable to fetch Room data from server.</p><br/></>}
+                        <br/>
+                        <button type='submit' className='box' onClick={(e)=>handleAdmit(e)}>Admit</button>
                     </div>
                 </div>
             </div>
