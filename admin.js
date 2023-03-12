@@ -6,8 +6,55 @@ const adminRouter = express.Router();
 
 adminRouter
 .route('/')
+.get(getAllEntities)
 .post(createEntity)
 .delete(deleteEntity);
+
+async function getAllEntities(req, res){
+    const type = req.query.type;
+    let sql_query = '';
+    let result = null;
+
+    try{
+        if(type == 'user'){
+            sql_query =  `SELECT * FROM User; `;
+        }
+        else if(type == 'doctor'){
+            sql_query =  `SELECT * FROM Physician; `;
+        }
+        else if(type == 'data-entry'){
+            sql_query =  `SELECT * FROM DataEntry; `;
+        }
+        else if(type == 'front-desk'){
+            sql_query =  `SELECT * FROM FrontDesk; `;
+        }
+        else if(type=='medication'){
+            sql_query = `SELECT * FROM Medication; `;
+        }
+        else if(type=='department'){
+            sql_query = `SELECT * FROM Department; `;
+        }
+        else if(type=='test'){
+            sql_query = `SELECT * FROM Test; `;
+        }
+        else if(type=='treatment'){
+            sql_query = `SELECT * FROM Treatment_Description; `;
+        }
+        else{
+            res.status(400).send({message: 'Invalid type'});
+
+            return;
+        }
+    }
+    catch(err){
+        res.status(400).send({message: 'Invalid request'});
+        return;
+    }
+
+    result = await executeQuery(sql_query, res);
+    res.status(result.status).send(result);
+}
+
   
 async function createEntity(req, res){
     

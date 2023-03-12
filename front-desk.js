@@ -20,11 +20,28 @@ frontDeskRouter
 
 function discharge_patient(req,res)
 {
-    const patient=req.body.patient_id;
-    const date=req.body.date;
+    const {patient, room, date} = req.body;
+   
     let sql_query=`UPDATE Stay SET End=${date} WHERE PatientID=${patient}`;
-    executeQuery(sql_query, req, res);
+    let result = executeQuery(sql_query, req);
+    if(result.status != 200){
+        res.status(result.status).send(result);
+        return;
+    }
+
+    sql_query=`UPDATE Room SET Unavailable=false WHERE RoomID=${room}`;
+    result = executeQuery(sql_query, req);
+    if(result.status != 200){
+        res.status(result.status).send(result);
+        return;
+    }
+
+    sql_query=`UPDATE Patient SET Status='discharged' WHERE Patient_SSN='${patient}'`;
+    result = executeQuery(sql_query, req);
+
+    res.status(result.status).send(result);
 }
+
 function addPatient(req, res){
     const patient = req.body;
     let sql_query = `INSERT INTO Patient(Patient_SSN, Patient_Name, Address, Age, Gender, Phone, Email, Status, InsuranceID) `+

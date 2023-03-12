@@ -11,13 +11,13 @@ admitRouter
 async function get_patient_roomno(req, res){
     let sql_query = '', result = {}, data = {};
     // get non-admitted patients
-    sql_query = `SELECT Patient_SSN AS id, Patient_Name, Address, Age, Gender FROM Patient WHERE Patient_SSN NOT IN (SELECT Patient_SSN FROM Stay WHERE End IS NULL);`;
+    sql_query = `SELECT Patient_SSN AS id, Patient_Name, Address, Age, Gender FROM Patient WHERE Status='not admitted';`;
     result = await executeQuery(sql_query, req);
     if(result.status != 200){
         res.status(result.status).send(result);
         return;
     }
-    data['patients'] = result.rows;
+    data['patients'] = result.rows; 
 
 
     // get available rooms
@@ -38,11 +38,9 @@ async function admit_patient(req, res)
     try{
         const {patient, room} = req.body;
         const date = new Date().toISOString().slice(0, 10).replace('T', ' ');
+
         let sql_query=`INSERT INTO Stay(Patient_SSN, RoomID, Start, End) VALUES('${patient}', ${room}, '${date}', NULL)`;
-        let result = await executeQuery(sql_query, req);
-        
-
-
+        let result = await executeQuery(sql_query, req);        
         if(result.status != 200){
             res.status(result.status).send(result);
             return;
@@ -50,6 +48,14 @@ async function admit_patient(req, res)
         
         sql_query=`UPDATE Room SET Unavailable=true WHERE RoomID=${room}`;
         result = await executeQuery(sql_query, req);
+        if(result.status != 200){
+            res.status(result.status).send(result);
+            return;
+        }
+
+        sql_query=`UPDATE Patient SET Status='admitted' WHERE Patient_SSN='${patient}'`;
+        result = await executeQuery(sql_query, req);
+
 
         res.status(result.status).send(result);
         return;
