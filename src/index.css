@@ -1,23 +1,18 @@
 body {
-  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; */
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: #683B2B;
 }
 
 h1,
-h2,h3,h4 {
+h2,
+h3,
+h4 {
   color: #683B2B;
 }
 
 /* HOME START */
 .container_home {
-  margin: 20px auto;
-  width: 400px;
-  height: 400px;
   display: grid;
   grid-template-columns: 200px 200px;
   grid-row: auto auto;
@@ -27,15 +22,12 @@ h2,h3,h4 {
 .box>button {
   height: 20vh;
   width: 20vh;
-  /* background-color: #333; */
-  /* background-color: #B08401; */
   padding: 20px;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: sans-serif;
-  /* color: white; */
   font-size: x-large;
   font-weight: bolder;
 }
@@ -108,6 +100,7 @@ button {
   border-radius: 5px;
   transition: .2s ease-in;
   cursor: pointer;
+  text-decoration: none;
 }
 
 button:hover {
@@ -160,15 +153,16 @@ th,
 td {
   text-align: left;
   padding: 6px 30px;
-  border-bottom: 1px solid #B08401  ;
+  border-bottom: 1px solid #B08401;
 }
 
-tbody tr:hover{
+tbody tr:hover {
   background-color: #D49E8D;
   color: #fff;
 }
 
-tr.selected, tr.selected:hover {
+tr.selected,
+tr.selected:hover {
   background-color: #B08401;
   color: #fff;
 }

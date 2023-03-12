@@ -9,12 +9,12 @@ function FDOps() {
         <hr />
       </header>
       <div className="App-body">
-      </div>
-      <div className="container_home">
-        <Link to="addpatient" className="box"><button>Add Patient</button></Link>
-        <Link to="admitpatient" className="box"><button>Admit Patient</button></Link>
-        <Link to="dischargepatient" className="box"><button>Discharge Patient</button></Link>
-        <Link to="appointment" className="box"><button>Schedule an Appointment</button></Link>
+        <div className="container_home">
+          <Link to="addpatient" className="box"><button>Add Patient</button></Link>
+          <Link to="admitpatient" className="box"><button>Admit Patient</button></Link>
+          <Link to="dischargepatient" className="box"><button>Discharge Patient</button></Link>
+          <Link to="appointment" className="box"><button>Schedule an Appointment</button></Link>
+        </div>
       </div>
     </div>
   );
