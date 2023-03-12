@@ -200,7 +200,7 @@ function Appointment(props) {
                         <Col sm={4}><Input type="date" id="app_date" sm="8" value={date} onChange={(e) => setDate(e.target.value)}></Input></Col>
                         <Label check sm={{offset:2, size:3}}>
                             Emergency? {' '}
-                            <Input type="checkbox" checked={emergency} onClick={()=>setEmergency(!emergency)} style={{backgroundColor: 'red', border: '2px solid red'}}/>
+                            <Input type="checkbox" checked={emergency} onClick={()=>setEmergency(!emergency)} style={{backgroundColor: 'red'}}/>
                         </Label>
                     </Row>
                     <br/>

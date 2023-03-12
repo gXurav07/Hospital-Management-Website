@@ -5,7 +5,8 @@ import { Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap
 function TreatmentResult(props) {
     const [treatments, setTreatments] = useState([]);
     const [treatmentId, setTreatmentId] = useState('');
-    const [showForm, setShowForm] = useState(false);
+    const [showForm, setShowForm] = useState(true);
+    const [success, setSuccess] = useState(true);
 
     const server_addr = props.server_addr;
 
@@ -39,17 +40,17 @@ function TreatmentResult(props) {
             Header: 'Treatment ID',
             accessor: 'id',
             Cell: ({ cell: { value } }) => value || "-",
-                    },
+        },
         {
             Header: 'Name',
             accessor: 'Treatment_Name',
             Cell: ({ cell: { value } }) => value || "-",
-                    },
+        },
         {
             Header: 'Patient',
             accessor: 'Patient_Name',
             Cell: ({ cell: { value } }) => value || "-",
-                    }
+        }
     ];
 
     return (
@@ -64,23 +65,22 @@ function TreatmentResult(props) {
                     showForm && (
                         <Form>
                             <FormGroup row>
-                                <Label for="exampleText" sm={2}>Text Area</Label>
-                                <Col sm={10}>
-                                    <Input type="textarea" name="text" id="exampleText" style={{maxHeigh: '20vh'}}/>
+                                <Label for="remarks" sm={3}>Remarks:</Label>
+                                <Col sm={9}>
+                                    <Input type="textarea" name="text" id="remarks" style={{maxHeight: '20vh'}}/>
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
-                                <Label for="exampleFile" sm={2}>File</Label>
-                                <Col sm={10}>
-                                    <Input type="file" name="file" id="exampleFile" />
-                                    <FormText color="muted">
-                                        This is some placeholder block-level help text for the above input.
-                                        It's a bit lighter and easily wraps to a new line.
-                                    </FormText>
+                                <Label for="status" sm={3}>Status:</Label>
+                                <Col sm={9}>
+                                    <Label check >
+                                        <Input type="checkbox" id="status" checked={success} onClick={()=>setSuccess(!success)} style={{backgroundColor: 'green'}}/>
+                                        {' '} Successfull?
+                                    </Label>
                                 </Col>
                             </FormGroup>
                             <FormGroup check row>
-                                <Col sm={{ size: 10, offset: 2 }}>
+                                <Col sm={{ size: 10, offset: 3 }}>
                                     <Button sm={3}>Submit</Button>
                                 </Col>
                             </FormGroup>

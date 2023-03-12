@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Form, FormGroup, Label, Col, Input, Button, FormText } from 'reactstrap';
 import TableContainer from './TableContainer';
 
 function TestResult(props) {
@@ -19,7 +20,7 @@ function TestResult(props) {
         })
         .then(data => {
             console.log("Test data: ", data);
-            setTests(data['tests']);
+            if(data.hasOwnProperty('tests')) setTests(data['tests']);
         });
     }, []);
 
@@ -29,7 +30,7 @@ function TestResult(props) {
             setShowForm(true);
         }
         else {
-            setShowForm(true);
+            setShowForm(false);
         }
     }, [testId]);
 
@@ -52,7 +53,41 @@ function TestResult(props) {
     ];
 
     return (
-       <></>
+       <div className='App'>
+            <div className='App-header'>
+                <h1>Upload Test results</h1>
+                <hr />
+                <Col sm={{ offset: 3, size: 6 }}> Select{(testId !== '') ? 'ed' : ''} Test: {testId} </Col>
+                {(tests.length > 0) ? <TableContainer columns={testColumns} data={tests} setRowId={setTestId} /> : <div>No tests scheduled</div>}
+                <hr />
+                {
+                    showForm && (
+                        <Form>
+                            <FormGroup row>
+                                <Label for="remarks" sm={3}>Remarks</Label>
+                                <Col sm={9}>
+                                    <Input type="textarea" name="text" id="remarks" style={{maxHeight: '20vh'}}/>
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label for="fileUpload" sm={3}>Upload File</Label>
+                                <Col sm={9}>
+                                    <Input type="file" name="file" id="fileUpload" />
+                                    <FormText color="muted">
+                                        max allowed file size is 10MB
+                                    </FormText>
+                                </Col>
+                            </FormGroup>
+                            <FormGroup check row>
+                                <Col sm={{ size: 9, offset: 3 }}>
+                                    <Button sm={3}>Submit</Button>
+                                </Col>
+                            </FormGroup>
+                        </Form>
+                    )
+                }
+            </div>
+        </div>
     );
 }
 
