@@ -23,6 +23,11 @@ import Appointment from "./Appointment";
 import AdmitPatient from "./AdmitPatient";
 import useToken, { checkAuth } from "./useToken";
 
+import AddMedication from "./admin_dashboard/add_medication";
+import AddTreatment from "./admin_dashboard/add_treatment";
+import AddTest from "./admin_dashboard/add_test";
+import AddDepartment from "./admin_dashboard/add_department";
+
 function App() {
   const server_addr = "10.147.134.229:3000";
   const { token, setToken } = useToken();
@@ -42,11 +47,6 @@ function App() {
 
             {/* Secondary Routes */}
             <Route exact path="user3/prescribe" element={<Prescribe server_addr={server_addr}/>} />
-            <Route exact path="user4/managedocs" element={<ManageDocs server_addr={server_addr}/>} render={()=>console.log('checking...')} />
-
-            <Route path="user4/managedocsd" element={<ManageDocsD server_addr={server_addr}/>} />
-            <Route path="user4/manageops" element={<ManageOps server_addr={server_addr}/>} />
-            <Route path="user4/manageopsd" element={<ManageOpsD server_addr={server_addr}/>} />
             <Route path="user1/addpatient" element={<AddPatient server_addr={server_addr}/>} />
             <Route path="user1/admitpatient" element={<AdmitPatient server_addr={server_addr}/>} />
             <Route path="user1/dischargepatient" element={<DischargePatient server_addr={server_addr}/>} />
@@ -59,6 +59,17 @@ function App() {
             {/* <Route path="user1/admitpatient" element={<AdmitPatient server_addr={server_addr}/>} /> */}
             {/* <Route path="user1/dischargepatient" element={<DischargePatient server_addr={server_addr}/>} /> */}
             {/* <Route path="user1/appointment" element={<Appointment server_addr={server_addr}/>} /> */}
+
+            {/* Admin Dashboard */}
+          <Route exact path="user4/managedocs" element={<ManageDocs server_addr={server_addr}/>} render={()=>console.log('checking...')} />
+          <Route path="user4/managedocsd" element={<ManageDocsD server_addr={server_addr}/>} />
+          <Route path="user4/manageops" element={<ManageOps server_addr={server_addr}/>} />
+          <Route path="user4/manageopsd" element={<ManageOpsD server_addr={server_addr}/>} />
+
+          <Route path="user4/treatment" element={<AddTreatment server_addr={server_addr}/>} />
+          <Route path="user4/test" element={<AddTest server_addr={server_addr}/>} />
+          <Route path="user4/medication" element={<AddMedication server_addr={server_addr}/>} />
+          <Route path="user4/department" element={<AddDepartment server_addr={server_addr}/>} />
 
           {/* <Route path="*" element={<NoPage />} /> */}
           <Route path="/" element={<Home server_addr={server_addr}/>}>

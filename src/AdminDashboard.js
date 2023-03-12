@@ -22,15 +22,16 @@ function AdminDashboard(props) {
           <hr/>
           <br/>
         </div>
-        <div className="container_home">
+        <div className="s">
           <Link to="managedocs" className="box"><button>Add Doctor</button></Link>
           <Link to="managedocsd" className="box"><button>Delete Doctor</button></Link>
           <Link to="manageops" className="box"><button>Add Data Operators</button></Link>
           <Link to="manageopsd" className="box"><button>Delete Data Operators</button></Link>
-          {/* <Link to="managedocs" className="box"><button>Add Doctor</button></Link>
-          <Link to="managedocsd" className="box"><button>Delete Doctor</button></Link>
-          <Link to="manageops" className="box"><button>Add Data Operators</button></Link>
-          <Link to="manageopsd" className="box"><button>Delete Data Operators</button></Link> */}
+
+          <Link to="medication" className="box"><button>Medication</button></Link>
+          <Link to="treatment" className="box"><button>Treatment</button></Link>
+          <Link to="test" className="box"><button>Test</button></Link>
+          <Link to="department" className="box"><button>Department</button></Link>
         </div>
       </header>
     </div>

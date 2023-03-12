@@ -10,13 +10,20 @@ function AddMedication(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const med = { id, name, brand, desc };
+        const med = { medicationid : id, name, brand, description : desc, type:'medication' };
 
-        fetch('http://' + server_addr + '/admin/medication', {
+        fetch('http://' + server_addr + '/admin', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(med)
-        }).then(() => console.log("Added Medication!", med));
+        })
+        .then(res => {
+            return res.json();
+          })
+          .then(data => {
+            console.log(med);
+            alert(data['message']);
+          });
     }
 
     return (
