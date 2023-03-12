@@ -13,6 +13,7 @@ function Appointment(props) {
     const [date, setDate] = useState('');
     const [slotId, setSlotId] = useState('');
     const [showSlots, setShowSlots] = useState(false);
+    const [emergency, setEmergency] = useState(false);
 
     const server_addr = props.server_addr;
 
@@ -33,10 +34,10 @@ function Appointment(props) {
     }, []);
     
     useEffect(() => {
-        console.log(['docId:', docId, 'patientId:', patientId, 'date:', date]);
+        console.log(['docId:', docId, 'patientId:', patientId, 'date:', date, 'emergency:', emergency]);
         if (docId !== '' && patientId !== '' && date !== '') {
             // get slots matching docId from db
-            fetch('http://'+server_addr+'/front-desk/appointment/slots?docId='+docId+'&date='+date)
+            fetch('http://'+server_addr+'/front-desk/appointment/slots?docId='+docId+'&date='+date+'&emergency='+emergency)
             .then(res => {
                 return res.json();
             })
@@ -52,7 +53,7 @@ function Appointment(props) {
         else {
             setShowSlots(false);
         }
-    }, [docId, patientId, date]);
+    }, [docId, patientId, date, emergency]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -154,55 +155,67 @@ function Appointment(props) {
             Header: 'Slot ID',
             accessor: 'SlotID',
             Cell: ({ cell: { value } }) => value || "-",
-                        Filter: SelectColumnFilter,
+            Filter: SelectColumnFilter,
         },
         {
             Header: 'Start time',
             accessor: 'Start',
             Cell: ({ cell: { value } }) => value || "-",
-                        Filter: SelectColumnFilter,
+            Filter: SelectColumnFilter,
         },
         {
             Header: 'End time',
             accessor: 'End',
             Cell: ({ cell: { value } }) => value || "-",
-                        Filter: SelectColumnFilter,
+            Filter: SelectColumnFilter,
+        },
+        {
+            Header: 'Status',
+            accessor: 'booked',
+            Cell: ({ cell: { value } }) => value || "-",
+            Filter: SelectColumnFilter,
+            invisible: !emergency
         }
     ];
 
     return ( 
         <div className="App">
             <header className="App-header">
-                <form className="doctor_dashboard">
-                    <h1>Schedule an Appointment</h1>
+                <h1>Schedule an Appointment</h1>
+                <hr/>
+                <div className='form_wrapper'> 
+                    <Col sm={{offset: 3, size: 6}}> Select{(patientId!=='')?"ed":""} Patient ID: {patientId}</Col>
+                    {(patients.length >0) ? <TableContainer columns={patientColumns} data={patients} selectedRow={patientId} setSelectedRow={(row) => setPatientId(row.values['id'])} TableName="Patients" identifierColumn={'id'}/> : <><p>Sorry! Unable to fetch Patient data from server.</p><br/></>}
+                    <br/>
                     <hr/>
-                    <div className='form_wrapper'> 
-                        <Col sm={{offset: 3, size: 6}}> Select{(patientId!=='')?"ed":""} Patient ID: {patientId}</Col>
-                        {(patients.length >0) ? <TableContainer columns={patientColumns} data={patients} selectedRow={patientId} setSelectedRow={(row) => setPatientId(row.values['id'])} TableName="Patients" identifierColumn={'id'}/> : <><p>Sorry! Unable to fetch Patient data from server.</p><br/></>}
-                        <br/>
-                        <hr/>
-                        <Col sm={{offset: 3, size: 6}}> Select{(patientId!=='')?"ed":""} Doctor ID: {docId}</Col>
-                        {(doctors.length > 0) ? <TableContainer columns={doctorColumns} data={doctors} selectedRow={docId} setSelectedRow={(row) => setDocId(row.values['id'])} TableName="Doctors" identifierColumn={'id'}/> : <><p>Sorry! Unable to fetch Doctor data from server.</p><br/></>}
-                        <br/>
-                        <hr/>
-                        <Row className='align-items-center'>
-                            <Col sm={{offset: 2, size: 3}} className="justify-content-end"><Label for="app_date"> Select Date: </Label></Col>
-                            <Col sm={4}><Input type="date" id="app_date" sm="8" value={date} onChange={(e) => setDate(e.target.value)}></Input></Col>
-                        </Row>
-                        {
-                            showSlots && (
-                            <>
-                                <br/>
-                                <hr/>
-                                <Col sm={{offset: 3, size: 6}}> Select{(slotId!=='')?"ed":""} Slot ID: {slotId}</Col>
-                                {(slots.length > 0) ? <TableContainer columns={slotColumns} data={slots} selectedRow={slotId} setSelectedRow={(row) => setSlotId(row.values['SlotID'])} TableName="Slots" identifierColumn={'SlotID'}/> : <><p>Sorry! No matching slots found.</p><br/></>}
-                                <br/>
-                                {(slotId !== '') ? <button type='submit' className='but_' onClick={(e) => handleSubmit(e)}>Schedule</button> : ''}
-                            </>
-                            )
-                        }
-                    </div>
-                </form>
+                    <Col sm={{offset: 3, size: 6}}> Select{(patientId!=='')?"ed":""} Doctor ID: {docId}</Col>
+                    {(doctors.length > 0) ? <TableContainer columns={doctorColumns} data={doctors} selectedRow={docId} setSelectedRow={(row) => setDocId(row.values['id'])} TableName="Doctors" identifierColumn={'id'}/> : <><p>Sorry! Unable to fetch Doctor data from server.</p><br/></>}
+                    <br/>
+                    <hr/>
+                    <br/>
+                    <Row className='align-items-center'>
+                    </Row>
+                    <Row className='align-items-center'>
+                        <Label sm={{offset: 0.5, size: 3}} for="app_date"> Select Date: </Label>
+                        <Col sm={4}><Input type="date" id="app_date" sm="8" value={date} onChange={(e) => setDate(e.target.value)}></Input></Col>
+                        <Label check sm={{offset:2, size:3}}>
+                            Emergency? {' '}
+                            <Input type="checkbox" checked={emergency} onClick={()=>setEmergency(!emergency)} style={{backgroundColor: 'red', border: '2px solid red'}}/>
+                        </Label>
+                    </Row>
+                    <br/>
+                    {
+                        showSlots && (
+                        <>
+                            <hr/>
+                            <Col sm={{offset: 3, size: 6}}> Select{(slotId!=='')?"ed":""} Slot ID: {slotId}</Col>
+                            {(slots.length > 0) ? <TableContainer columns={slotColumns} data={slots} selectedRow={slotId} setSelectedRow={(row) => setSlotId(row.values['SlotID'])} TableName="Slots" identifierColumn={'SlotID'}/> : <><p>Sorry! No matching slots found.</p><br/></>}
+                            <br/>
+                            {(slotId !== '') ? <button type='submit' className='but_' onClick={(e) => handleSubmit(e)}>Schedule</button> : ''}
+                        </>
+                        )
+                    }
+                </div>
             </header>
         </div >
     );

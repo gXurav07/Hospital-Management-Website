@@ -128,8 +128,8 @@ function ScheduleTest(props) {
                         <h1>Schedule Test</h1>
                         <hr/>
                     <div className='form_wrapper'>
-                        <Col sm={{offset: 3, size: 6}}> Select{(testId!=='') ? 'ed' : ''} {testId} </Col>
-                        {(tests.length > 0) ? <TableContainer columns={testColumns} data={tests} selectedRow={testId} setSelectedRow={(row) => setTestId(row.values['Test_instanceID'])} identifierColumn={'Test_instanceID'}/> : <div>No tests to schedule</div> }
+                        <Col sm={{offset: 3, size: 6}}> Select{(testId!=='') ? 'ed' : ''} Test ID: {testId} </Col>
+                        {(tests.length > 0) ? <TableContainer columns={testColumns} data={tests} selectedRow={testId} setSelectedRow={(row) => setTestId(row.values['Test_instanceID'])} TableName="Tests" identifierColumn={'Test_instanceID'}/> : <div>No tests to schedule</div> }
                         {
                             showSlots && (
                                 <>
@@ -141,7 +141,7 @@ function ScheduleTest(props) {
                                     </Row>
                                     <br/>
                                     <hr/>
-                                    <Col sm={{offset: 3, size: 6}}> Select{(slotId!=='') ? 'ed' : ''} {slotId} </Col>
+                                    <Col sm={{offset: 3, size: 6}}> Select{(slotId!=='') ? 'ed' : ''} Slot ID: {slotId} </Col>
                                     {(slots.length > 0) ? <TableContainer columns={slotColumns} data={slots} selectedRow={slotId} setSelectedRow={(row) => setSlotId(row.values['SlotID'])} TableName="Slots" identifierColumn={'SlotID'}/> : <div>Sorry! No matching slots found.</div> }
                                     <br/>
                                     <button type='submit' className='but_' onClick={(e) => handleSubmit(e)}>Schedule</button>

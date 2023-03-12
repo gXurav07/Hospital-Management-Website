@@ -153,8 +153,8 @@ function ScheduleTreatment(props) {
                     <h1>Schedule Treatment</h1>
                     <hr/>
                     <div className='form_wrapper'>
-                        <Col sm={{offset: 3, size: 6}}> Select{(treatmentId!=='') ? 'ed' : ''} {treatmentId} </Col>
-                        {(treatments.length > 0) ? <TableContainer columns={treatmentColumns} data={treatments} selectedRow={treatmentId} setSelectedRow={handleTableSelect} identifierColumn={'TreatmentID'}/> : <div>No treatments to schedule</div> }
+                        <Col sm={{offset: 3, size: 6}}> Select{(treatmentId!=='') ? 'ed' : ''} Treatment ID: {treatmentId} </Col>
+                        {(treatments.length > 0) ? <TableContainer columns={treatmentColumns} data={treatments} selectedRow={treatmentId} setSelectedRow={handleTableSelect} TableName="Treatments" identifierColumn={'TreatmentID'}/> : <div>No treatments to schedule</div> }
                         <br/>
                         <hr/>
                         <Row className='align-items-center'>
@@ -166,7 +166,7 @@ function ScheduleTreatment(props) {
                                 <>
                                     <br/>
                                     <hr/>
-                                    <Col sm={{offset: 3, size: 6}}> Select{(slotId!=='') ? 'ed' : ''} {slotId} </Col>
+                                    <Col sm={{offset: 3, size: 6}}> Select{(slotId!=='') ? 'ed' : ''} Slot ID: {slotId} </Col>
                                     {(slots.length > 0) ? <TableContainer columns={slotColumns} data={slots} selectedRow={slotId} setSelectedRow={(row) => setSlotId(row.values['SlotID'])} TableName="Slots" identifierColumn={'SlotID'}/> : <div>Sorry! No matching slots found.</div> }
                                     <br/>
                                     {(slotId !== '') ? <button type='submit' className='but_' onClick={(e) => handleSubmit(e)}>Schedule</button> : ''}
