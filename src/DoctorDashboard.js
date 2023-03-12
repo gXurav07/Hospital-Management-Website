@@ -96,13 +96,13 @@ function DoctorDashboard(props) {
       <header className="App-header">
         <h1>Doctor Dashboard</h1>
         <hr />
+        <h2>Your Patients' Appointment History</h2>
       </header>
       <div className="App-body">
         <div className="doctor_dashboard">
 
           {/* {patients ? <Table data={patients} /> : <br />} */}
-          <h1>Your Patients' Appointment History</h1>
-          <Col sm={{ offset: 3, size: 6 }}> Select{(pid !== '') ? "ed" : ""} Patient ID: {pid}</Col>
+          <Col className='my-col' sm={{ offset: 3, size: 6 }}> Select{(pid !== '') ? "ed" : ""} Patient ID: {pid}</Col>
           {patients ? <TableContainer columns={patient_columns} data={patients} selectedRow={pid} setSelectedRow={handleTableSelect} identifierColumn="id" TableName="Patients" /> : <br />}
 
           <div className='form_wrapper'>
@@ -120,7 +120,7 @@ function DoctorDashboard(props) {
             {pid ? <Prescribe server_addr={server_addr} pid={pid} did={did} appointmentid={appointmentid} date={date} /> : console.log('no patient selected')}
             {/* <Link to="prescribe"><button align='center'>Prescribe</button></Link> */}
           </div>
-          <h1>Future Appointments</h1>
+          <h2>Future Appointments</h2>
           {upcoming ? <Table data={upcoming} /> : console.log('no entry found')}
         </div>
       </div>

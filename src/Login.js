@@ -52,64 +52,67 @@ export default function Login(props) {
         <h1>{props.name}</h1>
         <hr />
       </header>
-      <div className="main">
-        <input type="checkbox" id="chk" area-hidden="true" />
-        <div className="signup">
-          <form onSubmit={(e) => handleSignup(e)}>
-            <label htmlFor="chk" aria-hidden="true">Sign up</label>
-            <input type="text"
-              name="name"
-              required
-              placeholder="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <input type="email"
-              name="email"
-              required
-              placeholder="Email ID"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <input type="text"
-              name="empid"
-              required
-              placeholder="Employee ID"
-              value={empid}
-              onChange={(e) => setEmpid(e.target.value)}
-            />
-            <input type="password"
-              name="password"
-              required
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <button>Sign up</button>
-          </form>
-        </div>
 
-        <div className="login">
-          <form onSubmit={(e) => handleLogin(e)}>
-            <label htmlFor="chk" aria-hidden="true">Login</label>
-            <input type="text"
-              name="empid"
-              required
-              placeholder="Employee ID"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <input type="password"
-              name="password"
-              required
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <button>Login</button>
-          </form>
-        </div>
+      <div className="App-body">
+        <div className="main">
+          <input className="inp" type="checkbox" id="chk" area-hidden="true" />
+          <div className="signup">
+            <form onSubmit={(e) => handleSignup(e)}>
+              <label className="lab" htmlFor="chk" aria-hidden="true">Sign up</label>
+              <input className="inp" type="text"
+                name="name"
+                required
+                placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <input className="inp" type="email"
+                name="email"
+                required
+                placeholder="Email ID"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <input className="inp" type="text"
+                name="empid"
+                required
+                placeholder="Employee ID"
+                value={empid}
+                onChange={(e) => setEmpid(e.target.value)}
+              />
+              <input className="inp" type="password"
+                name="password"
+                required
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button>Sign up</button>
+            </form>
+          </div>
 
+          <div className="login">
+            <form onSubmit={(e) => handleLogin(e)}>
+              <label className="lab" htmlFor="chk" aria-hidden="true">Login</label>
+              <input className="inp" type="text"
+                name="empid"
+                required
+                placeholder="Employee ID"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <input className="inp" type="password"
+                name="password"
+                required
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button>Login</button>
+            </form>
+          </div>
+
+        </div>
       </div>
     </div>
   );

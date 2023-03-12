@@ -61,20 +61,20 @@ h4 {
   height: 100%;
 }
 
-label {
-  /* color: #fff; */
-  /* color: #683B2B; */
-  /* font-size: 2.3em;
+.lab {
+  color: #fff;
+  color: #683B2B;
+  font-size: 2.3em;
   justify-content: center;
   display: flex;
   margin: 60px;
   font-weight: bold;
   cursor: pointer;
-  transition: .5s ease-in-out; */
+  transition: .5s ease-in-out;
 }
 
-input {
-  /* width: 60%;
+.inp {
+  width: 60%;
   height: 20px;
   background: #e0dede;
   justify-content: center;
@@ -83,11 +83,12 @@ input {
   padding: 15px;
   border: none;
   outline: none;
-  border-radius: 5px; */
+  border-radius: 5px;
 }
 
 button {
   margin: 10px auto;
+  padding: 5px 10px;
   justify-content: center;
   display: block;
   color: #fff;
@@ -101,6 +102,7 @@ button {
   transition: .2s ease-in;
   cursor: pointer;
   text-decoration: none;
+  font-size: 20px;
 }
 
 button:hover {
@@ -134,7 +136,7 @@ button:hover {
 
 /* LOGIN END */
 
-/* DOCTOR DASHBOARD START */
+/* TABLE START */
 .patient_list {
   border-radius: 10px;
   padding: 10px;
@@ -165,60 +167,65 @@ tr.selected:hover {
   background-color: #B08401;
   color: #fff;
 }
+/* TABLE END */
+
+.my-col{
+  font-size: 1.5rem;
+}
 
 .doctor_dashboard .form_wrapper {
-  color: #683B2B;
+  /* color: #683B2B;
   width: 75rem;
   margin: 50px auto;
   padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
 }
 
 .doctor_dashboard h1 {
-  margin-top: 100px;
-  margin-bottom: 50px;
+  /* margin-top: 100px;
+  margin-bottom: 50px; */
 }
 
 .doctor_dashboard form {
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
 }
 
 .doctor_dashboard label {
-  color: #683B2B;
+  /* color: #683B2B;
   font-size: 30px;
   margin: 0px;
-  font-weight: bold;
+  font-weight: bold; */
 }
 
 .doctor_dashboard input {
-  padding: 20px;
+  /* padding: 20px;
   font-size: 20px;
   border: none;
   border-radius: 5px;
-  margin-bottom: 20px;
+  margin-bottom: 20px; */
 }
 
 .doctor_dashboard .button_row {
-  font-size: 20px;
+  /* font-size: 20px;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 20px; */
 }
 
 .doctor_dashboard button {
-  margin: auto 20px;
+  /* margin: auto 20px;
   padding: 0px 20px;
   color: #fff;
   border: none;
   border-radius: 5px;
-  cursor: pointer;
+  cursor: pointer; */
 }
 
 .doctor_dashboard .but_ {
-  margin: auto;
+  /* margin: auto;
   font-size: 20px;
-  width: 200px;
+  width: 200px; */
 }
 
 /* DOCTOR DASHBOARD END */
@@ -240,7 +247,7 @@ tr.selected:hover {
 
 .managedocs button {
   background-color: #B08401;
-  
+
   font-size: 20px;
 }
 
