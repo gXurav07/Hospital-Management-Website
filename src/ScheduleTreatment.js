@@ -15,35 +15,35 @@ function ScheduleTreatment(props) {
 
     useEffect(() => {
         // get all pending treatments from db
-        fetch('http://'+server_addr+'/front-desk/schedule-treatment', {
+        fetch('http://' + server_addr + '/front-desk/schedule-treatment', {
             method: 'GET',
-            headers: {"Content-Type": "application/json"}
+            headers: { "Content-Type": "application/json" }
         })
-        .then(res => {
-            return res.json();
-        })
-        .then(data => {
-            console.log("Treatment data: ", data);
-            setTreatments(data['treatments']);
-        });
+            .then(res => {
+                return res.json();
+            })
+            .then(data => {
+                console.log("Treatment data: ", data);
+                setTreatments(data['treatments']);
+            });
     }, []);
 
     useEffect(() => {
         console.log(['treatmentId:', treatmentId, 'docId', docId, 'date:', date]);
         if (treatmentId !== '' && date !== '') {
             // get slots matching PhysicianID from db
-            fetch('http://'+server_addr+'/front-desk/schedule-treatment/slots?docId='+docId+'&date='+date)
-            .then(res => {
-                return res.json();
-            })
-            .then(data => {
-                console.log("Slot data: ", data);
-                if(data.hasOwnProperty('slots')) {
-                    setSlots(data['slots']);
-                    setShowSlots(true);
-                    setSlotId('');
-                }
-            });
+            fetch('http://' + server_addr + '/front-desk/schedule-treatment/slots?docId=' + docId + '&date=' + date)
+                .then(res => {
+                    return res.json();
+                })
+                .then(data => {
+                    console.log("Slot data: ", data);
+                    if (data.hasOwnProperty('slots')) {
+                        setSlots(data['slots']);
+                        setShowSlots(true);
+                        setSlotId('');
+                    }
+                });
         }
         else {
             setShowSlots(false);
@@ -60,9 +60,9 @@ function ScheduleTreatment(props) {
         console.log("Submit clicked:", ['treatmentID:', treatmentId, 'docId', docId, 'date:', date, 'slotId:', slotId]);
         if (treatmentId !== '' && docId !== '' && date !== '' && slotId !== '') {
             // post to db
-            fetch('http://'+server_addr+'/front-desk/schedule-treatment/slots', {
+            fetch('http://' + server_addr + '/front-desk/schedule-treatment/slots', {
                 method: 'POST',
-                headers: {"Content-Type": "application/json"},
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     treatment_id: treatmentId,
                     physician_id: docId,
@@ -70,24 +70,24 @@ function ScheduleTreatment(props) {
                     slot_id: slotId
                 })
             })
-            .then(res => {
-                return res.json();
-            })
-            .then(data => {
-                console.log("Treatment schedule data: ", data);
-                if(data['message']=='OK') {
-                    alert('Treatment scheduled successfully!');
-                    const updatedTreatments = treatments.filter(treatment => treatment['TreatmentID'] !== treatmentId)
-                    setTreatments(updatedTreatments);
-                    setTreatmentId([]);
-                    setDate('');
-                    setSlotId('');
-                    setShowSlots(false);
-                }
-                else {
-                    alert('Error scheduling treatment!');
-                }
-            });
+                .then(res => {
+                    return res.json();
+                })
+                .then(data => {
+                    console.log("Treatment schedule data: ", data);
+                    if (data['message'] == 'OK') {
+                        alert('Treatment scheduled successfully!');
+                        const updatedTreatments = treatments.filter(treatment => treatment['TreatmentID'] !== treatmentId)
+                        setTreatments(updatedTreatments);
+                        setTreatmentId([]);
+                        setDate('');
+                        setSlotId('');
+                        setShowSlots(false);
+                    }
+                    else {
+                        alert('Error scheduling treatment!');
+                    }
+                });
         }
         else {
             alert('Please select all fields!');
@@ -133,49 +133,51 @@ function ScheduleTreatment(props) {
             Header: 'Slot ID',
             accessor: 'SlotID',
             Cell: ({ cell: { value } }) => value || "-",
-                    },
+        },
         {
             Header: 'Start Time',
             accessor: 'Start',
             Cell: ({ cell: { value } }) => value || "-",
-                    },
+        },
         {
             Header: 'End Time',
             accessor: 'End',
             Cell: ({ cell: { value } }) => value || "-",
-                    }
+        }
     ];
 
     return (
         <div className='App'>
             <header className='App-header'>
+                <h1>Schedule Treatment</h1>
+                <hr />
+            </header>
+            <div className='App-body'>
                 <form className='doctor-dashboard'>
-                    <h1>Schedule Treatment</h1>
-                    <hr/>
                     <div className='form_wrapper'>
-                        <Col sm={{offset: 3, size: 6}}> Select{(treatmentId!=='') ? 'ed' : ''} Treatment ID: {treatmentId} </Col>
-                        {(treatments.length > 0) ? <TableContainer columns={treatmentColumns} data={treatments} selectedRow={treatmentId} setSelectedRow={handleTableSelect} TableName="Treatments" identifierColumn={'TreatmentID'}/> : <div>No treatments to schedule</div> }
-                        <br/>
-                        <hr/>
+                        <Col sm={{ offset: 3, size: 6 }}> Select{(treatmentId !== '') ? 'ed' : ''} Treatment ID: {treatmentId} </Col>
+                        {(treatments.length > 0) ? <TableContainer columns={treatmentColumns} data={treatments} selectedRow={treatmentId} setSelectedRow={handleTableSelect} TableName="Treatments" identifierColumn={'TreatmentID'} /> : <div>No treatments to schedule</div>}
+                        <br />
+                        <hr />
                         <Row className='align-items-center'>
-                            <Col sm={{offset: 2, size: 3}} className="justify-content-end"><Label for="app_date"> Select Date: </Label></Col>
+                            <Col sm={{ offset: 2, size: 3 }} className="justify-content-end"><Label for="app_date"> Select Date: </Label></Col>
                             <Col sm={4}><Input type="date" id="app_date" sm="8" value={date} onChange={(e) => setDate(e.target.value)}></Input></Col>
                         </Row>
                         {
                             showSlots && (
                                 <>
-                                    <br/>
-                                    <hr/>
-                                    <Col sm={{offset: 3, size: 6}}> Select{(slotId!=='') ? 'ed' : ''} Slot ID: {slotId} </Col>
-                                    {(slots.length > 0) ? <TableContainer columns={slotColumns} data={slots} selectedRow={slotId} setSelectedRow={(row) => setSlotId(row.values['SlotID'])} TableName="Slots" identifierColumn={'SlotID'}/> : <div>Sorry! No matching slots found.</div> }
-                                    <br/>
+                                    <br />
+                                    <hr />
+                                    <Col sm={{ offset: 3, size: 6 }}> Select{(slotId !== '') ? 'ed' : ''} Slot ID: {slotId} </Col>
+                                    {(slots.length > 0) ? <TableContainer columns={slotColumns} data={slots} selectedRow={slotId} setSelectedRow={(row) => setSlotId(row.values['SlotID'])} TableName="Slots" identifierColumn={'SlotID'} /> : <div>Sorry! No matching slots found.</div>}
+                                    <br />
                                     {(slotId !== '') ? <button type='submit' className='but_' onClick={(e) => handleSubmit(e)}>Schedule</button> : ''}
                                 </>
                             )
                         }
                     </div>
                 </form>
-            </header>
+            </div>
         </div>
     );
 }

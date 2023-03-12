@@ -12,27 +12,30 @@ function ManageDocs(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const type='doctor';
-    const doc = {name, employeeid, position, department, email, password, type};
+    const type = 'doctor';
+    const doc = { name, employeeid, position, department, email, password, type };
 
-    fetch('http://'+server_addr+'/admin',{
-        method: 'POST',
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(doc)
+    fetch('http://' + server_addr + '/admin', {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(doc)
     })
-    .then(res => {
-      return res.json();
-    })
-    .then(data => {
-      console.log("operation status: ", data['message']);
-    });
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        console.log("operation status: ", data['message']);
+      });
   }
 
   return (
     <div className="App">
       <header className="App-header">
+        <h1>Add a Doctor</h1>
+        <hr />
+      </header>
+      <div className="App-body">
         <div className="managedocs">
-          <h1>Add a Doctor</h1>
           <form onSubmit={handleSubmit}>
             <label>Name:</label>
             <input type="text" placeholder="Enter Name of Doctor" required value={name} onChange={(e) => setName(e.target.value)} />
@@ -57,7 +60,7 @@ function ManageDocs(props) {
             <button>Add Doctor</button>
           </form>
         </div>
-      </header>
+      </div>
     </div>
   );
 }

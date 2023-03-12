@@ -12,24 +12,24 @@ export default function Login(props) {
   const type = props.type;
   const server_addr = props.server_addr;
 
-  const signup = {name, email, empid, password, type};
-  const login = {email, password, type};
+  const signup = { name, email, empid, password, type };
+  const login = { email, password, type };
 
   const handleSignup = (e) => {
     e.preventDefault();
     console.log("Sent signup details!", signup)
-    fetch('http://'+server_addr+'/login',{
+    fetch('http://' + server_addr + '/login', {
       method: 'POST',
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(signup)
-  })
-  .then(res => {
-    return res.json();
-  })
-  .then(data => {
-    console.log("signup status ", data);
-    // setStatus(data);
-  });
+    })
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        console.log("signup status ", data);
+        // setStatus(data);
+      });
   }
 
   const handleLogin = (e) => {
@@ -50,68 +50,67 @@ export default function Login(props) {
     <div className="App">
       <header className="App-header">
         <h1>{props.name}</h1>
-        <br/>
-        <div className="main">
-          <input type="checkbox" id="chk" area-hidden="true"/>
-
-          <div className="signup">
-            <form onSubmit={(e) => handleSignup(e)}>
-					    <label htmlFor="chk" aria-hidden="true">Sign up</label>
-					    <input type="text" 
+        <hr />
+      </header>
+      <div className="main">
+        <input type="checkbox" id="chk" area-hidden="true" />
+        <div className="signup">
+          <form onSubmit={(e) => handleSignup(e)}>
+            <label htmlFor="chk" aria-hidden="true">Sign up</label>
+            <input type="text"
               name="name"
-              required 
+              required
               placeholder="Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              />
-              <input type="email" 
+            />
+            <input type="email"
               name="email"
-              required 
+              required
               placeholder="Email ID"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              />
-					    <input type="text" 
+            />
+            <input type="text"
               name="empid"
-              required 
+              required
               placeholder="Employee ID"
               value={empid}
               onChange={(e) => setEmpid(e.target.value)}
-              />
-					    <input type="password" 
+            />
+            <input type="password"
               name="password"
               required
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              />
-					    <button>Sign up</button>
-				    </form>
-          </div>
+            />
+            <button>Sign up</button>
+          </form>
+        </div>
 
-          <div className="login">
-				    <form onSubmit={(e) => handleLogin(e)}>
-					    <label htmlFor="chk" aria-hidden="true">Login</label>
-					    <input type="text" 
+        <div className="login">
+          <form onSubmit={(e) => handleLogin(e)}>
+            <label htmlFor="chk" aria-hidden="true">Login</label>
+            <input type="text"
               name="empid"
-              required 
+              required
               placeholder="Employee ID"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              />
-					    <input type="password" 
+            />
+            <input type="password"
               name="password"
               required
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              />
-					    <button>Login</button>
-				    </form>
-			    </div>
-
+            />
+            <button>Login</button>
+          </form>
         </div>
-      </header>
+
+      </div>
     </div>
   );
 }
