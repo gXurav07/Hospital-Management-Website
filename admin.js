@@ -7,7 +7,7 @@ const adminRouter = express.Router();
 adminRouter
 .route('/')
 .post(createEntity)
-//.delete(deleteEntity);
+.delete(deleteEntity);
   
 async function createEntity(req, res){
     
@@ -76,6 +76,51 @@ async function createEntity(req, res){
     res.status(result.status).send(result);
 
   
+}
+
+async function deleteEntity(req, res){
+    const entity = req.body;
+    const type = req.body.type;
+    let sql_query = '';
+    let result = null;
+
+    try{
+        if(type == 'user'){
+            sql_query =  `DELETE FROM User WHERE EmployeeID = '${entity.employeeid}'; `;
+        }
+        else if(type == 'doctor'){
+            sql_query =  `DELETE FROM Physician WHERE PhysicianID = '${entity.physicianid}'; `;
+        }
+        else if(type == 'data-entry'){
+            sql_query =  `DELETE FROM DataEntry WHERE EmployeeID = '${entity.employeeid}'; `;
+        }
+        else if(type == 'front-desk'){
+            sql_query =  `DELETE FROM FrontDesk WHERE EmployeeID = '${entity.employeeid}'; `;
+        }
+        else if(type=='medication'){
+            sql_query = `DELETE FROM Medication WHERE MedicationID = ${entity.medicationid}; `;
+        }
+        else if(type=='department'){
+            sql_query = `DELETE FROM Department WHERE DepartmentID = ${entity.departmentid}; `;
+        }
+        else if(type=='test'){
+            sql_query = `DELETE FROM Test WHERE TestID = '${entity.testid}'; `;
+        }
+        else if(type=='treatment'){
+            sql_query = `DELETE FROM Treatment_Description WHERE Treatment_DescriptionID = ${entity.treatmentid}; `;
+        }
+        else{
+            res.status(400).send({message: 'Invalid type'});
+            return;
+        }
+    }
+    catch(err){
+        res.status(400).send({message: 'Invalid request'});
+        return;
+    }
+
+    result = await executeQuery(sql_query, req);
+    res.status(result.status).send(result);
 }
 
 

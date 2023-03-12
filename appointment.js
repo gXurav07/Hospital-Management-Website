@@ -68,24 +68,41 @@ async function getSlots(req, res){
     res.status(result.status).send(result);
 }
 
+
+
 async function addAppointment(req, res){
     const {date, slotID, docID, patientSSN, overwrite} = req.body;
+    
     let sql_query = '', result = {};
-    if(overwrite == 'true'){
+    console.log(req.body);
+    if(overwrite == true){
+        console.log('Overwrite ho raha hai');
+
+
         // send mail to previous patient
-        sql_query = `SELECT Patient.Patient_SSN, Email FROM Appointment NATURAL JOIN Patient WHERE Date=${date} AND SlotID=${slotID} AND PhysicianID=${docID};`;
+        sql_query = `SELECT Patient.Patient_SSN, Email FROM Appointment NATURAL JOIN Patient WHERE Date='${date}' AND SlotID=${slotID} AND PhysicianID='${docID}';`;
         result = await executeQuery(sql_query, req, res);
         if(result.status != 200){
             res.status(result.status).send(result);
             return;
-        }   
+        }  
+        console.log(result);
+        
+        if(result.rows.length == 0){
+            res.status(500).send({message: 'internal error'});
+            return;
+        }
         const prevPatientSSN = result.rows[0]['Patient_SSN'], prevPatientEmail = result.rows[0]['Email'];
         
         // ************ send mail to previous patient ************
+ 
+  
 
         sql_query = `UPDATE Appointment SET Patient_SSN=${patientSSN} WHERE Date='${date}' AND SlotID=${slotID} AND PhysicianID='${docID}';`;
         result = await executeQuery(sql_query, req, res);
         res.status(result.status).send(result);
+
+        console.log('Overwrite result: ', result);
 
 
     }
