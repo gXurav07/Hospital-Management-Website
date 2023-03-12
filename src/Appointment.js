@@ -16,6 +16,7 @@ function Appointment(props) {
     const [emergency, setEmergency] = useState(false);
 
     const server_addr = props.server_addr;
+    let overwrite = false;
 
     useEffect(() => {
         // get all patients and doctors from db
@@ -59,6 +60,13 @@ function Appointment(props) {
         e.preventDefault();
         console.log("Submit clicked:", ['docId:', docId, 'patientId:', patientId, 'date:', date, 'slotId:', slotId]);
         if (docId !== '' && patientId !== '' && date !== '' && slotId !== '') {
+            if(emergency) {
+                const slot = slots.find(slot => slot.SlotID === slotId);
+                console.log("Slot: ", slot);
+                if(slot['booked'] === true) {
+                    overwrite = true;
+                }
+            }
             // post to db
             fetch('http://' + server_addr + '/front-desk/appointment/slots', {
                 method: 'POST',
@@ -67,7 +75,8 @@ function Appointment(props) {
                     docID: docId,
                     patientSSN: patientId,
                     date: date,
-                    slotID: slotId
+                    slotID: slotId,
+                    overwrite: overwrite
                 })
             })
                 .then(res => {
@@ -82,6 +91,7 @@ function Appointment(props) {
                         setPatientId('');
                         setSlotId('');
                         setShowSlots(false);
+                        setEmergency(false);
                     }
                     else {
                         alert("Appointment creation failed");
@@ -172,7 +182,7 @@ function Appointment(props) {
         {
             Header: 'Status',
             accessor: 'booked',
-            Cell: ({ cell: { value } }) => value || "-",
+            Cell: ({ cell: { value } }) => value ? "Busy": "Free" || "-",
             Filter: SelectColumnFilter,
             invisible: !emergency
         }
