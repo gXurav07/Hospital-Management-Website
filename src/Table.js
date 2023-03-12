@@ -1,5 +1,12 @@
+import React, {useEffect, useState} from 'react';
+
 function Table({ data }) {
+  // const [datal, setDatal] = useState(data)
   const headers = Object.keys(data[0] || {});
+
+  useEffect(() => {
+    // console.log("change encountered!");
+  }, [data])
 
   return (
     <div className="patient_list">
