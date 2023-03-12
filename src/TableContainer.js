@@ -44,7 +44,7 @@ export default function TableContainer({ columns, data, TableName , selectedRow,
         </tr>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
+            {headerGroup.headers.map((column) => !column.invisible && (
               <th {...column.getHeaderProps()}>
                 {column.render("Header")}
                 {/* rendering column filter */}
@@ -60,9 +60,9 @@ export default function TableContainer({ columns, data, TableName , selectedRow,
           return (
             <tr {...row.getRowProps()} onClick={()=> setSelectedRow(row)}
               className={selectedRow === row.values[identifierColumn]? "selected": ""}>
-              {row.cells.map((cell) => {
-                return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
-              })}
+              {row.cells.map((cell) => 
+                !cell.column.invisible && <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+              )}
             </tr>
           );
         })}
