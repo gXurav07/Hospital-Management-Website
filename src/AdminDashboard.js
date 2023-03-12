@@ -21,12 +21,11 @@ function AdminDashboard(props) {
         <hr />
       </header>
       <div className="App-body">
-        <div className="container_home">
+        <div className="container_home2"> 
           <Link to="managedocs" className="box"><button>Add Doctor</button></Link>
           <Link to="managedocsd" className="box"><button>Delete Doctor</button></Link>
           <Link to="manageops" className="box"><button>Add Data Operators</button></Link>
           <Link to="manageopsd" className="box"><button>Delete Data Operators</button></Link>
-
           <Link to="medication" className="box"><button>Add Medication</button></Link>
           <Link to="treatment" className="box"><button>Add Treatment</button></Link>
           <Link to="test" className="box"><button>Add Test</button></Link>
