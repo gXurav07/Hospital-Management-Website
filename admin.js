@@ -22,8 +22,8 @@ async function createEntity(req, res){
                             `VALUES('${entity.employeeid}', '${entity.name}', '${entity.email}', ${entity.user_type}, '${entity.password}', '${entity.iv}'); `;
         }
         else if(type == 'doctor'){
-            sql_query =  `INSERT INTO Physician(PhysicianID, Name, Position, SSN) `+
-                            `VALUES('${entity.employeeid}', '${entity.name}', '${entity.position}', 23213); `;
+            sql_query =  `INSERT INTO Physician(PhysicianID, Position) `+
+                            `VALUES('${entity.physicianid}', '${entity.position}'); `;
             result = await executeQuery(sql_query, res, connection);
 
             if(result.status != 200){
@@ -31,8 +31,8 @@ async function createEntity(req, res){
                 return;
             }
 
-            sql_query  = `INSERT INTO Affiliated_with(Physician, Department, PrimaryAffiliation) `+
-                        `VALUES('${entity.employeeid}', ${entity.department}, False);`;
+            sql_query  = `INSERT INTO Affiliated_with(Physician, Department) `+
+                        `VALUES('${entity.physicianid}', ${entity.department});`;
 
                             
         }
@@ -40,9 +40,13 @@ async function createEntity(req, res){
             sql_query =  `INSERT INTO DataEntry(EmployeeID, Name, Address) `+
                         `VALUES('${entity.employeeid}', '${entity.name}', '${entity.address}'); `;
         }
+        else if(type == 'front-desk'){
+            sql_query =  `INSERT INTO FrontDesk(EmployeeID, Name, Address) `+
+                        `VALUES('${entity.employeeid}', '${entity.name}', '${entity.address}'); `;
+        }
         else if(type=='medication'){
-            sql_query = `INSERT INTO Medication(MedicationID, Medicationn_Name, Brand, Description) `+
-                        `VALUES('${entity.medicationid}', '${entity.name}', '${entity.brand}', '${entity.description}'); `;
+            sql_query = `INSERT INTO Medication(MedicationID, Medication_Name, Brand, Description) `+
+                        `VALUES(${entity.medicationid}, '${entity.name}', '${entity.brand}', '${entity.description}'); `;
 
         }
         else if(type=='department'){
@@ -55,7 +59,7 @@ async function createEntity(req, res){
         }
         else if(type=='treatment'){
             sql_query = `INSERT INTO Treatment_Description(Treatment_DescriptionID, Desc_Name, Cost) `+
-                        `VALUES('${entity.treatmentid}', '${entity.name}', '${entity.cost}'); `;
+                        `VALUES(${entity.treatmentid}, '${entity.name}', '${entity.cost}'); `;
         }
         else{
             res.status(400).send({message: 'Invalid type'});
