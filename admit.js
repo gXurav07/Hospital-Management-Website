@@ -5,24 +5,58 @@ const { executeQuery } = require('./db');
 
 admitRouter
 .route('/')
-.get(get_roomno)
+.get(get_patient_roomno)
 .post(admit_patient);
 
-function get_roomno(req, res)
-{
-    const sql_query = `SELECT RoomID as FROM Room WHERE Unavailable=false;`;
-    const result = executeQuery(sql_query, req, res);
-    res.status(result.status).send(result);
+async function get_patient_roomno(req, res){
+    let sql_query = '', result = {}, data = {};
+    // get non-admitted patients
+    sql_query = `SELECT Patient_SSN AS id, Patient_Name, Address, Age, Gender FROM Patient WHERE Patient_SSN NOT IN (SELECT Patient_SSN FROM Stay WHERE End IS NULL);`;
+    result = await executeQuery(sql_query, req);
+    if(result.status != 200){
+        res.status(result.status).send(result);
+        return;
+    }
+    data['patients'] = result.rows;
+
+
+    // get available rooms
+    sql_query = `SELECT RoomID AS id FROM Room WHERE Unavailable=false;`;
+    result = await executeQuery(sql_query, req);
+    if(result.status != 200){
+        res.status(result.status).send(result);
+        return;
+    }
+    data['rooms'] = result.rows;
+    res.status(200).send(data);
 }
 
-function admit_patient(req,res)
+async function admit_patient(req, res)
 {
-    const patient=req.body.patient_id;
-    const room=req.body.room_id;
-    const date=req.body.date;
-    const sql_query=`INSERT INTO Stay VALUES(${patient},${room},${date},NULL)`;
-    const result = executeQuery(sql_query, req, res);
-    res.status(result.status).send(result);
+    console.log(req.body);
+    
+    try{
+        const {patient, room} = req.body;
+        const date = new Date().toISOString().slice(0, 10).replace('T', ' ');
+        let sql_query=`INSERT INTO Stay(Patient_SSN, RoomID, Start, End) VALUES('${patient}', ${room}, '${date}', NULL)`;
+        let result = await executeQuery(sql_query, req);
+        
+
+
+        if(result.status != 200){
+            res.status(result.status).send(result);
+            return;
+        }
+        
+        sql_query=`UPDATE Room SET Unavailable=true WHERE RoomID=${room}`;
+        result = await executeQuery(sql_query, req);
+
+        res.status(result.status).send(result);
+        return;
+    }
+    catch(err){
+        res.status(500).send({status: 500, message: err.message});
+    }
 }
 
 module.exports = admitRouter;

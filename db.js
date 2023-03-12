@@ -30,6 +30,7 @@ function executeQuery(sql_query, req){
                 return;
             }
             
+      
             connection.query(sql_query, (err, rows, fields) => {
                 if(err){
                     status= 400; message = 'SQL query error';
@@ -38,6 +39,7 @@ function executeQuery(sql_query, req){
                 connection.release();
                 resolve({status, message, rows});
             });
+            
             
         });
     });

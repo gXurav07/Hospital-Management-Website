@@ -39,14 +39,14 @@ function executeQuery(sql_query, pool){
                 resolve({status, message, rows});
             });
             
-        });
+        }); 
     });
 }
 
 async function test(){
     // "SELECT * FROM Test_instance;"
     // "Update Test_instance SET Date=null AND SlotID=null;"
-    let sql_query = "SELECT * FROM Test_instance;"
+    let sql_query = "SELECT * FROM Stay;"
 
     let data = await executeQuery(sql_query, pool);
     console.log(data);
