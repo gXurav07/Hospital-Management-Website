@@ -23,7 +23,7 @@
 .App-body {
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   text-align: left;
   flex-grow: 1;
   margin: 2rem;

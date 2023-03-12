@@ -2,6 +2,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  color: #683B2B;
 }
 
 h1,
@@ -62,7 +63,7 @@ h4 {
 
 label {
   /* color: #fff; */
-  color: #683B2B;
+  /* color: #683B2B; */
   /* font-size: 2.3em;
   justify-content: center;
   display: flex;
@@ -90,7 +91,6 @@ button {
   justify-content: center;
   display: block;
   color: #fff;
-  /* background: #573b8a; */
   background-color: #B08401;
   font-size: 1em;
   font-weight: bold;
@@ -104,7 +104,6 @@ button {
 }
 
 button:hover {
-  /* background: #6d44b8; */
   background: #D49E8D;
 }
 
@@ -230,43 +229,50 @@ tr.selected:hover {
 
 .managedocs form {
   padding: 20px;
-  max-width: 600px;
-  margin: 0 auto;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  width: 600px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
 }
 
 .managedocs label {
   font-size: 20px;
-  display: block;
-  margin-bottom: -5px;
+}
+
+.managedocs button {
+  background-color: #B08401;
+  
+  font-size: 20px;
+}
+
+.managedocs button:hover {
+  background-color: #D49E8D;
 }
 
 .managedocs input {
-  width: 300px;
+  /* width: 300px;
   padding: 20px;
   font-size: 15px;
   margin-bottom: 0px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box;
+  box-sizing: border-box; */
 }
 
 .managedocs select {
-  width: 300px;
+  /* width: 300px;
   padding: 10px;
   font-size: 15px;
   margin-top: 20px;
   margin-bottom: 0px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box;
+  box-sizing: border-box; */
 }
 
 .managedocs select {
-  height: 45px;
+  /* height: 45px; */
 }
 
 .managedocs button {
-  font-size: 20px;
-  width: 200px;
+  /* width: 50%; */
 }
