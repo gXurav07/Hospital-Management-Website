@@ -105,21 +105,19 @@ function DoctorDashboard(props) {
           <Col className='my-col' sm={{ offset: 3, size: 6 }}> Select{(pid !== '') ? "ed" : ""} Patient ID: {pid}</Col>
           {patients ? <TableContainer columns={patient_columns} data={patients} selectedRow={pid} setSelectedRow={handleTableSelect} identifierColumn="id" TableName="Patients" /> : <br />}
 
-          <div className='form_wrapper'>
-            <form>
-              <label>Get Patient Details:</label>
-              <input type="text" placeholder="Enter Patient ID...." required value={pid} onChange={(e) => setPid(e.target.value)} />
-              <div className='button_row'>
-                <button onClick={(e) => handleQuery(e, 'treatment')}>Treatment</button>
-                <button onClick={(e) => handleQuery(e, 'medication')}>Medicine Prescribed</button>
-                <button onClick={(e) => handleQuery(e, 'appointment')}>Appointment History</button>
-                <button onClick={(e) => handleQuery(e, 'test')}>Test Result</button>
-              </div>
-            </form>
-            {result ? <Table data={result} /> : console.log('no entry found')}
-            {pid ? <Prescribe server_addr={server_addr} pid={pid} did={did} appointmentid={appointmentid} date={date} /> : console.log('no patient selected')}
-            {/* <Link to="prescribe"><button align='center'>Prescribe</button></Link> */}
-          </div>
+          <form>
+            <label>Get Patient Details:</label>
+            <input type="text" placeholder="Enter Patient ID...." required value={pid} onChange={(e) => setPid(e.target.value)} />
+            <div className='button_row'>
+              <button onClick={(e) => handleQuery(e, 'treatment')}>Treatment</button>
+              <button onClick={(e) => handleQuery(e, 'medication')}>Medicine Prescribed</button>
+              <button onClick={(e) => handleQuery(e, 'appointment')}>Appointment History</button>
+              <button onClick={(e) => handleQuery(e, 'test')}>Test Result</button>
+            </div>
+          </form>
+          {result ? <Table data={result} /> : console.log('no entry found')}
+          {pid ? <Prescribe server_addr={server_addr} pid={pid} did={did} appointmentid={appointmentid} date={date} /> : console.log('no patient selected')}
+          {/* <Link to="prescribe"><button align='center'>Prescribe</button></Link> */}
           <h2>Future Appointments</h2>
           {upcoming ? <Table data={upcoming} /> : console.log('no entry found')}
         </div>

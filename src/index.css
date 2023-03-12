@@ -206,11 +206,11 @@ tr.selected:hover {
   margin-bottom: 20px; */
 }
 
-.doctor_dashboard .button_row {
-  /* font-size: 20px;
+.button_row {
+  font-size: 20px;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px; */
+  margin-bottom: 20px;
 }
 
 .doctor_dashboard button {
@@ -247,7 +247,6 @@ tr.selected:hover {
 
 .managedocs button {
   background-color: #B08401;
-
   font-size: 20px;
 }
 
