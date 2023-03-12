@@ -15,7 +15,7 @@ frontDeskRouter
 frontDeskRouter
 .route('/discharge')
 .post(discharge_patient);
-
+ 
 
 
 function discharge_patient(req,res)

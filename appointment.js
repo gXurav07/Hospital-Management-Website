@@ -37,16 +37,63 @@ async function getSlots(req, res){
                     `(SELECT SlotID FROM Appointment WHERE Date='${req_date}' and PhysicianID='${doc_id}') `+
                     `AND SlotID NOT IN (SELECT SlotID FROM Treatment WHERE Date='${req_date}' and PhysicianID='${doc_id}');`;
 
-    const result = await executeQuery(sql_query, req, res);
+    let result = await executeQuery(sql_query, req, res);
     result['slots'] = result['rows']; result['rows'] = undefined;
+
+
+    if(req.query.emergency == 'true'){
+        sql_query = 'SELECT SlotID,Start,End FROM Slot;';
+        let temp = result;
+        result = await executeQuery(sql_query, req);
+        result['slots'] = result['rows']; result['rows'] = undefined;
+        
+
+        for(let i in result['slots']){
+            let slot = result['slots'][i];
+            let found = false;
+            for(let j in temp['slots']){
+                if(slot['SlotID'] == temp['slots'][j]['SlotID']){
+                    found = true;
+                    break;
+                }
+            }
+            
+            if(found)
+                result['slots'][i]['booked'] = false;
+            else
+                result['slots'][i]['booked'] = true;
+        }
+    }
+
     res.status(result.status).send(result);
 }
 
 async function addAppointment(req, res){
-    const {date, slotID, docID, patientSSN} = req.body;
-    let sql_query = `INSERT INTO Appointment (Date, SlotID, PhysicianID, Patient_SSN) VALUES ('${date}', ${slotID}, '${docID}', ${patientSSN});`;
-    const result = await executeQuery(sql_query, req, res);
-    res.status(result.status).send(result);
+    const {date, slotID, docID, patientSSN, overwrite} = req.body;
+    let sql_query = '', result = {};
+    if(overwrite == 'true'){
+        // send mail to previous patient
+        sql_query = `SELECT Patient.Patient_SSN, Email FROM Appointment NATURAL JOIN Patient WHERE Date=${date} AND SlotID=${slotID} AND PhysicianID=${docID};`;
+        result = await executeQuery(sql_query, req, res);
+        if(result.status != 200){
+            res.status(result.status).send(result);
+            return;
+        }   
+        const prevPatientSSN = result.rows[0]['Patient_SSN'], prevPatientEmail = result.rows[0]['Email'];
+        
+        // ************ send mail to previous patient ************
+
+        sql_query = `UPDATE Appointment SET Patient_SSN=${patientSSN} WHERE Date='${date}' AND SlotID=${slotID} AND PhysicianID='${docID}';`;
+        result = await executeQuery(sql_query, req, res);
+        res.status(result.status).send(result);
+
+
+    }
+    else{
+        sql_query = `INSERT INTO Appointment (Date, SlotID, PhysicianID, Patient_SSN) VALUES ('${date}', ${slotID}, '${docID}', ${patientSSN});`;
+        const result = await executeQuery(sql_query, req, res);
+        res.status(result.status).send(result);
+    }
 }
 
 
