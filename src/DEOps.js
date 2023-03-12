@@ -5,19 +5,18 @@ function DEOps() {
     return (
         <div className="App">
             <header className="App-header">
-                <div className="heading">
-                    <h1>Data Entry Operator Dashboard</h1>
-                    <hr />
-                    <br />
-                </div>
+                <h1>Data Entry Operator Dashboard</h1>
+                <hr />
+            </header>
+            <div className="App-body">
                 <div className="container_home">
                     <Link to="scheduleTest" className="box"><button>Schedule Tests</button></Link>
                     <Link to="scheduleTreatment" className="box"><button>Schedule Treatments</button></Link>
                     <Link to="testResult" className="box"><button>Test Results</button></Link>
                     <Link to="treatmentResult" className="box"><button>Treatment Results</button></Link>
                 </div>
-            </header>
-        </div>
+            </div>
+        </div >
     );
 }
 export default DEOps;

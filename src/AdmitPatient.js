@@ -29,7 +29,7 @@ function AdmitPatient(props) {
             Header: 'Name',
             accessor: 'Patient_Name',
             Cell: ({ cell: { value } }) => value || "-",
-        },
+                    },
         {
             Header: 'Age',
             accessor: 'Age',
@@ -66,7 +66,7 @@ function AdmitPatient(props) {
 
     const handleAdmit = (e) => {
         e.preventDefault();
-        const admit_patient = {patient: patientId, room: roomId};
+        const admit_patient = { patient: patientId, room: roomId };
         console.log(admit_patient);
         if(patientId !== '' && roomId !== '') {
             console.log(admit_patient);
@@ -91,8 +91,11 @@ function AdmitPatient(props) {
     return (
         <div className="App">
             <header className="App-header">
+                <h1>Admit a Patient</h1>
+                <hr />
+            </header>
+            <div className="App-body">
                 <div className="doctor_dashboard">
-                    <h1>Admit a Patient</h1>
                     {/* {patients ? <Table data={patients} /> : <br />} */}
                     <div className='form_wrapper'>
                         {/* <label>ID:</label> */}
@@ -106,7 +109,7 @@ function AdmitPatient(props) {
                         <button type='submit' className='box' onClick={(e)=>handleAdmit(e)}>Admit</button>
                     </div>
                 </div>
-            </header>
+            </div>
         </div >
     );
 }

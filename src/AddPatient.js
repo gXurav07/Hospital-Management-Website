@@ -14,7 +14,7 @@ function AddPatient(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const doc = { ssn, name, addr, gender, age, phone, insuranceID, pcp};
+        const doc = { ssn, name, addr, gender, age, phone, insuranceID, pcp };
 
         fetch('http://' + server_addr + '/doctors', {
             method: 'POST',
@@ -26,8 +26,11 @@ function AddPatient(props) {
     return (
         <div className="App">
             <header className="App-header">
+                <h1>Add a Patient</h1>
+                <hr />
+            </header>
+            <div className="App-body">
                 <div className="managedocs">
-                    <h1>Add a Patient</h1>
                     <form onSubmit={handleSubmit}>
                         <label>SSN:</label>
                         <input type="text" placeholder="Enter patient SSN....." required value={ssn} onChange={(e) => setSSN(e.target.value)} />
@@ -52,7 +55,7 @@ function AddPatient(props) {
                         <button>Add Patient</button>
                     </form>
                 </div>
-            </header>
+            </div>
         </div>
     );
 }

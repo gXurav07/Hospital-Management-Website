@@ -16,13 +16,13 @@ function TreatmentResult(props) {
             method: 'GET',
             headers: { "Content-Type": "application/json" }
         })
-        .then(res => {
-            return res.json();
-        })
-        .then(data => {
-            console.log("Treatment data: ", data);
-            if(data.hasOwnProperty('treatments')) setTreatments(data['treatments']);
-        });
+            .then(res => {
+                return res.json();
+            })
+            .then(data => {
+                console.log("Treatment data: ", data);
+                if (data.hasOwnProperty('treatments')) setTreatments(data['treatments']);
+            });
     }, []);
 
     useEffect(() => {
@@ -58,6 +58,8 @@ function TreatmentResult(props) {
             <header className='App-header'>
                 <h1>Upload Treatment results</h1>
                 <hr />
+            </header>
+            <div className='App-body'>
                 <Col sm={{ offset: 3, size: 6 }}> Select{(treatmentId !== '') ? 'ed' : ''} Treatment: {treatmentId} </Col>
                 {(treatments.length > 0) ? <TableContainer columns={treatmentColumns} data={treatments} selectedRow={treatmentId} setSelectedRow={(row) => setTreatmentId(row.values['id'])} identifierColumn={'id'} /> : <div>No new treatments scheduled</div>}
                 <hr />
@@ -67,14 +69,14 @@ function TreatmentResult(props) {
                             <FormGroup row>
                                 <Label for="remarks" sm={3}>Remarks:</Label>
                                 <Col sm={9}>
-                                    <Input type="textarea" name="text" id="remarks" style={{maxHeight: '20vh'}}/>
+                                    <Input type="textarea" name="text" id="remarks" style={{ maxHeight: '20vh' }} />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
                                 <Label for="status" sm={3}>Status:</Label>
                                 <Col sm={9}>
                                     <Label check >
-                                        <Input type="checkbox" id="status" checked={success} onClick={()=>setSuccess(!success)} style={{backgroundColor: 'green'}}/>
+                                        <Input type="checkbox" id="status" checked={success} onClick={() => setSuccess(!success)} style={{ backgroundColor: 'green' }} />
                                         {' '} Successfull?
                                     </Label>
                                 </Col>
@@ -87,7 +89,7 @@ function TreatmentResult(props) {
                         </Form>
                     )
                 }
-            </header>
+            </div>
         </div>
     );
 }

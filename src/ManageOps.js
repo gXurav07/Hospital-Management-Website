@@ -8,20 +8,23 @@ function ManageOps(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const op = {name, role};
+    const op = { name, role };
 
-    fetch('http://'+server_addr+'/operator',{
-        method: 'POST',
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(op)
-    }).then(() => console.log("Added Operator!", op) );
+    fetch('http://' + server_addr + '/operator', {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(op)
+    }).then(() => console.log("Added Operator!", op));
   }
 
   return (
     <div className="App">
       <header className="App-header">
+        <h1>Add an Operator</h1>
+        <hr />
+      </header>
+      <div className="App-body">
         <div className="managedocs">
-          <h1>Add an Operator</h1>
           <form onSubmit={handleSubmit}>
             <label>Name:</label>
             <input type="text" placeholder="Enter name...." required value={name} onChange={(e) => setName(e.target.value)} />
@@ -33,7 +36,7 @@ function ManageOps(props) {
             <button>Add Operator</button>
           </form>
         </div>
-      </header>
+      </div>
     </div>
   );
 }
