@@ -7,7 +7,7 @@ import { checkAuth } from './useToken';
 
 function AdminDashboard(props) {
   const server_addr = props.server_addr;
-  const [token, setToken] = useState(JSON.parse(sessionStorage.getItem('token'))); 
+  const [token, setToken] = useState(JSON.parse(sessionStorage.getItem('token')));
   // useEffect(() => {
   //   checkAuth();
   // }, [])
@@ -17,12 +17,11 @@ function AdminDashboard(props) {
   return (
     <div className="App">
       <header className="App-header">
-        <div className="heading">
-          <h1>Admin Dashboard</h1>
-          <hr/>
-          <br/>
-        </div>
-        <div className="s">
+        <h1>Admin Dashboard</h1>
+        <hr />
+      </header>
+      <div className="App-body">
+        <div className="container_home">
           <Link to="managedocs" className="box"><button>Add Doctor</button></Link>
           <Link to="managedocsd" className="box"><button>Delete Doctor</button></Link>
           <Link to="manageops" className="box"><button>Add Data Operators</button></Link>
@@ -33,7 +32,7 @@ function AdminDashboard(props) {
           <Link to="test" className="box"><button>Test</button></Link>
           <Link to="department" className="box"><button>Department</button></Link>
         </div>
-      </header>
+      </div>
     </div>
   );
 }

@@ -13,7 +13,7 @@ function AdmitPatient(props) {
     const server_addr = props.server_addr;
 
     useEffect(() => {
-      setPatients(jsonData['patients']);
+        setPatients(jsonData['patients']);
     }, []);
 
     // useEffect(() => {
@@ -44,34 +44,37 @@ function AdmitPatient(props) {
             Header: 'Patient SSN',
             accessor: 'id',
             Cell: ({ cell: { value } }) => value || "-",
-                    },
+        },
         {
             Header: 'Name',
             accessor: 'Patient_Name',
             Cell: ({ cell: { value } }) => value || "-",
-                    },
+        },
         {
             Header: 'Age',
             accessor: 'Age',
             Cell: ({ cell: { value } }) => value || "-",
-                        Filter: SelectColumnFilter,
+            Filter: SelectColumnFilter,
         },
         {
             Header: 'Gender',
             accessor: 'Gender',
             Cell: ({ cell: { value } }) => value || "-",
-                        Filter: SelectColumnFilter,
+            Filter: SelectColumnFilter,
         }
     ];
 
     return (
         <div className="App">
             <header className="App-header">
+                <h1>Discharge a Patient</h1>
+                <hr />
+            </header>
+            <div className="App-body">
                 <div className="doctor_dashboard">
-                    <h1>Discharge a Patient</h1>
-                    <Col sm={{offset: 3, size: 6}}> Select{(patientId!=='')?"ed":""} Patient ID: {patientId}</Col>
-                    {(patients.length >0) ? <TableContainer columns={patientColumns} data={patients} selectedRow={patientId} setSelectedRow={(row) => setPatientId(row.values['id'])} TableName="Patients" identifierColumn={'id'}/> : <><p>Sorry! Unable to fetch Patient data from server.</p><br/></>}
-                    <br/>
+                    <Col sm={{ offset: 3, size: 6 }}> Select{(patientId !== '') ? "ed" : ""} Patient ID: {patientId}</Col>
+                    {(patients.length > 0) ? <TableContainer columns={patientColumns} data={patients} selectedRow={patientId} setSelectedRow={(row) => setPatientId(row.values['id'])} TableName="Patients" identifierColumn={'id'} /> : <><p>Sorry! Unable to fetch Patient data from server.</p><br /></>}
+                    <br />
                     <div className='form_wrapper'>
                         <form>
                             {/* <label>ID:</label> */}
@@ -80,7 +83,7 @@ function AdmitPatient(props) {
                         </form>
                     </div>
                 </div>
-            </header>
+            </div>
         </div >
     );
 }

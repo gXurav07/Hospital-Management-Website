@@ -15,13 +15,13 @@ function TestResult(props) {
             method: 'GET',
             headers: { "Content-Type": "application/json" }
         })
-        .then(res => {
-            return res.json();
-        })
-        .then(data => {
-            console.log("Test data: ", data);
-            if(data.hasOwnProperty('tests')) setTests(data['tests']);
-        });
+            .then(res => {
+                return res.json();
+            })
+            .then(data => {
+                console.log("Test data: ", data);
+                if (data.hasOwnProperty('tests')) setTests(data['tests']);
+            });
     }, []);
 
     useEffect(() => {
@@ -39,24 +39,26 @@ function TestResult(props) {
             Header: 'Test ID',
             accessor: 'id',
             Cell: ({ cell: { value } }) => value || "-",
-                    },
+        },
         {
             Header: 'Name',
             accessor: 'Test_Name',
             Cell: ({ cell: { value } }) => value || "-",
-                    },
+        },
         {
             Header: 'Patient',
             accessor: 'Patient_Name',
             Cell: ({ cell: { value } }) => value || "-",
-                    }
+        }
     ];
 
     return (
-       <div className='App'>
-            <div className='App-header'>
+        <div className='App'>
+            <header className='App-header'>
                 <h1>Upload Test results</h1>
                 <hr />
+            </header>
+            <div className='App-body'>
                 <Col sm={{ offset: 3, size: 6 }}> Select{(testId !== '') ? 'ed' : ''} Test: {testId} </Col>
                 {(tests.length > 0) ? <TableContainer columns={testColumns} data={tests} setRowId={setTestId} /> : <div>No tests scheduled</div>}
                 <hr />
@@ -66,7 +68,7 @@ function TestResult(props) {
                             <FormGroup row>
                                 <Label for="remarks" sm={3}>Remarks</Label>
                                 <Col sm={9}>
-                                    <Input type="textarea" name="text" id="remarks" style={{maxHeight: '20vh'}}/>
+                                    <Input type="textarea" name="text" id="remarks" style={{ maxHeight: '20vh' }} />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>

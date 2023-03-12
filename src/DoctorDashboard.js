@@ -59,48 +59,51 @@ function DoctorDashboard(props) {
       Header: 'Appointment ID',
       accessor: 'id',
       Cell: ({ cell: { value } }) => value || "-",
-            // Filter: SelectColumnFilter
+      // Filter: SelectColumnFilter
     },
     {
       Header: 'Patient ID',
       accessor: 'Patient_SSN',
       Cell: ({ cell: { value } }) => value || "-",
-          },
-    {
-        Header: 'Name',
-        accessor: 'Patient_Name',
-        Cell: ({ cell: { value } }) => value || "-",
-            },
-    {
-        Header: 'Age',
-        accessor: 'Age',
-        Cell: ({ cell: { value } }) => value || "-",
-                Filter: SelectColumnFilter,
     },
     {
-        Header: 'Gender',
-        accessor: 'Gender',
-        Cell: ({ cell: { value } }) => value || "-",
-                Filter: SelectColumnFilter,
+      Header: 'Name',
+      accessor: 'Patient_Name',
+      Cell: ({ cell: { value } }) => value || "-",
+    },
+    {
+      Header: 'Age',
+      accessor: 'Age',
+      Cell: ({ cell: { value } }) => value || "-",
+      Filter: SelectColumnFilter,
+    },
+    {
+      Header: 'Gender',
+      accessor: 'Gender',
+      Cell: ({ cell: { value } }) => value || "-",
+      Filter: SelectColumnFilter,
     },
     {
       Header: 'Date',
       accessor: 'Date',
       Cell: ({ cell: { value } }) => value || "-",
-            Filter: SelectColumnFilter
-  }
-];
+      Filter: SelectColumnFilter
+    }
+  ];
 
   return (
     <div className="App">
       <header className="App-header">
+        <h1>Doctor Dashboard</h1>
+        <hr />
+      </header>
+      <div className="App-body">
         <div className="doctor_dashboard">
 
-          <h1>Doctor Dashboard</h1>
           {/* {patients ? <Table data={patients} /> : <br />} */}
           <h1>Your Patients' Appointment History</h1>
-          <Col sm={{offset: 3, size: 6}}> Select{(pid!=='')?"ed":""} Patient ID: {pid}</Col>
-          {patients ? <TableContainer columns={patient_columns} data={patients} selectedRow={pid} setSelectedRow={handleTableSelect} identifierColumn="id" TableName="Patients"/> : <br />}
+          <Col sm={{ offset: 3, size: 6 }}> Select{(pid !== '') ? "ed" : ""} Patient ID: {pid}</Col>
+          {patients ? <TableContainer columns={patient_columns} data={patients} selectedRow={pid} setSelectedRow={handleTableSelect} identifierColumn="id" TableName="Patients" /> : <br />}
 
           <div className='form_wrapper'>
             <form>
@@ -113,14 +116,14 @@ function DoctorDashboard(props) {
                 <button onClick={(e) => handleQuery(e, 'test')}>Test Result</button>
               </div>
             </form>
-            {result ? <Table data={result}/> : console.log('no entry found')}
-            {pid ? <Prescribe server_addr={server_addr} pid={pid} did={did} appointmentid={appointmentid} date={date}/> : console.log('no patient selected')}
+            {result ? <Table data={result} /> : console.log('no entry found')}
+            {pid ? <Prescribe server_addr={server_addr} pid={pid} did={did} appointmentid={appointmentid} date={date} /> : console.log('no patient selected')}
             {/* <Link to="prescribe"><button align='center'>Prescribe</button></Link> */}
           </div>
           <h1>Future Appointments</h1>
-          {upcoming ? <Table data={upcoming}/> : console.log('no entry found')}
+          {upcoming ? <Table data={upcoming} /> : console.log('no entry found')}
         </div>
-      </header>
+      </div>
     </div >
   );
 }

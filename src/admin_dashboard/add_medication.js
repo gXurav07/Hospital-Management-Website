@@ -29,8 +29,11 @@ function AddMedication(props) {
     return (
         <div className="App">
             <header className="App-header">
+                <h1>Add Medication</h1>
+                <hr />
+            </header>
+            <div className="App-body">
                 <div className="managedocs">
-                    <h1>Add Medication</h1>
                     <form onSubmit={handleSubmit}>
                         <label>Name:</label>
                         <input type="text" placeholder="Enter name of medication....." required value={name} onChange={(e) => setName(e.target.value)} />
@@ -43,7 +46,7 @@ function AddMedication(props) {
                         <button>Add Medication</button>
                     </form>
                 </div>
-            </header>
+            </div>
         </div>
     );
 }

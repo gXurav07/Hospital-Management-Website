@@ -40,8 +40,11 @@ function ManageDocsD(props) {
   return (
     <div className="App">
       <header className="App-header">
+        <h1>Delete Doctor</h1>
+        <hr />
+      </header>
+      <div className="App-body">
         <div className="doctor_dashboard">
-          <h1>Delete Doctor</h1>
           {patients ? <Table data={patients} /> : <br />}
           <div className='form_wrapper'>
             <form>
@@ -52,7 +55,7 @@ function ManageDocsD(props) {
           </div>
           {result ? <Table data={result} /> : <br />}
         </div>
-      </header>
+      </div>
     </div >
   );
 }
