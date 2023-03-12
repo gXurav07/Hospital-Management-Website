@@ -31,4 +31,32 @@ INSERT INTO Stay(Patient_SSN,RoomID,Start,End) VALUES(${Patient_SSN},${Room_id},
 -- Discharging a patient 
 UPDATE Stay SET End=${End} WHERE Patient_SSN=${Patient_SSN} and End is NULL
 
+-- query for getting mail id of a particular doctor
+SELECT Email FROM User WHERE EmployeeID=${EmployeeID};
+
+-- query for getting all patients of a particular doctor
+SELECT Patient_Name,Patient_SSN,Email,Test.Result as "Test Result",Test.Test_image as "Test Image",Test.Date as "Test Date",Desc_Name as "Treatment Name",Treatment.Date as "Treatment Date" FROM Patient NATURAL JOIN Physician NATURAL JOIN Appointment,Test,Treatment,Treatment_Description WHERE PhysicianID=${PhysicianID} and Test.Patient_SSN=Patient_SSN and Treatment.Patient_SSN=Patient_SSN and Treatment.Treatment_DescriptionID=Treatment_Description.Treatment_DescriptionID;
+Here is an example code in Node.js to handle the result of the SQL query and transform it into text for sending mail:
+
+// Assuming that the result of the SQL query is stored in a variable called 'result'
+
+let mailText = `Dear Physician,\n\nHere are the details of your patients:\n\n`;
+
+// Loop through each row in the result and add it to the mailText
+result.forEach(row => {
+  mailText += `Patient Name: ${row.Patient_Name}\n`;
+  mailText += `Patient SSN: ${row.Patient_SSN}\n`;
+  mailText += `Email: ${row.Email}\n`;
+  mailText += `Test Result: ${row.Test Result}\n`;
+  mailText += `Test Image: ${row.Test Image}\n`;
+  mailText += `Test Date: ${row.Test Date}\n`;
+  mailText += `Treatment Name: ${row.Treatment Name}\n`;
+  mailText += `Treatment Date: ${row.Treatment Date}\n\n`;
+});
+
+// Add closing message to the mailText
+mailText += `Thank you,\nYour Hospital`;
+
+// Now you can use the mailText to send an email to the physician using a library like Nodemailer
+
 
