@@ -16,6 +16,7 @@ export default function Login(props) {
     let status;
     e.preventDefault();
     console.log("login details!", type, id, password);
+    console.log(`http://${server_addr}/login/?type=${type}&id=${id}&pass=${password}`);
     fetch(`http://${server_addr}/login/?type=${type}&id=${id}&pass=${password}`)
       .then(res => {
         return res.json();
@@ -25,7 +26,7 @@ export default function Login(props) {
         status = data;
         if (data.success === true) {
           alert("logged in!", status.message);
-          props.onLogin();
+          props.onLogin(id);
           sessionStorage.setItem('token', JSON.stringify({ logged_in: true, type: type }));
           navigate(`/user${type}`);
         } else {
@@ -52,8 +53,8 @@ export default function Login(props) {
               <Label for="type" sm={3}>Type:</Label>
               <Col sm={9}>
                 <Input type="select" name="type" id="type" value={type} onChange={(e) => setType(e.target.value)}>
-                  <option value={1}>Front-End</option>
-                  <option value={2}>Data-Entry</option>
+                  <option value={1}>Front-Desk Operator</option>
+                  <option value={2}>Data-Entry Operator</option>
                   <option value={3}>Doctor</option>
                   <option value={4}>Administrator</option>
                 </Input>
@@ -72,35 +73,11 @@ export default function Login(props) {
               </Col>
             </FormGroup>
             <FormGroup row>
-              <Col sm={{ size: 9, offset: 4 }}>
+              <Col sm={{ size: 9, offset: 5 }}>
                 <Button type="submit" color="primary">Login</Button>
               </Col>
             </FormGroup>
           </Form>
-          {/* <form onSubmit={(e) => handleLogin(e)}>
-            <label>Login</label>
-            <select value={type} onChange={(e) => setType(e.target.value)}>
-              <option value={1}>Front-End</option>
-              <option value={2}>Data-Entry</option>
-              <option value={3}>Doctor</option>
-              <option value={4}>Administrator</option>
-            </select>
-            <input type="text"
-              name="empid"
-              required
-              placeholder="Employee ID"
-              value={id}
-              onChange={(e) => setId(e.target.value)}
-            />
-            <input type="password"
-              name="password"
-              required
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <button>Login</button>
-          </form> */}
         </div>
 
       </div>
