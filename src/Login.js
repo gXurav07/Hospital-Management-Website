@@ -16,6 +16,7 @@ export default function Login(props) {
     let status;
     e.preventDefault();
     console.log("login details!", type, id, password);
+    console.log(`http://${server_addr}/login/?type=${type}&id=${id}&pass=${password}`);
     fetch(`http://${server_addr}/login/?type=${type}&id=${id}&pass=${password}`)
       .then(res => {
         return res.json();
@@ -25,7 +26,7 @@ export default function Login(props) {
         status = data;
         if (data.success === true) {
           alert("logged in!", status.message);
-          props.onLogin();
+          props.onLogin(id);
           sessionStorage.setItem('token', JSON.stringify({ logged_in: true, type: type }));
           navigate(`/user${type}`);
         } else {

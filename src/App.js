@@ -34,8 +34,9 @@ import PrivateRoute from "./PrivateRoute";
 import { Button } from "reactstrap";
 
 function App() {
-  const server_addr = "10.147.167.202:3000";
+  const server_addr = "10.145.192.224:3000";
   const [ userType, setUserType ] = useState();
+  const [ userId, setUserId ] = useState();
   const [ status, setStatus ] = useState(JSON.parse(sessionStorage.getItem('token')));
   const { token, setToken } = useToken();
   function handleTypeChange (type){setUserType(type)}
@@ -61,7 +62,7 @@ function App() {
             {/* Primary Routes */}
             <Route path="user1" element={<PrivateRoute type={1}> <FDOps server_addr={server_addr}/></PrivateRoute>} />
             <Route path="user2" element={<PrivateRoute type={2}> <DEOps server_addr={server_addr}/></PrivateRoute>} />
-            <Route path="user3" element={<PrivateRoute type={3}> <DoctorDashboard server_addr={server_addr}/></PrivateRoute>} />
+            <Route path="user3" element={<PrivateRoute type={3}> <DoctorDashboard did={userId} server_addr={server_addr}/></PrivateRoute>} />
             <Route path="user4" element={<PrivateRoute type={4}> <AdminDashboard server_addr={server_addr}/></PrivateRoute>} />
 
             {/* Secondary Routes */}            
@@ -89,7 +90,12 @@ function App() {
             <Route path="user4/medication" element={<PrivateRoute type={4}> <AddMedication server_addr={server_addr}/></PrivateRoute>} />
             <Route path="user4/department" element={<PrivateRoute type={4}> <AddDepartment server_addr={server_addr}/></PrivateRoute>} />
 
-          <Route exact path='/login' element ={<Login server_addr={server_addr} onLogin={() => setStatus(JSON.parse(sessionStorage.getItem('token'))) }/>}/>
+          <Route exact path='/login' element ={<Login server_addr={server_addr} onLogin={ (id) => 
+          {
+            setStatus(JSON.parse(sessionStorage.getItem('token')))
+            setUserId(id);            
+          }}/>
+        }/>
         </Routes>
     </BrowserRouter>
     </div>

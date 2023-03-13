@@ -16,6 +16,7 @@ function DoctorDashboard(props) {
   const [date, setDate] = useState();
 
   const server_addr = props.server_addr;
+  // const did = props.did;
 
   // useEffect(() => {
   //   setPatients(jsonData['doctors']);
