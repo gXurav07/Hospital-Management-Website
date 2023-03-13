@@ -89,7 +89,7 @@ function App() {
             <Route path="user4/medication" element={<PrivateRoute type={4}> <AddMedication server_addr={server_addr}/></PrivateRoute>} />
             <Route path="user4/department" element={<PrivateRoute type={4}> <AddDepartment server_addr={server_addr}/></PrivateRoute>} />
 
-          <Route exact path='/login' element ={<Login onLogin={() => setStatus(JSON.parse(sessionStorage.getItem('token'))) }/>}/>
+          <Route exact path='/login' element ={<Login server_addr={server_addr} onLogin={() => setStatus(JSON.parse(sessionStorage.getItem('token'))) }/>}/>
         </Routes>
     </BrowserRouter>
     </div>

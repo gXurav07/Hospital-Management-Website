@@ -13,8 +13,7 @@ function ManageDocs(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const type = 'doctor';
-    const doc = { name, physicianid: employeeid, position, department : departmentId, type : 'doctor'};
+    const doc = { physicianid: employeeid, position, department : departmentId, type : 'doctor'};
 
     fetch('http://' + server_addr + '/admin', {
       method: 'POST',
@@ -40,25 +39,17 @@ function ManageDocs(props) {
         <div className="managedocs">
           <Form onSubmit={handleSubmit}>
             <FormGroup row>
-              <Label for="name" sm={3}>Name:</Label>
-              <Col sm={9}>
-                <Input type="text" name="name" id="name" placeholder="Enter name of doctor....." required value={name} onChange={(e) => setName(e.target.value)} />
-              </Col>
-            </FormGroup>
-            <FormGroup row>
               <Label for="employeeid" sm={3}>Employee ID:</Label>
               <Col sm={9}>
                 <Input type="text" name="employeeid" id="employeeid" placeholder="Enter employee ID of doctor....." required value={employeeid} onChange={(e) => setEmpid(e.target.value)} />
               </Col>
             </FormGroup>
             <FormGroup row>
-              <Label for="department" sm={3}>Department:</Label>
+              <Label for="department" sm={3}>Department ID:</Label>
               <Col sm={9}>
-                <Input type="select" name="department" id="department" value={departmentId} onChange={(e) => setDep(e.target.value)}>
-                  <option value={1}>Cardiology</option>
-                  <option value={2}>Neurology</option>
-                  <option value={3}>Surgery</option>
-                </Input>
+              <Col sm={9}>
+                <Input type="text" name="department" id="employeeid" placeholder="Enter department ID....." required value={departmentId} onChange={(e) => setDep(e.target.value)} />
+              </Col>
               </Col>
             </FormGroup>
             <FormGroup row>
@@ -69,18 +60,6 @@ function ManageDocs(props) {
                   <option value="senior">Senior Doctor</option>
                   <option value="resident">Resident Doctor</option>
                 </Input>
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Label for="email" sm={3}>Email ID:</Label>
-              <Col sm={9}>
-                <Input type="text" name="email" id="email" placeholder="Enter email ID of doctor....." required value={email} onChange={(e) => setEmail(e.target.value)} />
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Label for="password" sm={3}>Password:</Label>
-              <Col sm={9}>
-                <Input type="text" name="password" id="password" placeholder="Set password....." required value={password} onChange={(e) => setPassword(e.target.value)} />
               </Col>
             </FormGroup>
             <FormGroup check row>

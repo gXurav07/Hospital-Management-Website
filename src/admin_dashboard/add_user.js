@@ -5,7 +5,7 @@ function AddUser(props) {
     const [id, setID] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [user_type, setUserType] = useState(1);
+    const [user_type, setUserType] = useState(3);
     const [password, setPassword] = useState('');
 
     const server_addr = props.server_addr;
@@ -46,16 +46,16 @@ function AddUser(props) {
                         <FormGroup row>
                             <Label for="id" sm={3}>ID:</Label>
                             <Col sm={9}>
-                                <Input type="text" name="name" id="name" placeholder="Enter user id....." required value={name} onChange={(e) => setID(e.target.value)} />
+                                <Input type="text" name="name" id="name" placeholder="Enter user id....." required value={id} onChange={(e) => setID(e.target.value)} />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
                             <Label for="type" sm={3}>Type:</Label>
                             <Col sm={9}>
                                 <Input type="select" value={user_type} onChange={(e) => setUserType(e.target.value)}>
-                                    <option value={1}>Doctor</option>
-                                    <option value={2}>Front-Desk Operator</option>
-                                    <option value={3}>Data-Entry Operator</option>
+                                    <option value={3}>Doctor</option>
+                                    <option value={1}>Front-Desk Operator</option>
+                                    <option value={2}>Data-Entry Operator</option>
                                     <option value={4}>Administrator</option>
                                 </Input>
                             </Col>
@@ -63,13 +63,13 @@ function AddUser(props) {
                         <FormGroup row>
                             <Label for="email" sm={3}>Email ID:</Label>
                             <Col sm={9}>
-                                <Input type="text" name="email" id="email" placeholder="Enter email ID of doctor....." required value={email} onChange={(e) => setEmail(e.target.value)} />
+                                <Input type="text" name="email" id="email" placeholder="Enter email ID....." required value={email} onChange={(e) => setEmail(e.target.value)} />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
                             <Label for="password" sm={3}>Password:</Label>
                             <Col sm={9}>
-                                <Input type="text" name="password" id="password" placeholder="Set password....." required value={password} onChange={(e) => setPassword(e.target.value)} />
+                                <Input type="password" name="password" id="password" placeholder="Set password....." required value={password} onChange={(e) => setPassword(e.target.value)} />
                             </Col>
                         </FormGroup>
                         <FormGroup check row>

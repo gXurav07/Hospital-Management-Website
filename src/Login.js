@@ -15,30 +15,26 @@ export default function Login(props) {
   const handleLogin = (e) => {
     let status;
     e.preventDefault();
-    console.log("login details!", login);
-    // fetch('http://'+server_addr+'/login/?type='+type+'&id='+id+'&pass='+password)
-    // .then(res => {
-    //   return res.json();
-    // })
-    // .then(data => {
-    //     console.log("logged in!!!!", login);
-    //     status = data;
-    //     if(data['success']==true)
-    //     {
-    //       // props.onLogin(id);
-    //       sessionStorage.setItem('token', JSON.stringify({logged_in: true, type: type}));
-    //       navigate("/user"+type);
-    //     }
-    //     else
-    //     {
-    //       alert("Authentication Failed ", status['message']);
-    //     }
-    // });
-    props.onLogin();
-    sessionStorage.setItem('token', JSON.stringify({ logged_in: true, type: type }));
-    navigate("/user" + type);
-  }
-
+    console.log("login details!", type, id, password);
+    fetch(`http://${server_addr}/login/?type=${type}&id=${id}&pass=${password}`)
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        console.log("logged in!!!!", login, " hello ", data);
+        status = data;
+        if (data.success === true) {
+          alert("logged in!", status.message);
+          props.onLogin();
+          sessionStorage.setItem('token', JSON.stringify({ logged_in: true, type: type }));
+          navigate(`/user${type}`);
+        } else {
+          alert("Authentication Failed ", status.message);
+        }
+      });
+    console.log("logging in");
+  };
+  
   return (
     <div className="App">
       <header className="App-header">
