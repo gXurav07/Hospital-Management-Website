@@ -74,17 +74,21 @@ async function createEntity(req, res){
         else if(type == 'doctor'){
             sql_query =  `INSERT INTO Physician(PhysicianID, Position) `+
                             `VALUES('${entity.physicianid}', '${entity.position}'); `;
-            result = await executeQuery(sql_query, res, connection);
+
+            console.log(sql_query);
+            result = await executeQuery(sql_query, req);
+
+            console.log(result);
 
             if(result.status != 200){
                 res.status(result.status).send(result);
                 return;
             }
 
-            sql_query  = `INSERT INTO Affiliated_with(Physician, Department) `+
+            sql_query  = `INSERT INTO Affiliated_with(PhysicianID, Department) `+
                         `VALUES('${entity.physicianid}', ${entity.department});`;
 
-                            
+                             
         }
         else if(type == 'data-entry'){
             sql_query =  `INSERT INTO DataEntry(EmployeeID, Name, Address) `+
@@ -117,6 +121,7 @@ async function createEntity(req, res){
         }
     }
     catch(err){
+        console.log(err);
         res.status(400).send({message: 'Invalid request'});
         return;
     }
