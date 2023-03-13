@@ -31,6 +31,7 @@ const doctorRouter = require('./doctor');
 const loginRouter = require('./login');
 const adminRouter = require('./admin');
 const frontDeskRouter = require('./front-desk');
+const dataEntryRouter = require('./data-entry');
 
 
 
@@ -39,6 +40,7 @@ app.use('/doctor', doctorRouter);
 app.use('/login', loginRouter);
 app.use('/admin', adminRouter);
 app.use('/front-desk', frontDeskRouter);
+app.use('/data-entry', dataEntryRouter);
 
 
 // 404 Handler
