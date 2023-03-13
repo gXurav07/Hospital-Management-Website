@@ -18,20 +18,31 @@ function Appointment(props) {
     const server_addr = props.server_addr;
     let overwrite = false;
 
+    function getMinDate() {
+        const today = new Date();
+        return today.toISOString().substr(0, 10);
+    }
+
+    function getMaxDate() {
+        const today = new Date();
+        const twoMonthsLater = new Date(today.getFullYear(), today.getMonth() + 2, today.getDate());
+        return twoMonthsLater.toISOString().substr(0, 10);
+    }
+
     useEffect(() => {
         // get all patients and doctors from db
         fetch('http://' + server_addr + '/front-desk/appointment', {
             method: 'GET',
             headers: { "Content-Type": "application/json" }
         })
-            .then(res => {
-                return res.json();
-            })
-            .then(data => {
-                console.log("Patient and Doctor data: ", data);
-                setDoctors(data['doctors']);
-                setPatients(data['patients']);
-            });
+        .then(res => {
+            return res.json();
+        })
+        .then(data => {
+            console.log("Patient and Doctor data: ", data);
+            setDoctors(data['doctors']);
+            setPatients(data['patients']);
+        });
     }, []);
 
     useEffect(() => {
@@ -76,27 +87,27 @@ function Appointment(props) {
                     patientSSN: patientId,
                     date: date,
                     slotID: slotId,
-                    overwrite: overwrite
+                    overwrite: overwrite,
                 })
             })
-                .then(res => {
-                    return res.json();
-                })
-                .then(data => {
-                    console.log("Appointment data: ", data);
-                    if (data['message'] == 'OK') {
-                        alert("Appointment created successfully");
-                        setDate('');
-                        setDocId('');
-                        setPatientId('');
-                        setSlotId('');
-                        setShowSlots(false);
-                        setEmergency(false);
-                    }
-                    else {
-                        alert("Appointment creation failed");
-                    }
-                });
+            .then(res => {
+                return res.json();
+            })
+            .then(data => {
+                console.log("Appointment data: ", data);
+                if (data['message'] == 'OK') {
+                    alert("Appointment created successfully");
+                    setDate('');
+                    setDocId('');
+                    setPatientId('');
+                    setSlotId('');
+                    setShowSlots(false);
+                    setEmergency(false);
+                }
+                else {
+                    alert("Appointment creation failed");
+                }
+            });
         }
         else {
             alert("Please fill all the fields");
@@ -209,10 +220,10 @@ function Appointment(props) {
                     </Row>
                     <Row className='my-col align-items-center'>
                         <Label sm={{ offset: 0.5, size: 3 }} for="app_date"> Select Date: </Label>
-                        <Col sm={4}><Input type="date" id="app_date" sm="8" value={date} onChange={(e) => setDate(e.target.value)}></Input></Col>
+                        <Col sm={4}><Input type="date" min={getMinDate()} max={getMaxDate()} id="app_date" sm="8" value={date} onChange={(e) => setDate(e.target.value)}></Input></Col>
                         <Label check sm={{ offset: 2, size: 3 }}>
                             Emergency? {' '}
-                            <Input type="checkbox" checked={emergency} onClick={() => setEmergency(!emergency)} style={{ backgroundColor: 'red' }} />
+                            <Input type="checkbox" defaultChecked={false} checked={emergency} onClick={() => setEmergency(!emergency)} style={{ backgroundColor: 'red' }} />
                         </Label>
                     </Row>
                     <br />

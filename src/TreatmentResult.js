@@ -65,28 +65,30 @@ function TreatmentResult(props) {
                 <hr />
                 {
                     showForm && (
-                        <Form>
-                            <FormGroup row>
-                                <Label for="remarks" sm={3}>Remarks:</Label>
-                                <Col sm={9}>
-                                    <Input type="textarea" name="text" id="remarks" style={{ maxHeight: '20vh' }} />
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                                <Label for="status" sm={3}>Status:</Label>
-                                <Col sm={9}>
-                                    <Label check >
-                                        <Input type="checkbox" id="status" checked={success} onClick={() => setSuccess(!success)} style={{ backgroundColor: 'green' }} />
-                                        {' '} Successfull?
-                                    </Label>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup check row>
-                                <Col sm={{ size: 10, offset: 3 }}>
-                                    <Button sm={3}>Submit</Button>
-                                </Col>
-                            </FormGroup>
-                        </Form>
+                        <div className='managedocs'>
+                            <Form>
+                                <FormGroup row>
+                                    <Label for="remarks" sm={3}>Remarks:</Label>
+                                    <Col sm={9}>
+                                        <Input type="textarea" name="text" id="remarks" style={{ maxHeight: '25vh' }} />
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup row>
+                                    <Label for="status" sm={3}>Status:</Label>
+                                    <Col sm={9} className="d-flex align-items-center">
+                                        <Label check >
+                                            <Input type="checkbox" id="status" checked={success} onClick={() => setSuccess(!success)} style={{ backgroundColor: 'green' }} />
+                                            {' '} Successfull?
+                                        </Label>
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup check row>
+                                    <Col sm={{ size: 10, offset: 3 }}>
+                                        <Button sm={3}>Submit</Button>
+                                    </Col>
+                                </FormGroup>
+                            </Form>
+                        </div>
                     )
                 }
             </div>

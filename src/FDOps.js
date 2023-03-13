@@ -14,6 +14,8 @@ function FDOps() {
           <Link to="admitpatient" className="box"><button>Admit Patient</button></Link>
           <Link to="dischargepatient" className="box"><button>Discharge Patient</button></Link>
           <Link to="appointment" className="box"><button>Schedule an Appointment</button></Link>
+          <Link to="scheduleTest" className="box"><button>Schedule Tests</button></Link>
+          <Link to="scheduleTreatment" className="box"><button>Schedule Treatments</button></Link>
         </div>
       </div>
     </div>

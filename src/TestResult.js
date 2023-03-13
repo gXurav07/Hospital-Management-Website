@@ -6,12 +6,13 @@ function TestResult(props) {
     const [tests, setTests] = useState([]);
     const [testId, setTestId] = useState('');
     const [showForm, setShowForm] = useState(false);
+    const [file, setFile] = useState(null);
 
     const server_addr = props.server_addr;
 
     useEffect(() => {
         // get all scheduled tests from db
-        fetch('http://' + server_addr + '/front-desk/test-result', {
+        fetch('http://' + server_addr + '/data-entry/test-result', {
             method: 'GET',
             headers: { "Content-Type": "application/json" }
         })
@@ -37,11 +38,12 @@ function TestResult(props) {
     const testColumns = [
         {
             Header: 'Test ID',
-            accessor: 'id',
+            accessor: 'Test_instanceID',
             Cell: ({ cell: { value } }) => value || "-",
+            invisible: true,
         },
         {
-            Header: 'Name',
+            Header: 'Test Name',
             accessor: 'Test_Name',
             Cell: ({ cell: { value } }) => value || "-",
         },
@@ -49,8 +51,43 @@ function TestResult(props) {
             Header: 'Patient',
             accessor: 'Patient_Name',
             Cell: ({ cell: { value } }) => value || "-",
+        },
+        {
+            Header: 'Date',
+            accessor: 'Date',
+            Cell: ({ cell: { value } }) => value || "-",
+        },
+        {
+            Header: 'Time',
+            accessor: 'Start',
+            Cell: ({ cell: { value } }) => value || "-",
         }
     ];
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // const remarks = e.target.remarks.value;
+        // const formData = new FormData();
+        // formData.append('file', file);
+        // formData.append('remarks', remarks);
+        // formData.append('testId', testId);
+        // console.log("Form data: ", formData, file);
+        fetch('http://' + server_addr + '/data-entry/test-result', {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: FormData
+            // body: formData
+        })
+            .then(res => {
+                return res.json();
+            })
+            .then(data => {
+                console.log("Test data: ", data);
+            })
+            .catch(err => {
+                console.log("Error: ", err);
+            });
+    }
 
     return (
         <div className='App'>
@@ -59,33 +96,37 @@ function TestResult(props) {
                 <hr />
             </header>
             <div className='App-body'>
-                <Col sm={{ offset: 3, size: 6 }}> Select{(testId !== '') ? 'ed' : ''} Test: {testId} </Col>
-                {(tests.length > 0) ? <TableContainer columns={testColumns} data={tests} setRowId={setTestId} /> : <div>No tests scheduled</div>}
+                <Col className='my-col' sm={{ offset: 3, size: 6 }}> Select{(testId !== '') ? 'ed' : ''} Test: {testId} </Col>
+                {(tests.length > 0) ? <TableContainer columns={testColumns} data={tests} selectedRow={testId} setSelectedRow={(row) => setTestId(row.values['Test_instanceID'])} identifierColumn="Test_instanceID" /> : <div>No tests scheduled</div>}
+                <br />
                 <hr />
+                <br />
                 {
                     showForm && (
-                        <Form>
-                            <FormGroup row>
-                                <Label for="remarks" sm={3}>Remarks</Label>
-                                <Col sm={9}>
-                                    <Input type="textarea" name="text" id="remarks" style={{ maxHeight: '20vh' }} />
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                                <Label for="fileUpload" sm={3}>Upload File</Label>
-                                <Col sm={9}>
-                                    <Input type="file" name="file" id="fileUpload" />
-                                    <FormText color="muted">
-                                        max allowed file size is 10MB
-                                    </FormText>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup check row>
-                                <Col sm={{ size: 9, offset: 3 }}>
-                                    <Button sm={3}>Submit</Button>
-                                </Col>
-                            </FormGroup>
-                        </Form>
+                        <div className='managedocs'>
+                            <Form onSubmit={handleSubmit}>
+                                <FormGroup row>
+                                    <Label for="remarks" sm={3}>Remarks</Label>
+                                    <Col sm={9}>
+                                        <Input type="textarea" name="text" id="remarks" style={{ maxHeight: '25vh' }} />
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup row>
+                                    <Label for="fileUpload" sm={3}>Upload File</Label>
+                                    <Col sm={9}>
+                                        <Input type="file" onChange={(e)=>setFile(e.target.files[0])} name="file" id="fileUpload" />
+                                        <FormText color="muted">
+                                            max allowed file size is 10MB
+                                        </FormText>
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup check row>
+                                    <Col sm={{ size: 9, offset: 3 }}>
+                                        <Button sm={3} type="submit">Submit</Button>
+                                    </Col>
+                                </FormGroup>
+                            </Form>
+                        </div>
                     )
                 }
             </div>

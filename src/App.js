@@ -51,8 +51,8 @@ function App() {
             <Route path="user1/admitpatient" element={<AdmitPatient server_addr={server_addr}/>} />
             <Route path="user1/dischargepatient" element={<DischargePatient server_addr={server_addr}/>} />
             <Route path="user1/appointment" element={<Appointment server_addr={server_addr}/>} />
-            <Route path="user2/scheduleTest" element={<ScheduleTest server_addr={server_addr}/>} />
-            <Route path="user2/scheduleTreatment" element={<ScheduleTreatment server_addr={server_addr}/>} />
+            <Route path="user1/scheduleTest" element={<ScheduleTest server_addr={server_addr}/>} />
+            <Route path="user1/scheduleTreatment" element={<ScheduleTreatment server_addr={server_addr}/>} />
             <Route path="user2/testResult" element={<TestResult server_addr={server_addr}/>} />
             <Route path="user2/treatmentResult" element={<TreatmentResult server_addr={server_addr}/>} />
             {/* <Route path="user2/appointment" element={<Appointment server_addr={server_addr}/>} /> */}
