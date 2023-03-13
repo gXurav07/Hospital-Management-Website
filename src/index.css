@@ -219,6 +219,8 @@ tr.selected:hover {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+  padding: 20px;
+  gap: 20px;
 }
 
 .doctor_dashboard button {
