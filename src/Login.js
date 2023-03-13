@@ -17,25 +17,25 @@ export default function Login(props) {
     e.preventDefault();
     console.log("login details!", type, id, password);
     fetch(`http://${server_addr}/login/?type=${type}&id=${id}&pass=${password}`)
-      .then(res => {
-        return res.json();
-      })
-      .then(data => {
-        console.log("logged in!!!!", login, " hello ", data);
-        status = data;
-        if (data.success === true) {
-          alert("logged in!", status.message);
-          props.onLogin();
-          sessionStorage.setItem('token', JSON.stringify({ logged_in: true, type: type }));
-          navigate(`/user${type}`);
-        } else {
-          alert("Authentication Failed ", status.message);
-        }
-      });
-      // props.onLogin();
-      // sessionStorage.setItem('token', JSON.stringify({ logged_in: true, type: type }));
-      // navigate(`/user${type}`);
-    console.log("logging in");
+    .then(res => {
+      return res.json();
+    })
+    .then(data => {
+      console.log("logged in!!!!", login, " hello ", data);
+      status = data;
+      if (data.success === true) {
+        alert("logged in!", status.message);
+        props.onLogin();
+        sessionStorage.setItem('token', JSON.stringify({ logged_in: true, type: type }));
+        navigate(`/user${type}`);
+      } else {
+        alert("Authentication Failed ", status.message);
+      }
+    });
+    //   props.onLogin();
+    //   sessionStorage.setItem('token', JSON.stringify({ logged_in: true, type: type }));
+    //   navigate(`/user${type}`);
+    // console.log("logging in");
   };
   
   return (
@@ -52,7 +52,7 @@ export default function Login(props) {
               <Label for="type" sm={3}>Type:</Label>
               <Col sm={9}>
                 <Input type="select" name="type" id="type" value={type} onChange={(e) => setType(e.target.value)}>
-                  <option value={1}>Front-End</option>
+                  <option value={1}>Front-Desk</option>
                   <option value={2}>Data-Entry</option>
                   <option value={3}>Doctor</option>
                   <option value={4}>Administrator</option>
