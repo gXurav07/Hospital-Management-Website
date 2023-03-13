@@ -41,7 +41,15 @@ function AdmitPatient(props) {
             })
             .then(data => {
                 console.log(test);
-                alert(data['message']);
+                if(data['message'] == 'OK') {
+                    const updatedPatients = patients.filter(patient => patient.Patient_SSN !== patientId)
+                    setPatients(updatedPatients)
+                    setPatientId('')
+                    alert('patient discharged successfuly!')
+                }
+                else {
+                    alert('Unable to process request!')
+                }
             });
     }
 
