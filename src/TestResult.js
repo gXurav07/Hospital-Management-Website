@@ -72,45 +72,43 @@ function TestResult(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // const remarks = e.target.remarks.value;
-        // const formData = new FormData();
-        // formData.append('file', file);
-        // formData.append('remarks', remarks);
-        // formData.append('testId', testId);
-        // console.log("Form data: ", formData, file);
         console.log(['remarks:', remarks, 'file:', file]);
         if(testId !== '' && remarks !== '' && remarks !== null) {
+            // create FormData object
+            const formData = new FormData();
+            formData.append('test_instanceid', testId);
+            formData.append('test_result', remarks);
+            formData.append('file', file);
+            
             // post to db
             fetch('http://' + server_addr + '/data-entry/test-result', {
                 method: 'POST',
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    test_instanceid: testId,
-                    test_result: remarks,
-                    file: file
-                })
+                body: formData
             })
-                .then(res => {
-                    return res.json();
-                })
-                .then(data => {
-                    console.log("Test result data: ", data);
-                    if (data['message'] == 'OK') {
-                        alert('Test result added successfully');
-                        const newTests = tests.filter((test) => test['Test_instanceID'] !== testId);
-                        setTests(newTests);
-                        setFile(null);
-                        setTestId('');
-                    }
-                    else {
-                        alert('Error adding treatment result');
-                    }
-                });
+            .then(res => res.json())
+            .then(data => {
+                console.log("Test result data: ", data);
+                if (data['message'] == 'OK') {
+                    alert('Test result added successfully');
+                    const newTests = tests.filter((test) => test['Test_instanceID'] !== testId);
+                    setTests(newTests);
+                    setFile(null);
+                    setTestId('');
+                }
+                else {
+                    alert('Error adding treatment result');
+                }
+            })
+            .catch(error => {
+                console.log('Error adding test result: ', error);
+                alert('Error adding test result');
+            });
         }
         else {
             alert('Please enter remarks');
         }
     }
+    
 
     return (
         <div className='App'>
@@ -139,7 +137,7 @@ function TestResult(props) {
                                     <Col sm={9}>
                                         <Input type="file" onChange={(e)=>setFile(e.target.files[0])} name="file" id="fileUpload" />
                                         <FormText color="muted">
-                                            max allowed file size is 10MB
+                                            max allowed file size is 2MB
                                         </FormText>
                                     </Col>
                                 </FormGroup>
