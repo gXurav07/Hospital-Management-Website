@@ -5,7 +5,7 @@ function AddPatient(props) {
     const [ssn, setSSN] = useState('');
     const [name, setName] = useState('');
     const [addr, setAddr] = useState('');
-    const [gender, setGender] = useState('');
+    const [gender, setGender] = useState('male');
     const [age, setAge] = useState('');
     const [phone, setPhone] = useState('');
     const [insuranceID, setInsuranceID] = useState('');
@@ -17,12 +17,17 @@ function AddPatient(props) {
         e.preventDefault();
         const patient = { patient_ssn : ssn, patient_name : name, address : addr, gender, age, phone, insuranceID, email };
 
-        fetch('http://' + server_addr + '/register', {
+        fetch('http://' + server_addr + '/front-desk/register', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(patient)
-        }).then(data => {
+        })
+        .then(res => {
+            return res.json();
+        })
+        .then(data => {
             console.log(patient);
+            alert(data['message']);
         });
     }
 
@@ -62,7 +67,7 @@ function AddPatient(props) {
                         <FormGroup row>
                             <Label for="exampleSelect" sm={3}>Gender:</Label>
                             <Col sm={9}>
-                                <Input type="select" name="select" id="exampleSelect" >
+                                <Input type="select" name="select" id="exampleSelect" onChange={(e) => setGender(e.target.value)}>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                     <option value="other">Other</option>
