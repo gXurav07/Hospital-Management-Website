@@ -21,18 +21,19 @@ export default function Login(props) {
     //   return res.json();
     // })
     // .then(data => {
-    //   status = data;
+    //     console.log("logged in!!!!", login);
+    //     status = data;
+    //     if(data['success']==true)
+    //     {
+    //       // props.onLogin(id);
+    //       sessionStorage.setItem('token', JSON.stringify({logged_in: true, type: type}));
+    //       navigate("/user"+type);
+    //     }
+    //     else
+    //     {
+    //       alert("Authentication Failed ", status['message']);
+    //     }
     // });
-    // if(status['success']=='successful')
-    // {
-    //   props.onLogin(id);
-    //   sessionStorage.setItem('token', JSON.stringify({logged_in: true, type: type}));
-    //   navigate("/user"+type);
-    // }
-    // else
-    // {
-    //   alert("Authentication Failed ", status['message']);
-    // }
     props.onLogin();
     sessionStorage.setItem('token', JSON.stringify({ logged_in: true, type: type }));
     navigate("/user" + type);

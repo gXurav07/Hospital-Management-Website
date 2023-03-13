@@ -12,37 +12,43 @@ function AdmitPatient(props) {
 
     const server_addr = props.server_addr;
 
-    useEffect(() => {
-        setPatients(jsonData['patients']);
-    }, []);
-
     // useEffect(() => {
-    //     fetch('http://' + server_addr + '/doctor/' + did)
-    //         .then(res => {
-    //             return res.json();
-    //         })
-    //         .then(data => {
-    //             console.log("doctor's patients", data['Patients']);
-    //             setPatients(data['Patients']);
-    //         });
-    // }, [])
+    //     setPatients(jsonData['patients']);
+    // }, []);
 
-    // const handleQuery = (e, qno) => {
-    //     e.preventDefault();
-    //     fetch('http://' + server_addr + '/doctor/' + did + '?query=' + qno + '&patient=' + pid)
-    //         .then(res => {
-    //             return res.json();
-    //         })
-    //         .then(data => {
-    //             console.log("query result", data);
-    //             setResult(data);
-    //         });
-    // }
+    useEffect(() => {
+        fetch('http://' + server_addr + '/front-desk/discharge')
+            .then(res => {
+                return res.json();
+            })
+            .then(data => {
+                console.log("doctor's patients", data['rows']);
+                setPatients(data['rows']);
+            });
+    }, [])
+
+    const handleQuery = (e) => {
+        e.preventDefault();
+        const test = { patient : patientId };
+        console.log(test)
+        fetch('http://' + server_addr + '/front-desk/discharge', {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(test)
+        })
+            .then(res => {
+                return res.json();
+            })
+            .then(data => {
+                console.log(test);
+                alert(data['message']);
+            });
+    }
 
     const patientColumns = [
         {
             Header: 'Patient SSN',
-            accessor: 'id',
+            accessor: 'Patient_SSN',
             Cell: ({ cell: { value } }) => value || "-",
         },
         {
@@ -73,12 +79,12 @@ function AdmitPatient(props) {
             <div className="App-body">
                 <div className="doctor_dashboard">
                     <Col className='my-col' sm={{ offset: 3, size: 6 }}> Select{(patientId !== '') ? "ed" : ""} Patient ID: {patientId}</Col>
-                    {(patients.length > 0) ? <TableContainer columns={patientColumns} data={patients} selectedRow={patientId} setSelectedRow={(row) => setPatientId(row.values['id'])} TableName="Patients" identifierColumn={'id'} /> : <><p>Sorry! Unable to fetch Patient data from server.</p><br /></>}
+                    {(patients.length > 0) ? <TableContainer columns={patientColumns} data={patients} selectedRow={patientId} setSelectedRow={(row) => setPatientId(row.values['Patient_SSN'])} TableName="Patients" identifierColumn={'Patient_SSN'} /> : <><p>Sorry! Unable to fetch Patient data from server.</p><br /></>}
                     <div className='form_wrapper'>
                         <form>
                             {/* <label>ID:</label> */}
                             {/* <input type="text" placeholder="Enter Patient ID...." required value={pid} onChange={(e) => setPid(e.target.value)} /> */}
-                            <button className='but_'>Discharge</button>
+                            <button className='but_' onClick={handleQuery}>Discharge</button>
                         </form>
                     </div>
                 </div>

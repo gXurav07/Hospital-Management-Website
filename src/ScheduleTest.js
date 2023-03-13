@@ -141,7 +141,7 @@ function ScheduleTest(props) {
             <div className='App-body'>
                 <form className='doctor-dashboard'>
                     <div className='form_wrapper'>
-                        <Col sm={{ offset: 3, size: 6 }}> Select{(testId !== '') ? 'ed' : ''} Test ID: {testId} </Col>
+                        <Col className='my-col' sm={{ offset: 3, size: 6 }}> Select{(testId !== '') ? 'ed' : ''} Test ID: {testId} </Col>
                         {(tests.length > 0) ? <TableContainer columns={testColumns} data={tests} selectedRow={testId} setSelectedRow={(row) => setTestId(row.values['Test_instanceID'])} TableName="Tests" identifierColumn={'Test_instanceID'} /> : <div>No tests to schedule</div>}
                         {
                             showSlots && (
@@ -149,12 +149,12 @@ function ScheduleTest(props) {
                                     <br />
                                     <hr />
                                     <Row className='align-items-center'>
-                                        <Col sm={{ offset: 2, size: 3 }} className="justify-content-end"><Label for="app_date"> Select Date: </Label></Col>
-                                        <Col sm={4}><Input type="date" min={getMinDate()} max={getMaxDate()} id="app_date" sm="8" value={date} onChange={(e) => setDate(e.target.value)}></Input></Col>
+                                        <Col sm={{ offset: 2, size: 3 }} className="my-col justify-content-end"><Label for="app_date"> Select Date: </Label></Col>
+                                        <Col className='my-col' sm={4}><Input type="date" min={getMinDate()} max={getMaxDate()} id="app_date" sm="8" value={date} onChange={(e) => setDate(e.target.value)}></Input></Col>
                                     </Row>
                                     <br />
                                     <hr />
-                                    <Col sm={{ offset: 3, size: 6 }}> Select{(slotId !== '') ? 'ed' : ''} Slot ID: {slotId} </Col>
+                                    <Col className='my-col' sm={{ offset: 3, size: 6 }}> Select{(slotId !== '') ? 'ed' : ''} Slot ID: {slotId} </Col>
                                     {(slots.length > 0) ? <TableContainer columns={slotColumns} data={slots} selectedRow={slotId} setSelectedRow={(row) => setSlotId(row.values['SlotID'])} TableName="Slots" identifierColumn={'SlotID'} /> : <div>Sorry! No matching slots found.</div>}
                                     <br />
                                     <button type='submit' className='but_' onClick={(e) => handleSubmit(e)}>Schedule</button>
