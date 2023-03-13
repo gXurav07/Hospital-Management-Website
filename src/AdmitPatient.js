@@ -87,6 +87,8 @@ function AdmitPatient(props) {
                 }
                 const updatedPatients = patients.filter(patient => patient.id !== patientId);
                 setPatients(updatedPatients);
+                const updatedRooms = rooms.filter(room => room.id !== roomId);
+                setRooms(updatedRooms);
                 setPatientId('');
                 setRoomId('');
             })
