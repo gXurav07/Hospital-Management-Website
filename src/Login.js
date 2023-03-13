@@ -73,6 +73,5 @@ export default function Login(props) {
 
         </div>
       </div>
-    </div>
   );
 }

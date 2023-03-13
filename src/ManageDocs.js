@@ -54,7 +54,7 @@ function ManageDocs(props) {
             <FormGroup row>
               <Label for="department" sm={3}>Department:</Label>
               <Col sm={9}>
-                <Input type="select" name="department" id="department" value={department} onChange={(e) => setDep(e.target.value)}>
+                <Input type="select" name="department" id="department" value={departmentId} onChange={(e) => setDep(e.target.value)}>
                   <option value={1}>Cardiology</option>
                   <option value={2}>Neurology</option>
                   <option value={3}>Surgery</option>
