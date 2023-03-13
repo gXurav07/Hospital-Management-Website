@@ -35,14 +35,15 @@ async function get_tests(req, res){
 
 async function add_test_result(req, res){
     // convert to string
-    req.body = JSON.stringify(req.body);
-    console.log(req.body);
-    // const {test_instanceid, test_result} = req.body;
-    // let sql_query = `UPDATE Test_instance SET Result='${test_result}' WHERE Test_instanceID=${test_instanceid};`;
-    // let result = await executeQuery(sql_query, req);
     
-    // res.status(result.status).send(result);
-    res.status(200).send({message: 'Hehe'});
+    console.log(req.body);
+    const {test_instanceid, test_result, file} = req.body;
+    let sql_query = `UPDATE Test_instance SET Result='${test_result}', Test_image=${file} WHERE Test_instanceID=${test_instanceid};`;
+    let result = await executeQuery(sql_query, req);
+    
+    res.status(result.status).send(result);
+    // res.status(200).send({message: 'Hehe'});
+    console.log(file);
 }
 
 
@@ -70,12 +71,12 @@ async function add_treatment_result(req, res){
     // convert to string
 
     console.log(req.body);
-    const {treatmentid, treatment_remarks, success} = req.body;
-    let sql_query = `UPDATE Treatment SET Treatment_Remarks='${treatment_remarks}', Successful=${success} WHERE TreatmentID=${treatmentid};`;
+    const {treatmentid, treatment_remarks, successful} = req.body;
+    let sql_query = `UPDATE Treatment SET Treatment_Remarks='${treatment_remarks}', Successful=${successful} WHERE TreatmentID=${treatmentid};`;
     let result = await executeQuery(sql_query, req);
     
-    // res.status(result.status).send(result);
-    res.status(200).send({message: 'Hehe'});
+    res.status(result.status).send(result);
+   
 }
 
 module.exports = dataEntryRouter;
