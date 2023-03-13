@@ -91,12 +91,14 @@ async function testmail()
 {
     let sql_query="SELECT Email from Patient NATURAL JOIN Appointment WHERE Appointment.Date='2023-03-22' and Appointment.SlotID=3";
     let result = await executeQuery(sql_query, pool);
-    console.log(result);
+    const patient_email=result.rows[0].Email;
+    console.log(patient_email);
     let mailText = `Sorry due to emergency your appointment is cancelled on 2023-03-22 during 10:20:00 :11:00:00. Please contact the hospital for scheduling appointment.`;
     console.log(mailText);
     let second_query="Select Email from Physician,User,Appointment WHERE Appointment.Date='2023-03-22' and Appointment.SlotID=3 and Appointment.PhysicianID=Physician.PhysicianID and Physician.PhysicianID=User.EmployeeID";
     let result2 = await executeQuery(second_query, pool);
-    console.log(result2);
+    const physician_email=result2.rows[0].Email;
+    console.log(physician_email);
     let mailText2 = `Sorry due to emergency your appointment is changed for 2023-03-22 during 10:20:00 :11:00:00. You can login due to view further details.`;
     console.log(mailText2);
 }
