@@ -69,9 +69,9 @@ function App() {
             <Route path="user1/admitpatient" element={<PrivateRoute type={1}> <AdmitPatient server_addr={server_addr}/></PrivateRoute>} />
             <Route path="user1/dischargepatient" element={<PrivateRoute type={1}> <DischargePatient server_addr={server_addr}/></PrivateRoute>} />
             <Route path="user1/appointment" element={<PrivateRoute type={1}> <Appointment server_addr={server_addr}/></PrivateRoute>} />
+            <Route path="user1/scheduleTest" element={<PrivateRoute type={1}> <ScheduleTest server_addr={server_addr}/></PrivateRoute>} />
+            <Route path="user1/scheduleTreatment" element={<PrivateRoute type={1}> <ScheduleTreatment server_addr={server_addr}/></PrivateRoute>} />
             
-            <Route path="user2/scheduleTest" element={<PrivateRoute type={2}> <ScheduleTest server_addr={server_addr}/></PrivateRoute>} />
-            <Route path="user2/scheduleTreatment" element={<PrivateRoute type={2}> <ScheduleTreatment server_addr={server_addr}/></PrivateRoute>} />
             <Route path="user2/testResult" element={<PrivateRoute type={2}> <TestResult server_addr={server_addr}/></PrivateRoute>} />
             <Route path="user2/treatmentResult" element={<PrivateRoute type={2}> <TreatmentResult server_addr={server_addr}/></PrivateRoute>} />
 

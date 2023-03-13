@@ -25,8 +25,8 @@ function AdminDashboard(props) {
           <Link to="user" className="box"><button>Add User</button></Link>
           <Link to="managedocs" className="box"><button>Add Doctor</button></Link>
           <Link to="managedocsd" className="box"><button>Delete Doctor</button></Link>
-          <Link to="manageops" className="box"><button>Add Data Operators</button></Link>
-          <Link to="manageopsd" className="box"><button>Delete Data Operators</button></Link>
+          {/* <Link to="manageops" className="box"><button>Add Data Operators</button></Link> */}
+          {/* <Link to="manageopsd" className="box"><button>Delete Data Operators</button></Link> */}
           <Link to="medication" className="box"><button>Add Medication</button></Link>
           <Link to="treatment" className="box"><button>Add Treatment</button></Link>
           <Link to="test" className="box"><button>Add Test</button></Link>
