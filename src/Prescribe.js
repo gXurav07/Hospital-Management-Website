@@ -132,8 +132,6 @@ function Prescribe(props) {
               </>
               )
              : <br></br>)}
-            {(selectedType === 'Test' ? <ListItems type="Test" /> : <br></br>)}
-            {(selectedType === 'Treatment' ? <ListItems type="Treatment" /> : <br></br>)}
             {prescription ? <Table data={prescription} /> : console.log('no entry found')}
           </Form>
         </div >
