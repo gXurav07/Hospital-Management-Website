@@ -3,6 +3,8 @@ body {
   padding: 0;
   box-sizing: border-box;
   color: #683B2B;
+
+  color: #5b2400;
 }
 
 /* HOME START */
@@ -76,7 +78,7 @@ button:hover {
 }
 
 table {
-  color: #683B2B;
+  /* color: black; */
   width: 100%;
   border-collapse: collapse;
   font-size: large;
