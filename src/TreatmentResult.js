@@ -7,12 +7,18 @@ function TreatmentResult(props) {
     const [treatmentId, setTreatmentId] = useState('');
     const [showForm, setShowForm] = useState(true);
     const [success, setSuccess] = useState(true);
+    const [remarks, setRemarks] = useState('');
 
     const server_addr = props.server_addr;
 
+    const handleRemarksChange = (event) => {
+        const { value } = event.target;
+        setRemarks(value);
+    };
+
     useEffect(() => {
         // get all scheduled treatments from db
-        fetch('http://' + server_addr + '/front-desk/treatment-result', {
+        fetch('http://' + server_addr + '/data-entry/treatment-result', {
             method: 'GET',
             headers: { "Content-Type": "application/json" }
         })
@@ -31,19 +37,55 @@ function TreatmentResult(props) {
             setShowForm(true);
         }
         else {
-            setShowForm(true);
+            setShowForm(false);
         }
     }, [treatmentId]);
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(['remarks:', remarks, 'success:', success]);
+        if(treatmentId !== '' && remarks !== '' && remarks !== null) {
+            // post to db
+            fetch('http://' + server_addr + '/data-entry/treatment-result', {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    treatmentid: treatmentId,
+                    treatment_remarks: remarks,
+                    successful: success
+                })
+            })
+                .then(res => {
+                    return res.json();
+                })
+                .then(data => {
+                    console.log("Treatment result data: ", data);
+                    if (data['message'] == 'OK') {
+                        alert('Treatment result added successfully');
+                        const newTreatments = treatments.filter(treatment => treatment['TreatmentID'] !== treatmentId);
+                        setTreatments(newTreatments);
+                        setSuccess(true);
+                        setTreatmentId('');
+                    }
+                    else {
+                        alert('Error adding treatment result');
+                    }
+                });
+        }
+        else {
+            alert('Please enter remarks');
+        }
+    }
 
     const treatmentColumns = [
         {
             Header: 'Treatment ID',
-            accessor: 'id',
+            accessor: 'TreatmentID',
             Cell: ({ cell: { value } }) => value || "-",
         },
         {
             Header: 'Name',
-            accessor: 'Treatment_Name',
+            accessor: 'Desc_Name',
             Cell: ({ cell: { value } }) => value || "-",
         },
         {
@@ -60,31 +102,31 @@ function TreatmentResult(props) {
                 <hr />
             </header>
             <div className='App-body'>
-                <Col sm={{ offset: 3, size: 6 }}> Select{(treatmentId !== '') ? 'ed' : ''} Treatment: {treatmentId} </Col>
-                {(treatments.length > 0) ? <TableContainer columns={treatmentColumns} data={treatments} selectedRow={treatmentId} setSelectedRow={(row) => setTreatmentId(row.values['id'])} identifierColumn={'id'} /> : <div>No new treatments scheduled</div>}
+                <Col className='my-col' sm={{ offset: 3, size: 6 }}> Select{(treatmentId !== '') ? 'ed' : ''} Treatment: {treatmentId} </Col>
+                {(treatments.length > 0) ? <TableContainer columns={treatmentColumns} data={treatments} selectedRow={treatmentId} setSelectedRow={(row) => setTreatmentId(row.values['TreatmentID'])} identifierColumn={'TreatmentID'} /> : <div>No new treatments scheduled</div>}
                 <hr />
                 {
                     showForm && (
                         <div className='managedocs'>
-                            <Form>
+                            <Form onSubmit={handleSubmit}>
                                 <FormGroup row>
                                     <Label for="remarks" sm={3}>Remarks:</Label>
                                     <Col sm={9}>
-                                        <Input type="textarea" name="text" id="remarks" style={{ maxHeight: '25vh' }} />
+                                    <Input type="textarea" name="text" id="remarks" style={{ maxHeight: '25vh' }} value={remarks} onChange={handleRemarksChange} />
                                     </Col>
                                 </FormGroup>
                                 <FormGroup row>
                                     <Label for="status" sm={3}>Status:</Label>
                                     <Col sm={9} className="d-flex align-items-center">
-                                        <Label check >
-                                            <Input type="checkbox" id="status" checked={success} onClick={() => setSuccess(!success)} style={{ backgroundColor: 'green' }} />
-                                            {' '} Successfull?
-                                        </Label>
+                                    <Label check>
+                                        <Input type="checkbox" id="status" checked={success} onChange={(e) => setSuccess(e.target.checked)} style={{ backgroundColor: 'green' }} />
+                                        {' '} Successful?
+                                    </Label>
                                     </Col>
                                 </FormGroup>
                                 <FormGroup check row>
                                     <Col sm={{ size: 10, offset: 3 }}>
-                                        <Button sm={3}>Submit</Button>
+                                        <Button sm={3} type="submit">Submit</Button>
                                     </Col>
                                 </FormGroup>
                             </Form>

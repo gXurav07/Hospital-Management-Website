@@ -134,9 +134,9 @@ function Prescribe(props) {
                 </Input>
               </Col>
             </FormGroup>
-            {(selectedType === 'Medication' ? <ListItems type="medication" /> : <br></br>)}
-            {(selectedType === 'Test' ? <ListItems type="test" /> : <br></br>)}
-            {(selectedType === 'Treatment' ? <ListItems type="treatment" /> : <br></br>)}
+            {(selectedType === 'Medication' ? <ListItems type="Medication" /> : <br></br>)}
+            {(selectedType === 'Test' ? <ListItems type="Test" /> : <br></br>)}
+            {(selectedType === 'Treatment' ? <ListItems type="Treatment" /> : <br></br>)}
             {prescription ? <Table data={prescription} /> : console.log('no entry found')}
           </Form>
         </div >

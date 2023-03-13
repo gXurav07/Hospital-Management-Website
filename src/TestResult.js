@@ -6,9 +6,15 @@ function TestResult(props) {
     const [tests, setTests] = useState([]);
     const [testId, setTestId] = useState('');
     const [showForm, setShowForm] = useState(false);
+    const [remarks, setRemarks] = useState('');
     const [file, setFile] = useState(null);
 
     const server_addr = props.server_addr;
+
+    const handleRemarksChange = (event) => {
+        const { value } = event.target;
+        setRemarks(value);
+    };
 
     useEffect(() => {
         // get all scheduled tests from db
@@ -72,21 +78,38 @@ function TestResult(props) {
         // formData.append('remarks', remarks);
         // formData.append('testId', testId);
         // console.log("Form data: ", formData, file);
-        fetch('http://' + server_addr + '/data-entry/test-result', {
-            method: 'POST',
-            headers: { "Content-Type": "application/json" },
-            body: FormData
-            // body: formData
-        })
-            .then(res => {
-                return res.json();
+        console.log(['remarks:', remarks, 'file:', file]);
+        if(testId !== '' && remarks !== '' && remarks !== null) {
+            // post to db
+            fetch('http://' + server_addr + '/data-entry/test-result', {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    test_instanceid: testId,
+                    test_result: remarks,
+                    file: file
+                })
             })
-            .then(data => {
-                console.log("Test data: ", data);
-            })
-            .catch(err => {
-                console.log("Error: ", err);
-            });
+                .then(res => {
+                    return res.json();
+                })
+                .then(data => {
+                    console.log("Test result data: ", data);
+                    if (data['message'] == 'OK') {
+                        alert('Test result added successfully');
+                        const newTests = tests.filter((test) => test['Test_instanceID'] !== testId);
+                        setTests(newTests);
+                        setFile(null);
+                        setTestId('');
+                    }
+                    else {
+                        alert('Error adding treatment result');
+                    }
+                });
+        }
+        else {
+            alert('Please enter remarks');
+        }
     }
 
     return (
@@ -108,7 +131,7 @@ function TestResult(props) {
                                 <FormGroup row>
                                     <Label for="remarks" sm={3}>Remarks</Label>
                                     <Col sm={9}>
-                                        <Input type="textarea" name="text" id="remarks" style={{ maxHeight: '25vh' }} />
+                                    <Input type="textarea" name="text" id="remarks" style={{ maxHeight: '25vh' }} value={remarks} onChange={handleRemarksChange} />
                                     </Col>
                                 </FormGroup>
                                 <FormGroup row>
