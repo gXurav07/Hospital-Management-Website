@@ -5,7 +5,7 @@ import jsonData from './prescribe_list.json';
 function Prescribe(props) {
   const server_addr = props.server_addr;
   const did = props.did;
-  const pssn = props.pid;
+  const pid = props.pid;
   const appointmentid = props.appointmentid;
   const date = props.date;
 
@@ -26,6 +26,11 @@ function Prescribe(props) {
     setSelectedItem(event.target.value);
   };
 
+  const handleRemarksChange = (event) => {
+    // event.preventDefault();
+    setRemarks(event.target.value);
+  };
+
   const appendPrescription = (e) => {
     e.preventDefault();
     let list = prescription;
@@ -38,7 +43,7 @@ function Prescribe(props) {
   };
 
   const sendPrescription = (e) => {
-    const packed_prescription = { prescription, did, pssn, appointmentid, date };
+    const packed_prescription = { prescription, did, pid, appointmentid, date };
     e.preventDefault();
     console.log("Final Prescription", packed_prescription);
 
@@ -78,7 +83,7 @@ function Prescribe(props) {
               ))}
             </select>
             <label>Remarks:</label>
-            <input type="text" placeholder="Enter Remarks..." value={remarks} onChange={(e) => setRemarks(e.target.value)} />
+            <input type="text" placeholder="Enter Remarks..." value={remarks} onChange={handleRemarksChange} />
             <button onClick={(e) => appendPrescription(e)}>Add to Prescription</button>
             {prescription === [] ? <hr /> : <button onClick={(e) => sendPrescription(e)}>Prescribe</button>}
           </form>
@@ -88,7 +93,7 @@ function Prescribe(props) {
   }
 
   return (
-    <div className="App">
+    <>
       <header className="App-header">
         <h1>Prescribe to a Patient</h1>
         <hr />
@@ -114,7 +119,7 @@ function Prescribe(props) {
         {(selectedType === 'Treatment' ? <ListItems type="treatment" /> : <br></br>)}
         {prescription ? <Table data={prescription} /> : console.log('no entry found')}
       </div >
-    </div>
+    </>
   );
 }
 export default Prescribe;

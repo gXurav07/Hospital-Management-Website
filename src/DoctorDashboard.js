@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Table from './Table';
-import { Link } from "react-router-dom";
 import TableContainer from './TableContainer';
 import { SelectColumnFilter } from './Filter';
 import { Col, Row } from 'reactstrap';
@@ -104,10 +103,10 @@ function DoctorDashboard(props) {
           {/* {patients ? <Table data={patients} /> : <br />} */}
           <Col className='my-col' sm={{ offset: 3, size: 6 }}> Select{(pid !== '') ? "ed" : ""} Patient ID: {pid}</Col>
           {patients ? <TableContainer columns={patient_columns} data={patients} selectedRow={pid} setSelectedRow={handleTableSelect} identifierColumn="id" TableName="Patients" /> : <br />}
-
+          <br />
           <form>
-            <label>Get Patient Details:</label>
-            <input type="text" placeholder="Enter Patient ID...." required value={pid} onChange={(e) => setPid(e.target.value)} />
+            {/* <label>Get Patient Details:</label>
+            <input type="text" placeholder="Enter Patient ID...." required value={pid} onChange={(e) => setPid(e.target.value)} /> */}
             <div className='button_row'>
               <button onClick={(e) => handleQuery(e, 'treatment')}>Treatment</button>
               <button onClick={(e) => handleQuery(e, 'medication')}>Medicine Prescribed</button>

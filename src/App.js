@@ -29,7 +29,7 @@ import AddTest from "./admin_dashboard/add_test";
 import AddDepartment from "./admin_dashboard/add_department";
 
 function App() {
-  const server_addr = "10.147.167.202:3000";
+  const server_addr = "10.147.164.51:3001";
   const { token, setToken } = useToken();
   return (
     <BrowserRouter>
