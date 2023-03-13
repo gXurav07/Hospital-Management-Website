@@ -1,6 +1,7 @@
 import "./App.css";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route , Navigate } from "react-router-dom";
+import { useEffect, useState } from 'react'
 import Home from "./Home";
 import { Link } from "react-router-dom";
 import Login from "./Login";
@@ -27,55 +28,70 @@ import AddMedication from "./admin_dashboard/add_medication";
 import AddTreatment from "./admin_dashboard/add_treatment";
 import AddTest from "./admin_dashboard/add_test";
 import AddDepartment from "./admin_dashboard/add_department";
+import AddUser from "./admin_dashboard/add_user";
+
+import PrivateRoute from "./PrivateRoute";
+import { Button } from "reactstrap";
 
 function App() {
-  const server_addr = "10.147.134.229:3000";
+  const server_addr = "10.147.167.202:3000";
+  const [ userType, setUserType ] = useState();
+  const [ status, setStatus ] = useState(JSON.parse(sessionStorage.getItem('token')));
   const { token, setToken } = useToken();
+  function handleTypeChange (type){setUserType(type)}
+
+  const auth = JSON.parse(sessionStorage.getItem('token'));
+
+  // const handleLogout = (e) => {
+  //     sessionStorage.removeItem("token");
+  //     setStatus(sessionStorage.getItem('token'));
+  //     alert("logged out!");
+  // }
+
+  useEffect(() => {
+    console.log("re-rendering!");
+}, [status]);
+
   return (
+    <div>
+    {/* { (status && status['logged_in']==true) ? <button onClick={(e) => handleLogout(e)}> Logout </button> : <hr/> }  */}
     <BrowserRouter>
         <Routes>
+            <Route exact path='/' element ={<Navigate to="/login"/>}/>
             {/* Primary Routes */}
-            <Route path="user1" element={<FDOps server_addr={server_addr}/>} />
-            <Route path="user1" element={<Login name="Front End Operator"  type={1} server_addr={server_addr}/>} />
-            <Route path="user2" element={<DEOps server_addr={server_addr}/>} />
-            <Route path="user2" element={<Login name="Data Entry Operator" type={2} server_addr={server_addr}/>} />
-            {/* <Route path="user3" element={<Login name="Doctor"/>} /> */}
-            {/* <Route path="user4" element={<Login name="Database Administrator"/>} /> */}
-
-            <Route path="user3" element={<DoctorDashboard type={3} server_addr={server_addr}/>} />
-            <Route exact path="user4" element={<AdminDashboard type={4} server_addr={server_addr}/>} />
+            <Route path="user1" element={<PrivateRoute type={1}> <FDOps server_addr={server_addr}/></PrivateRoute>} />
+            <Route path="user2" element={<PrivateRoute type={2}> <DEOps server_addr={server_addr}/></PrivateRoute>}  />
+            <Route path="user3" element ={<PrivateRoute type={3}> <DoctorDashboard type={3} server_addr={server_addr}/> </PrivateRoute> } />
+            <Route exact path="user4" element ={ <PrivateRoute type={4}> <AdminDashboard type={4} server_addr={server_addr}/> </PrivateRoute> } />
 
             {/* Secondary Routes */}
-            <Route exact path="user3/prescribe" element={<Prescribe server_addr={server_addr}/>} />
-            <Route path="user1/addpatient" element={<AddPatient server_addr={server_addr}/>} />
-            <Route path="user1/admitpatient" element={<AdmitPatient server_addr={server_addr}/>} />
-            <Route path="user1/dischargepatient" element={<DischargePatient server_addr={server_addr}/>} />
-            <Route path="user1/appointment" element={<Appointment server_addr={server_addr}/>} />
-            <Route path="user2/scheduleTest" element={<ScheduleTest server_addr={server_addr}/>} />
-            <Route path="user2/scheduleTreatment" element={<ScheduleTreatment server_addr={server_addr}/>} />
-            <Route path="user2/testResult" element={<TestResult server_addr={server_addr}/>} />
-            <Route path="user2/treatmentResult" element={<TreatmentResult server_addr={server_addr}/>} />
-            {/* <Route path="user2/appointment" element={<Appointment server_addr={server_addr}/>} /> */}
-            {/* <Route path="user1/admitpatient" element={<AdmitPatient server_addr={server_addr}/>} /> */}
-            {/* <Route path="user1/dischargepatient" element={<DischargePatient server_addr={server_addr}/>} /> */}
-            {/* <Route path="user1/appointment" element={<Appointment server_addr={server_addr}/>} /> */}
+            <Route exact path="user3/prescribe" element ={<PrivateRoute type={3}> <Prescribe server_addr={server_addr}/> </PrivateRoute>} />
+            <Route path="user1/addpatient" element={<PrivateRoute type={1}> <AddPatient server_addr={server_addr}/></PrivateRoute>} />
+            <Route path="user1/admitpatient" element={<PrivateRoute type={1}> <AdmitPatient server_addr={server_addr}/></PrivateRoute>} />
+            <Route path="user1/dischargepatient" element={<PrivateRoute type={1}> <DischargePatient server_addr={server_addr}/></PrivateRoute>} />
+            <Route path="user1/appointment" element={<PrivateRoute type={1}> <Appointment server_addr={server_addr}/></PrivateRoute>} />
+            
+            <Route path="user2/scheduleTest" element={<PrivateRoute type={2}> <ScheduleTest server_addr={server_addr}/></PrivateRoute>} />
+            <Route path="user2/scheduleTreatment" element={<PrivateRoute type={2}> <ScheduleTreatment server_addr={server_addr}/></PrivateRoute>} />
+            <Route path="user2/testResult" element={<PrivateRoute type={2}> <TestResult server_addr={server_addr}/></PrivateRoute>} />
+            <Route path="user2/treatmentResult" element={<PrivateRoute type={2}> <TreatmentResult server_addr={server_addr}/></PrivateRoute>} />
 
             {/* Admin Dashboard */}
-          <Route exact path="user4/managedocs" element={<ManageDocs server_addr={server_addr}/>} render={()=>console.log('checking...')} />
-          <Route path="user4/managedocsd" element={<ManageDocsD server_addr={server_addr}/>} />
-          <Route path="user4/manageops" element={<ManageOps server_addr={server_addr}/>} />
-          <Route path="user4/manageopsd" element={<ManageOpsD server_addr={server_addr}/>} />
+          <Route exact path="user4/managedocs" element={<PrivateRoute type={4}> <ManageDocs server_addr={server_addr}/></PrivateRoute>} render={()=>console.log('checking...')} />
+          <Route path="user4/managedocsd" element={<PrivateRoute type={4}> <ManageDocsD server_addr={server_addr}/></PrivateRoute>} />
+          <Route path="user4/manageops" element={<PrivateRoute type={4}> <ManageOps server_addr={server_addr}/></PrivateRoute>} />
+          <Route path="user4/manageopsd" element={<PrivateRoute type={4}> <ManageOpsD server_addr={server_addr}/></PrivateRoute>} />
 
-          <Route path="user4/treatment" element={<AddTreatment server_addr={server_addr}/>} />
-          <Route path="user4/test" element={<AddTest server_addr={server_addr}/>} />
-          <Route path="user4/medication" element={<AddMedication server_addr={server_addr}/>} />
-          <Route path="user4/department" element={<AddDepartment server_addr={server_addr}/>} />
+          <Route path="user4/user" element={<PrivateRoute type={4}> <AddUser server_addr={server_addr}/></PrivateRoute>} />
+          <Route path="user4/treatment" element={<PrivateRoute type={4}> <AddTreatment server_addr={server_addr}/></PrivateRoute>} />
+          <Route path="user4/test" element={<PrivateRoute type={4}> <AddTest server_addr={server_addr}/></PrivateRoute>} />
+          <Route path="user4/medication" element={<PrivateRoute type={4}> <AddMedication server_addr={server_addr}/></PrivateRoute>} />
+          <Route path="user4/department" element={<PrivateRoute type={4}> <AddDepartment server_addr={server_addr}/></PrivateRoute>} />
 
-          {/* <Route path="*" element={<NoPage />} /> */}
-          <Route path="/" element={<Home server_addr={server_addr}/>}>
-          </Route>
+          <Route exact path='/login' element ={<Login onLogin={() => setStatus(JSON.parse(sessionStorage.getItem('token'))) }/>}/>
         </Routes>
     </BrowserRouter>
+    </div>
   );
 }
 export default App;

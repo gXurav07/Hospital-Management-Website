@@ -3,7 +3,7 @@ import { useState } from "react";
 function ManageDocs(props) {
   const [name, setName] = useState('');
   const [employeeid, setEmpid] = useState('');
-  const [department, setDep] = useState('1');
+  const [departmentId, setDep] = useState('1');
   const [position, setPosition] = useState('hod');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,7 +13,7 @@ function ManageDocs(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const type = 'doctor';
-    const doc = { name, employeeid, position, department, email, password, type };
+    const doc = { name, physicianid: employeeid, position, department : departmentId, type : 'doctor'};
 
     fetch('http://' + server_addr + '/admin', {
       method: 'POST',
@@ -24,7 +24,8 @@ function ManageDocs(props) {
         return res.json();
       })
       .then(data => {
-        console.log("operation status: ", data['message']);
+        alert(data['message'])
+        // console.log("operation status: ", data['message']);
       });
   }
 
@@ -40,23 +41,15 @@ function ManageDocs(props) {
             <label>Name:</label>
             <input type="text" placeholder="Enter Name of Doctor" required value={name} onChange={(e) => setName(e.target.value)} />
             <label>Employee ID:</label>
-            <input type="text" placeholder="Enter Employee Number" required value={employeeid} onChange={e => setEmpid(e.target.value)} />
-            <label>Department:</label>
-            <select value={department} onChange={(e) => setDep(e.target.value)}>
-              <option value={1}>Cardiology</option>
-              <option value={2}>Neurology</option>
-              <option value={3}>Surgery</option>
-            </select>
+            <input type="text" placeholder="Enter Physician ID" required value={employeeid} onChange={e => setEmpid(e.target.value)} />
+            <label>Department ID:</label>
+            <input type="text" placeholder="Enter Department ID" required value={departmentId} onChange={e => setDep(e.target.value)} />
             <label>Position:</label>
             <select value={position} onChange={(e) => setPosition(e.target.value)}>
               <option value="hod">Head of Department</option>
               <option value="senior">Senior Doctor</option>
               <option value="resident">Resident Doctor</option>
             </select>
-            <label>Email ID:</label>
-            <input type="text" placeholder="Set Email-ID" required value={email} onChange={(e) => setEmail(e.target.value)} />
-            <label>Password:</label>
-            <input type="text" placeholder="Set Password" required value={password} onChange={(e) => setPassword(e.target.value)} />
             <button>Add Doctor</button>
           </form>
         </div>
