@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FormGroup, Label, Col, Input, Form, Button } from "reactstrap";
 
 function ManageOpsD(props) {
   const [name, setName] = useState('');
@@ -25,16 +26,25 @@ function ManageOpsD(props) {
       </header>
       <div className="App-body">
         <div className="managedocs">
-          <form onSubmit={handleSubmit}>
-            <label>Operator ID:</label>
-            <input type="text" placeholder="Enter operator ID...." required value={name} onChange={(e) => setName(e.target.value)} />
-            <label>Role:</label>
-            {/* <select value={role} onChange={(e) => setRole(e.target.value)}>
-              <option value="front">Front Desk Operator</option>
-              <option value="data">Data Entry Operator</option>
-            </select> */}
-            <button>Delete Operator</button>
-          </form>
+          <Form onSubmit={handleSubmit}>
+            <FormGroup row>
+              <Label sm={3}>Operator ID:</Label>
+              <Col sm={9}>
+              <Input type="text" placeholder="Enter operator ID...." required value={name} onChange={(e) => setName(e.target.value)} />
+              </Col>
+            </FormGroup>
+            {/* <FormGroup row>
+              <Label sm={3}>Role:</Label>
+              <Col sm={9}>
+              <Input type="text" placeholder="Enter role...." required value={role} onChange={(e) => setRole(e.target.value)} />
+              </Col>
+            </FormGroup> */}
+            <FormGroup check row>
+              <Col sm={{ size: 9, offset: 4 }}>
+                <Button>Delete Doctor</Button>
+              </Col>
+            </FormGroup>
+          </Form>
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  color: #683B2B;
 }
 
 h1,
@@ -19,7 +20,14 @@ h4 {
   grid-column-gap: 40px;
 }
 
-.box>button {
+.container_home2 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.box button {
   height: 20vh;
   width: 20vh;
   padding: 20px;
@@ -32,7 +40,8 @@ h4 {
   font-weight: bolder;
 }
 
-.container_home>.box {
+.container_home .box,
+.container_home2 .box {
   text-decoration: none;
 }
 
@@ -60,20 +69,20 @@ h4 {
   height: 100%;
 }
 
-label {
-  /* color: #fff; */
+.lab {
+  color: #fff;
   color: #683B2B;
-  /* font-size: 2.3em;
+  font-size: 2.3em;
   justify-content: center;
   display: flex;
   margin: 60px;
   font-weight: bold;
   cursor: pointer;
-  transition: .5s ease-in-out; */
+  transition: .5s ease-in-out;
 }
 
-input {
-  /* width: 60%;
+.inp {
+  width: 60%;
   height: 20px;
   background: #e0dede;
   justify-content: center;
@@ -82,15 +91,15 @@ input {
   padding: 15px;
   border: none;
   outline: none;
-  border-radius: 5px; */
+  border-radius: 5px;
 }
 
 button {
   margin: 10px auto;
+  padding: 5px 10px;
   justify-content: center;
   display: block;
   color: #fff;
-  /* background: #573b8a; */
   background-color: #B08401;
   font-size: 1em;
   font-weight: bold;
@@ -100,11 +109,10 @@ button {
   border-radius: 5px;
   transition: .2s ease-in;
   cursor: pointer;
-  text-decoration: none;
+  font-size: 20px;
 }
 
 button:hover {
-  /* background: #6d44b8; */
   background: #D49E8D;
 }
 
@@ -135,7 +143,7 @@ button:hover {
 
 /* LOGIN END */
 
-/* DOCTOR DASHBOARD START */
+/* TABLE START */
 .patient_list {
   border-radius: 10px;
   padding: 10px;
@@ -167,40 +175,46 @@ tr.selected:hover {
   color: #fff;
 }
 
+/* TABLE END */
+
+.my-col {
+  font-size: 1.5rem;
+}
+
 .doctor_dashboard .form_wrapper {
-  color: #683B2B;
+  /* color: #683B2B;
   width: 75rem;
   margin: 50px auto;
   padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
 }
 
 .doctor_dashboard h1 {
-  margin-top: 100px;
-  margin-bottom: 50px;
+  /* margin-top: 100px;
+  margin-bottom: 50px; */
 }
 
 .doctor_dashboard form {
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
 }
 
 .doctor_dashboard label {
-  color: #683B2B;
+  /* color: #683B2B;
   font-size: 30px;
   margin: 0px;
-  font-weight: bold;
+  font-weight: bold; */
 }
 
 .doctor_dashboard input {
-  padding: 20px;
+  /* padding: 20px;
   font-size: 20px;
   border: none;
   border-radius: 5px;
-  margin-bottom: 20px;
+  margin-bottom: 20px; */
 }
 
-.doctor_dashboard .button_row {
+.button_row {
   font-size: 20px;
   display: flex;
   justify-content: space-between;
@@ -208,18 +222,18 @@ tr.selected:hover {
 }
 
 .doctor_dashboard button {
-  margin: auto 20px;
+  /* margin: auto 20px;
   padding: 0px 20px;
   color: #fff;
   border: none;
   border-radius: 5px;
-  cursor: pointer;
+  cursor: pointer; */
 }
 
 .doctor_dashboard .but_ {
-  margin: auto;
+  /* margin: auto;
   font-size: 20px;
-  width: 200px;
+  width: 200px; */
 }
 
 /* DOCTOR DASHBOARD END */
@@ -230,43 +244,49 @@ tr.selected:hover {
 
 .managedocs form {
   padding: 20px;
-  max-width: 600px;
-  margin: 0 auto;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  width: 600px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
 }
 
 .managedocs label {
   font-size: 20px;
-  display: block;
-  margin-bottom: -5px;
+}
+
+.managedocs button {
+  background-color: #B08401;
+  font-size: 20px;
+}
+
+.managedocs button:hover {
+  background-color: #D49E8D;
 }
 
 .managedocs input {
-  width: 300px;
+  /* width: 300px;
   padding: 20px;
   font-size: 15px;
   margin-bottom: 0px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box;
+  box-sizing: border-box; */
 }
 
 .managedocs select {
-  width: 300px;
+  /* width: 300px;
   padding: 10px;
   font-size: 15px;
   margin-top: 20px;
   margin-bottom: 0px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box;
+  box-sizing: border-box; */
 }
 
 .managedocs select {
-  height: 45px;
+  /* height: 45px; */
 }
 
 .managedocs button {
-  font-size: 20px;
-  width: 200px;
+  /* width: 50%; */
 }

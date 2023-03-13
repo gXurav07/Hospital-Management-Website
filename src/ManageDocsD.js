@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Table from './Table';
 import jsonData from './db.json';
+import { FormGroup, Label, Col, Input, Form, Button } from "reactstrap";
 
 function ManageDocsD(props) {
   const [patients, setPatients] = useState();
@@ -40,19 +41,25 @@ function ManageDocsD(props) {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Delete Doctor</h1>
+        <h1>Delete a Doctor</h1>
         <hr />
       </header>
       <div className="App-body">
-        <div className="doctor_dashboard">
+        <div className="managedocs">
           {patients ? <Table data={patients} /> : <br />}
-          <div className='form_wrapper'>
-            <form>
-              <label>Get Details:</label>
-              <input type="text" placeholder="Enter Doctor ID...." required value={pid} onChange={(e) => setPid(e.target.value)} />
-              <button className='but_'>Delete Doctor</button>
-            </form>
-          </div>
+          <Form>
+            <FormGroup row>
+              <Label for="name" sm={3}>Get Details:</Label>
+              <Col sm={9}>
+                <Input type="text" name="name" id="name" placeholder="Enter Doctor ID...." required value={pid} onChange={(e) => setPid(e.target.value)} />
+              </Col>
+            </FormGroup>
+            <FormGroup check row>
+              <Col sm={{ size: 9, offset: 4 }}>
+                <Button>Delete Doctor</Button>
+              </Col>
+            </FormGroup>
+          </Form>
           {result ? <Table data={result} /> : <br />}
         </div>
       </div>

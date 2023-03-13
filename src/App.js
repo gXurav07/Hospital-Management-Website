@@ -59,10 +59,12 @@ function App() {
         <Routes>
             <Route exact path='/' element ={<Navigate to="/login"/>}/>
             {/* Primary Routes */}
-            <Route path="user1" element={<PrivateRoute type={1}> <FDOps server_addr={server_addr}/></PrivateRoute>} />
-            <Route path="user2" element={<PrivateRoute type={2}> <DEOps server_addr={server_addr}/></PrivateRoute>}  />
-            <Route path="user3" element ={<PrivateRoute type={3}> <DoctorDashboard type={3} server_addr={server_addr}/> </PrivateRoute> } />
-            <Route exact path="user4" element ={ <PrivateRoute type={4}> <AdminDashboard type={4} server_addr={server_addr}/> </PrivateRoute> } />
+            <Route path="user1" element={<FDOps server_addr={server_addr}/>} />
+            <Route path="user1" element={<Login name="Front End Operator"  type={1} server_addr={server_addr}/>} />
+            <Route path="user2" element={<DEOps server_addr={server_addr}/>} />
+            <Route path="user2" element={<Login name="Data Entry Operator" type={2} server_addr={server_addr}/>} />
+            {/* <Route path="user3" element={<Login name="Doctor"/>} /> */}
+            {/* <Route path="user4" element={<Login name="Database Administrator"/>} /> */}
 
             {/* Secondary Routes */}
             <Route exact path="user3/prescribe" element ={<PrivateRoute type={3}> <Prescribe server_addr={server_addr}/> </PrivateRoute>} />

@@ -12,6 +12,17 @@ function ScheduleTest(props) {
 
     const server_addr = props.server_addr;
 
+    function getMinDate() {
+        const today = new Date();
+        return today.toISOString().substr(0, 10);
+    }
+
+    function getMaxDate() {
+        const today = new Date();
+        const twoMonthsLater = new Date(today.getFullYear(), today.getMonth() + 2, today.getDate());
+        return twoMonthsLater.toISOString().substr(0, 10);
+    }
+
     useEffect(() => {
         // get all pending tests from db
         fetch('http://' + server_addr + '/front-desk/schedule-test', {
@@ -139,7 +150,7 @@ function ScheduleTest(props) {
                                     <hr />
                                     <Row className='align-items-center'>
                                         <Col sm={{ offset: 2, size: 3 }} className="justify-content-end"><Label for="app_date"> Select Date: </Label></Col>
-                                        <Col sm={4}><Input type="date" id="app_date" sm="8" value={date} onChange={(e) => setDate(e.target.value)}></Input></Col>
+                                        <Col sm={4}><Input type="date" min={getMinDate()} max={getMaxDate()} id="app_date" sm="8" value={date} onChange={(e) => setDate(e.target.value)}></Input></Col>
                                     </Row>
                                     <br />
                                     <hr />

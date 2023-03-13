@@ -16,6 +16,18 @@ function Appointment(props) {
     const [emergency, setEmergency] = useState(false);
 
     const server_addr = props.server_addr;
+    let overwrite = false;
+
+    function getMinDate() {
+        const today = new Date();
+        return today.toISOString().substr(0, 10);
+    }
+
+    function getMaxDate() {
+        const today = new Date();
+        const twoMonthsLater = new Date(today.getFullYear(), today.getMonth() + 2, today.getDate());
+        return twoMonthsLater.toISOString().substr(0, 10);
+    }
 
     useEffect(() => {
         // get all patients and doctors from db
@@ -23,14 +35,14 @@ function Appointment(props) {
             method: 'GET',
             headers: { "Content-Type": "application/json" }
         })
-            .then(res => {
-                return res.json();
-            })
-            .then(data => {
-                console.log("Patient and Doctor data: ", data);
-                setDoctors(data['doctors']);
-                setPatients(data['patients']);
-            });
+        .then(res => {
+            return res.json();
+        })
+        .then(data => {
+            console.log("Patient and Doctor data: ", data);
+            setDoctors(data['doctors']);
+            setPatients(data['patients']);
+        });
     }, []);
 
     useEffect(() => {
@@ -59,6 +71,13 @@ function Appointment(props) {
         e.preventDefault();
         console.log("Submit clicked:", ['docId:', docId, 'patientId:', patientId, 'date:', date, 'slotId:', slotId]);
         if (docId !== '' && patientId !== '' && date !== '' && slotId !== '') {
+            if(emergency) {
+                const slot = slots.find(slot => slot.SlotID === slotId);
+                console.log("Slot: ", slot);
+                if(slot['booked'] === true) {
+                    overwrite = true;
+                }
+            }
             // post to db
             fetch('http://' + server_addr + '/front-desk/appointment/slots', {
                 method: 'POST',
@@ -67,26 +86,28 @@ function Appointment(props) {
                     docID: docId,
                     patientSSN: patientId,
                     date: date,
-                    slotID: slotId
+                    slotID: slotId,
+                    overwrite: overwrite,
                 })
             })
-                .then(res => {
-                    return res.json();
-                })
-                .then(data => {
-                    console.log("Appointment data: ", data);
-                    if (data['message'] == 'OK') {
-                        alert("Appointment created successfully");
-                        setDate('');
-                        setDocId('');
-                        setPatientId('');
-                        setSlotId('');
-                        setShowSlots(false);
-                    }
-                    else {
-                        alert("Appointment creation failed");
-                    }
-                });
+            .then(res => {
+                return res.json();
+            })
+            .then(data => {
+                console.log("Appointment data: ", data);
+                if (data['message'] == 'OK') {
+                    alert("Appointment created successfully");
+                    setDate('');
+                    setDocId('');
+                    setPatientId('');
+                    setSlotId('');
+                    setShowSlots(false);
+                    setEmergency(false);
+                }
+                else {
+                    alert("Appointment creation failed");
+                }
+            });
         }
         else {
             alert("Please fill all the fields");
@@ -172,7 +193,7 @@ function Appointment(props) {
         {
             Header: 'Status',
             accessor: 'booked',
-            Cell: ({ cell: { value } }) => value || "-",
+            Cell: ({ cell: { value } }) => value ? "Busy": "Free" || "-",
             Filter: SelectColumnFilter,
             invisible: !emergency
         }
@@ -186,23 +207,23 @@ function Appointment(props) {
             </header>
             <div className="App-body">
                 <div className='form_wrapper'>
-                    <Col sm={{ offset: 3, size: 6 }}> Select{(patientId !== '') ? "ed" : ""} Patient ID: {patientId}</Col>
+                    <Col className='my-col' sm={{ offset: 3, size: 6 }}> Select{(patientId !== '') ? "ed" : ""} Patient ID: {patientId}</Col>
                     {(patients.length > 0) ? <TableContainer columns={patientColumns} data={patients} selectedRow={patientId} setSelectedRow={(row) => setPatientId(row.values['id'])} TableName="Patients" identifierColumn={'id'} /> : <><p>Sorry! Unable to fetch Patient data from server.</p><br /></>}
                     <br />
                     <hr />
-                    <Col sm={{ offset: 3, size: 6 }}> Select{(patientId !== '') ? "ed" : ""} Doctor ID: {docId}</Col>
+                    <Col className='my-col' sm={{ offset: 3, size: 6 }}> Select{(patientId !== '') ? "ed" : ""} Doctor ID: {docId}</Col>
                     {(doctors.length > 0) ? <TableContainer columns={doctorColumns} data={doctors} selectedRow={docId} setSelectedRow={(row) => setDocId(row.values['id'])} TableName="Doctors" identifierColumn={'id'} /> : <><p>Sorry! Unable to fetch Doctor data from server.</p><br /></>}
                     <br />
                     <hr />
                     <br />
                     <Row className='align-items-center'>
                     </Row>
-                    <Row className='align-items-center'>
+                    <Row className='my-col align-items-center'>
                         <Label sm={{ offset: 0.5, size: 3 }} for="app_date"> Select Date: </Label>
-                        <Col sm={4}><Input type="date" id="app_date" sm="8" value={date} onChange={(e) => setDate(e.target.value)}></Input></Col>
+                        <Col sm={4}><Input type="date" min={getMinDate()} max={getMaxDate()} id="app_date" sm="8" value={date} onChange={(e) => setDate(e.target.value)}></Input></Col>
                         <Label check sm={{ offset: 2, size: 3 }}>
                             Emergency? {' '}
-                            <Input type="checkbox" checked={emergency} onClick={() => setEmergency(!emergency)} style={{ backgroundColor: 'red' }} />
+                            <Input type="checkbox" defaultChecked={false} checked={emergency} onClick={() => setEmergency(!emergency)} style={{ backgroundColor: 'red' }} />
                         </Label>
                     </Row>
                     <br />
@@ -210,7 +231,7 @@ function Appointment(props) {
                         showSlots && (
                             <>
                                 <hr />
-                                <Col sm={{ offset: 3, size: 6 }}> Select{(slotId !== '') ? "ed" : ""} Slot ID: {slotId}</Col>
+                                <Col className='my-col' sm={{ offset: 3, size: 6 }}> Select{(slotId !== '') ? "ed" : ""} Slot ID: {slotId}</Col>
                                 {(slots.length > 0) ? <TableContainer columns={slotColumns} data={slots} selectedRow={slotId} setSelectedRow={(row) => setSlotId(row.values['SlotID'])} TableName="Slots" identifierColumn={'SlotID'} /> : <><p>Sorry! No matching slots found.</p><br /></>}
                                 <br />
                                 {(slotId !== '') ? <button type='submit' className='but_' onClick={(e) => handleSubmit(e)}>Schedule</button> : ''}

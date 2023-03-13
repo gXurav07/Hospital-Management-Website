@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FormGroup, Label, Col, Input, Form, Button } from "reactstrap";
 
 function ManageOps(props) {
   const [name, setName] = useState('');
@@ -28,16 +29,28 @@ function ManageOps(props) {
       </header>
       <div className="App-body">
         <div className="managedocs">
-          <form onSubmit={handleSubmit}>
-            <label>Name:</label>
-            <input type="text" placeholder="Enter name...." required value={name} onChange={(e) => setName(e.target.value)} />
-            <label>Role:</label>
-            <select value={role} onChange={(e) => setRole(e.target.value)}>
-              <option value="front">Front Desk Operator</option>
-              <option value="data">Data Entry Operator</option>
-            </select>
-            <button>Add Operator</button>
-          </form>
+          <Form onSubmit={handleSubmit}>
+            <FormGroup row>
+              <Label for="name" sm={3}>Name:</Label>
+              <Col sm={9}>
+                <Input type="text" name="name" id="name" placeholder="Enter name of operator....." required value={name} onChange={(e) => setName(e.target.value)} />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label for="role" sm={3}>Role:</Label>
+              <Col sm={9}>
+                <Input type="select" name="role" id="role" value={role} onChange={(e) => setRole(e.target.value)}>
+                  <option value="front">Front Desk Operator</option>
+                  <option value="data">Data Entry Operator</option>
+                </Input>
+              </Col>
+            </FormGroup>
+            <FormGroup check row>
+              <Col sm={{ size: 9, offset: 4 }}>
+                <Button>Add Operator</Button>
+              </Col>
+            </FormGroup>
+          </Form>
         </div>
       </div>
     </div>

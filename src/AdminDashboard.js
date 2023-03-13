@@ -27,11 +27,10 @@ function AdminDashboard(props) {
           <Link to="managedocsd" className="box"><button>Delete Doctor</button></Link>
           <Link to="manageops" className="box"><button>Add Data Operators</button></Link>
           <Link to="manageopsd" className="box"><button>Delete Data Operators</button></Link>
-
-          <Link to="medication" className="box"><button>Medication</button></Link>
-          <Link to="treatment" className="box"><button>Treatment</button></Link>
-          <Link to="test" className="box"><button>Test</button></Link>
-          <Link to="department" className="box"><button>Department</button></Link>
+          <Link to="medication" className="box"><button>Add Medication</button></Link>
+          <Link to="treatment" className="box"><button>Add Treatment</button></Link>
+          <Link to="test" className="box"><button>Add Test</button></Link>
+          <Link to="department" className="box"><button>Add Department</button></Link>
         </div>
       </div>
     </div>
