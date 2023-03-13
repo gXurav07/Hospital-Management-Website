@@ -9,19 +9,21 @@ function AddPatient(props) {
     const [age, setAge] = useState('');
     const [phone, setPhone] = useState('');
     const [insuranceID, setInsuranceID] = useState('');
-    const [pcp, setPCP] = useState('');
+    const [email, setEMAIL] = useState('');
 
     const server_addr = props.server_addr;
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const doc = { ssn, name, addr, gender, age, phone, insuranceID, pcp };
+        const patient = { patient_ssn : ssn, patient_name : name, address : addr, gender, age, phone, insuranceID, email };
 
-        fetch('http://' + server_addr + '/doctors', {
+        fetch('http://' + server_addr + '/register', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(doc)
-        }).then(() => console.log("Added doctor!", doc));
+            body: JSON.stringify(patient)
+        }).then(data => {
+            console.log(patient);
+        });
     }
 
     return (
@@ -80,9 +82,9 @@ function AddPatient(props) {
                             </Col>
                         </FormGroup>
                         <FormGroup row>
-                            <Label for="pcp" sm={3}>PCP:</Label>
+                            <Label for="email" sm={3}>EMAIL:</Label>
                             <Col sm={9}>
-                                <Input type="text" name="pcp" id="pcp" placeholder="Enter PCP of patient...." required value={pcp} onChange={(e) => setPCP(e.target.value)} />
+                                <Input type="text" name="email" id="email" placeholder="Enter EMAIL of patient...." required value={email} onChange={(e) => setEMAIL(e.target.value)} />
                             </Col>
                         </FormGroup>
                         <FormGroup check row>

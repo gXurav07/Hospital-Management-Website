@@ -4,7 +4,7 @@ function AddUser(props) {
     const [id, setID] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [user_type, setUserType] = useState('');
+    const [user_type, setUserType] = useState(1);
     const [password, setPassword] = useState('');
 
     const server_addr = props.server_addr;
