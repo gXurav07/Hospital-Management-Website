@@ -68,48 +68,6 @@ function Prescribe(props) {
       });
   }, [])
 
-  function ListItems(props) {
-    const type = props.type;
-    return (
-      <>
-        <FormGroup  row>
-          <Label for={type} sm={3}>Prescribe {type}</Label>
-          <Col sm={9}>
-            <Input type="select" name={type} id={type} value={selectedItem} onChange={handleItemChange}>
-              <option value="">Select {type}</option>
-              {listItems[type].map((item, index) => (
-                <option key={index} value={item['id']}>
-                  {item['name']}
-                </option>
-              ))}
-            </Input>
-          </Col>
-        </FormGroup>
-        <FormGroup  row>
-          <Label for="remarks" sm={3}>Remarks</Label>
-          <Col sm={9}>
-            <Input type="textarea" name="remarks" id="remarks" placeholder="Enter Remarks..." value={remarks} onChange={handleRemarksChange} />
-          </Col>
-        </FormGroup>
-        <FormGroup  row>
-          <Col sm={{size: 9, offset: 3}}>
-            <Row>
-              <Col sm={3}>
-                <Button onClick={(e) => setPrescription([])}>Clear</Button>
-              </Col>
-              <Col sm={3}>
-                <Button onClick={(e) => appendPrescription(e)}>Add</Button>
-              </Col>
-              <Col sm={2}>
-                {prescription === [] ? <hr /> : <Button onClick={(e) => sendPrescription(e)}>Prescribe</Button>}
-              </Col>
-            </Row>
-          </Col>
-        </FormGroup>
-      </>
-    )
-  }
-
   return (
     <>
       <br />
@@ -134,9 +92,46 @@ function Prescribe(props) {
                 </Input>
               </Col>
             </FormGroup>
-            {(selectedType === 'Medication' ? <ListItems type="Medication" /> : <br></br>)}
-            {(selectedType === 'Test' ? <ListItems type="Test" /> : <br></br>)}
-            {(selectedType === 'Treatment' ? <ListItems type="Treatment" /> : <br></br>)}
+            {(selectedType === 'Medication' || selectedType === 'Test' || selectedType === 'Treatment' ? 
+              (
+                <>
+                <FormGroup row>
+                <Label for={selectedType} sm={3}>Prescribe {selectedType}</Label>
+                <Col sm={9}>
+                  <Input type="select" name={selectedType} id={selectedType} value={selectedItem} onChange={handleItemChange}>
+                    <option value="">Select {selectedType}</option>
+                    {listItems[selectedType].map((item, index) => (
+                      <option key={index} value={item['id']}>
+                        {item['name']}
+                      </option>
+                    ))}
+                  </Input>
+                </Col>
+              </FormGroup>
+              <FormGroup  row>
+                <Label for="remarks" sm={3}>Remarks</Label>
+                <Col sm={9}>
+                  <Input type="textarea" name="remarks" id="remarks" placeholder="Enter Remarks..." value={remarks} onChange={handleRemarksChange} />
+                </Col>
+              </FormGroup>
+              <FormGroup  row>
+                <Col sm={{size: 9, offset: 3}}>
+                  <Row>
+                    <Col sm={3}>
+                      <Button onClick={(e) => setPrescription([])}>Clear</Button>
+                    </Col>
+                    <Col sm={3}>
+                      <Button onClick={(e) => appendPrescription(e)}>Add</Button>
+                    </Col>
+                    <Col sm={2}>
+                      {prescription === [] ? <hr /> : <Button onClick={(e) => sendPrescription(e)}>Prescribe</Button>}
+                    </Col>
+                  </Row>
+                </Col>
+              </FormGroup>
+              </>
+              )
+             : <br></br>)}
             {prescription ? <Table data={prescription} /> : console.log('no entry found')}
           </Form>
         </div >
