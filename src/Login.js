@@ -53,8 +53,8 @@ export default function Login(props) {
               <Label for="type" sm={3}>Type:</Label>
               <Col sm={9}>
                 <Input type="select" name="type" id="type" value={type} onChange={(e) => setType(e.target.value)}>
-                  <option value={1}>Front-End</option>
-                  <option value={2}>Data-Entry</option>
+                  <option value={1}>Front-Desk Operator</option>
+                  <option value={2}>Data-Entry Operator</option>
                   <option value={3}>Doctor</option>
                   <option value={4}>Administrator</option>
                 </Input>
