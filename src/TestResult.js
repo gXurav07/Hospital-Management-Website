@@ -75,15 +75,20 @@ function TestResult(props) {
         console.log(['remarks:', remarks, 'file:', file]);
         if(testId !== '' && remarks !== '' && remarks !== null) {
             // create FormData object
-            const formData = new FormData();
-            formData.append('test_instanceid', testId);
-            formData.append('test_result', remarks);
-            formData.append('file', file);
-            
+            // const formData = new FormData();
+            // formData.append('test_instanceid', testId);
+            // formData.append('test_result', remarks);
+            // formData.append('file', file);
+            // console.log('formData: ', formData);
             // post to db
             fetch('http://' + server_addr + '/data-entry/test-result', {
                 method: 'POST',
-                body: formData
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    test_instanceid: testId,
+                    test_result: remarks,
+                    file: file
+                })
             })
             .then(res => res.json())
             .then(data => {
