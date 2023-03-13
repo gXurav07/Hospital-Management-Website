@@ -10,7 +10,7 @@ function DoctorDashboard(props) {
   const [patients, setPatients] = useState();
   const [upcoming, setUpcoming] = useState();
   const [result, setResult] = useState([]);
-  const [did, setDid] = useState(1);
+  const [did, setDid] = useState(props.did);
   const [pid, setPid] = useState();
   const [appointmentid, setAppointmentid] = useState();
   const [date, setDate] = useState();
@@ -24,6 +24,7 @@ function DoctorDashboard(props) {
   // }, []);
 
   useEffect(() => {
+    setDid(props.did)
     console.log("requesting all patient data");
     fetch('http://' + server_addr + '/doctor/' + did)
       .then(res => {
