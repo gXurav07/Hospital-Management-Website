@@ -24,6 +24,7 @@ function DoctorDashboard(props) {
   // }, []);
 
   useEffect(() => {
+    setDid(props.did)
     console.log("requesting all patient data");
     fetch('http://' + server_addr + '/doctor/' + did)
       .then(res => {

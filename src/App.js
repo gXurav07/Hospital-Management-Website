@@ -29,6 +29,7 @@ import AddTreatment from "./admin_dashboard/add_treatment";
 import AddTest from "./admin_dashboard/add_test";
 import AddDepartment from "./admin_dashboard/add_department";
 import AddUser from "./admin_dashboard/add_user";
+import DeleteUser from "./admin_dashboard/delete_user";
 
 import PrivateRoute from "./PrivateRoute";
 import { Button } from "reactstrap";
@@ -80,7 +81,7 @@ function App() {
             
             {/* Admin Dashboard */}
             <Route exact path="user4/managedocs" element={<PrivateRoute type={4}> <ManageDocs server_addr={server_addr}/></PrivateRoute>} render={()=>console.log('checking...')} />
-            <Route path="user4/managedocsd" element={<PrivateRoute type={4}> <ManageDocsD server_addr={server_addr}/></PrivateRoute>} />
+            <Route path="user4/delete" element={<PrivateRoute type={4}> <DeleteUser server_addr={server_addr}/></PrivateRoute>} />
             <Route path="user4/manageops" element={<PrivateRoute type={4}> <ManageOps server_addr={server_addr}/></PrivateRoute>} />
             <Route path="user4/manageopsd" element={<PrivateRoute type={4}> <ManageOpsD server_addr={server_addr}/></PrivateRoute>} />
 
@@ -93,7 +94,8 @@ function App() {
           <Route exact path='/login' element ={<Login server_addr={server_addr} onLogin={ (id) => 
           {
             setStatus(JSON.parse(sessionStorage.getItem('token')))
-            setUserId(id);            
+            setUserId(id);   
+            console.log("user id:", id);         
           }}/>
         }/>
         </Routes>

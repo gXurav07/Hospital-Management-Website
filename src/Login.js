@@ -25,7 +25,7 @@ export default function Login(props) {
       status = data;
       if (data.success === true) {
         alert("logged in!", status.message);
-        props.onLogin();
+        props.onLogin(id);
         sessionStorage.setItem('token', JSON.stringify({ logged_in: true, type: type }));
         navigate(`/user${type}`);
       } else {
