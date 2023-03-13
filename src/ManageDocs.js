@@ -4,7 +4,7 @@ import { FormGroup, Label, Col, Input, Form, Button } from "reactstrap";
 function ManageDocs(props) {
   const [name, setName] = useState('');
   const [employeeid, setEmpid] = useState('');
-  const [department, setDep] = useState('1');
+  const [departmentId, setDep] = useState('1');
   const [position, setPosition] = useState('hod');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -14,7 +14,7 @@ function ManageDocs(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const type = 'doctor';
-    const doc = { name, employeeid, position, department, email, password, type };
+    const doc = { name, physicianid: employeeid, position, department : departmentId, type : 'doctor'};
 
     fetch('http://' + server_addr + '/admin', {
       method: 'POST',
@@ -25,7 +25,8 @@ function ManageDocs(props) {
         return res.json();
       })
       .then(data => {
-        console.log("operation status: ", data['message']);
+        alert(data['message'])
+        // console.log("operation status: ", data['message']);
       });
   }
 
@@ -53,7 +54,7 @@ function ManageDocs(props) {
             <FormGroup row>
               <Label for="department" sm={3}>Department:</Label>
               <Col sm={9}>
-                <Input type="select" name="department" id="department" value={department} onChange={(e) => setDep(e.target.value)}>
+                <Input type="select" name="department" id="department" value={departmentId} onChange={(e) => setDep(e.target.value)}>
                   <option value={1}>Cardiology</option>
                   <option value={2}>Neurology</option>
                   <option value={3}>Surgery</option>

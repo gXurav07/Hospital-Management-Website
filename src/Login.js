@@ -1,49 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { FormGroup, Label, Col, Input, Form, Button } from "reactstrap";
 import useToken from "./useToken";
 
 export default function Login(props) {
-  // console.log("l",props)
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [empid, setEmpid] = useState('');
+  const [id, setId] = useState('');
   const [password, setPassword] = useState('');
-  // const { token, setToken } = useToken();
+  const [type, setType] = useState(1);
 
-  const type = props.type;
+  const navigate = useNavigate();
   const server_addr = props.server_addr;
-
-  const signup = { name, email, empid, password, type };
-  const login = { email, password, type };
-
-  const handleSignup = (e) => {
-    e.preventDefault();
-    console.log("Sent signup details!", signup)
-    fetch('http://' + server_addr + '/login', {
-      method: 'POST',
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(signup)
-    })
-      .then(res => {
-        return res.json();
-      })
-      .then(data => {
-        console.log("signup status ", data);
-        // setStatus(data);
-      });
-  }
+  const login = { id, password, type };
 
   const handleLogin = (e) => {
+    let status;
     e.preventDefault();
-    console.log("Sent login details!", login)
-    // fetch('http://'+server_addr+'/login/?type='+type+'&email='+email+'&pass='+password)
+    console.log("login details!", login);
+    // fetch('http://'+server_addr+'/login/?type='+type+'&id='+id+'&pass='+password)
     // .then(res => {
     //   return res.json();
     // })
     // .then(data => {
     //   status = data;
     // });
-    sessionStorage.setItem('token', JSON.stringify(true));
-    props.setToken(true);//this will redirect to AdminDashboard
+    // if(status['success']=='successful')
+    // {
+    //   props.onLogin(id);
+    //   sessionStorage.setItem('token', JSON.stringify({logged_in: true, type: type}));
+    //   navigate("/user"+type);
+    // }
+    // else
+    // {
+    //   alert("Authentication Failed ", status['message']);
+    // }
+    props.onLogin();
+    sessionStorage.setItem('token', JSON.stringify({ logged_in: true, type: type }));
+    navigate("/user" + type);
   }
 
   return (
@@ -52,67 +44,65 @@ export default function Login(props) {
         <h1>{props.name}</h1>
         <hr />
       </header>
-
       <div className="App-body">
-        <div className="main">
-          <input className="inp" type="checkbox" id="chk" area-hidden="true" />
-          <div className="signup">
-            <form onSubmit={(e) => handleSignup(e)}>
-              <label className="lab" htmlFor="chk" aria-hidden="true">Sign up</label>
-              <input className="inp" type="text"
-                name="name"
-                required
-                placeholder="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <input className="inp" type="email"
-                name="email"
-                required
-                placeholder="Email ID"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <input className="inp" type="text"
-                name="empid"
-                required
-                placeholder="Employee ID"
-                value={empid}
-                onChange={(e) => setEmpid(e.target.value)}
-              />
-              <input className="inp" type="password"
-                name="password"
-                required
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <button>Sign up</button>
-            </form>
-          </div>
-
-          <div className="login">
-            <form onSubmit={(e) => handleLogin(e)}>
-              <label className="lab" htmlFor="chk" aria-hidden="true">Login</label>
-              <input className="inp" type="text"
-                name="empid"
-                required
-                placeholder="Employee ID"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <input className="inp" type="password"
-                name="password"
-                required
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <button>Login</button>
-            </form>
-          </div>
-
+        <h2>Login</h2>
+        <div className="managedocs">
+          <Form onSubmit={(e) => handleLogin(e)}>
+            <FormGroup row>
+              <Label for="type" sm={3}>Type:</Label>
+              <Col sm={9}>
+                <Input type="select" name="type" id="type" value={type} onChange={(e) => setType(e.target.value)}>
+                  <option value={1}>Front-End</option>
+                  <option value={2}>Data-Entry</option>
+                  <option value={3}>Doctor</option>
+                  <option value={4}>Administrator</option>
+                </Input>
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label for="empid" sm={3}>Employee ID:</Label>
+              <Col sm={9}>
+                <Input type="text" name="empid" id="empid" placeholder="Enter Employee ID....." required value={id} onChange={(e) => setId(e.target.value)} />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label for="password" sm={3}>Password:</Label>
+              <Col sm={9}>
+                <Input type="password" name="password" id="password" placeholder="Enter Password....." required value={password} onChange={(e) => setPassword(e.target.value)} />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Col sm={{ size: 9, offset: 4 }}>
+                <Button type="submit" color="primary">Login</Button>
+              </Col>
+            </FormGroup>
+          </Form>
+          {/* <form onSubmit={(e) => handleLogin(e)}>
+            <label>Login</label>
+            <select value={type} onChange={(e) => setType(e.target.value)}>
+              <option value={1}>Front-End</option>
+              <option value={2}>Data-Entry</option>
+              <option value={3}>Doctor</option>
+              <option value={4}>Administrator</option>
+            </select>
+            <input type="text"
+              name="empid"
+              required
+              placeholder="Employee ID"
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+            />
+            <input type="password"
+              name="password"
+              required
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button>Login</button>
+          </form> */}
         </div>
+
       </div>
     </div>
   );

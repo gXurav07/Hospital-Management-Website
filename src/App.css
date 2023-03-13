@@ -1,6 +1,9 @@
 .App {
   text-align: center;
-  background: url('img/bg.png') no-repeat center center/cover;
+  background-image: url('img/bg.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;

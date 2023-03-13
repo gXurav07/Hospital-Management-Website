@@ -15,7 +15,10 @@ function ManageOps(props) {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(op)
-    }).then(() => console.log("Added Operator!", op));
+    }).then(data => {
+      console.log(test);
+      alert(data['message']);
+    });
   }
 
   return (
