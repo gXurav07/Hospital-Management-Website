@@ -89,7 +89,10 @@ async function test(){
   
 async function testmail()
 {
-    let sql_query="SELECT Email from Patient NATURAL JOIN Appointment WHERE Appointment.Date='2023-03-22' and Appointment.SlotID=3";
+    let date = new Date().toISOString().slice(0, 9).replace('T', ' ');
+    let slotid = 3;
+
+    let sql_query=`SELECT Email from Patient NATURAL JOIN Appointment WHERE Appointment.Date='${date}' and Appointment.SlotID=${slotid}`;
     let result = await executeQuery(sql_query, pool);
     const patient_email=result.rows[0].Email;
     console.log(patient_email);

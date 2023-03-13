@@ -1,6 +1,7 @@
 const express = require('express');
 const dataEntryRouter = express.Router();
 
+
 const { executeQuery } = require('./db');
 
 dataEntryRouter
@@ -38,7 +39,7 @@ async function add_test_result(req, res){
     
     console.log(req.body);
     const {test_instanceid, test_result, file} = req.body;
-    let sql_query = `UPDATE Test_instance SET Result='${test_result}', Test_image=${file} WHERE Test_instanceID=${test_instanceid};`;
+    let sql_query = `UPDATE Test_instance SET Result='${test_result}' WHERE Test_instanceID=${test_instanceid};`;
     let result = await executeQuery(sql_query, req);
     
     res.status(result.status).send(result);

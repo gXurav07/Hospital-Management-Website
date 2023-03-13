@@ -45,11 +45,11 @@ function executeQuery(sql_query, pool){
 async function test(){
     // "SELECT * FROM Test_instance;"
     // "Update Test_instance SET Date=null AND SlotID=null;"
-    let sql_query = "SELECT * FROM Test_instance;" 
+    let sql_query = "SELECT * FROM Patient;" 
  
     let data = await executeQuery(sql_query, pool);
     console.log(data);
   
 } 
   
-test();  
+test();   

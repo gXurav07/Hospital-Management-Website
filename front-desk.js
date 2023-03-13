@@ -35,6 +35,12 @@ async function discharge_patient(req, res)
         res.status(result.status).send(result);
         return;
     }
+
+    if(result.rows.length == 0){
+        res.status(400).send({message: 'Patient not admitted or already discharged'});
+        return;
+    }
+
     const room = result.rows[0].RoomID;
     const date = new Date().toISOString().slice(0, 10).replace('T', ' ');
    
