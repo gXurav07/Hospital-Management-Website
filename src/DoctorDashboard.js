@@ -117,10 +117,16 @@ function DoctorDashboard(props) {
           {result ? <Table data={result} /> : console.log('no entry found')}
           {pid ? <Prescribe server_addr={server_addr} pid={pid} did={did} appointmentid={appointmentid} date={date} /> : console.log('no patient selected')}
           {/* <Link to="prescribe"><button align='center'>Prescribe</button></Link> */}
-          <h2>Future Appointments</h2>
-          {upcoming ? <Table data={upcoming} /> : console.log('no entry found')}
-        </div>
       </div>
+      <br />
+      <hr />
+      <header className="App-header">
+        <h1>Future Appointments</h1>
+      </header>
+      <div className="App-body">
+          {upcoming ? <Table data={upcoming} /> : console.log('no entry found')}
+      </div>
+    </div >
     </div >
   );
 }

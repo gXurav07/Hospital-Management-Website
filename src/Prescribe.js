@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Table from './Table';
+import { Form, Col, Row, Button, FormGroup, Label, Input } from 'reactstrap';
 import jsonData from './prescribe_list.json';
 
 function Prescribe(props) {
@@ -70,55 +71,76 @@ function Prescribe(props) {
   function ListItems(props) {
     const type = props.type;
     return (
-      <div className="doctor_dashboard">
-        <div className='form_wrapper'>
-          <form>
-            <label>Prescribe a {type}</label>
-            <select value={selectedItem} onChange={handleItemChange}>
+      <>
+        <FormGroup  row>
+          <Label for={type} sm={3}>Prescribe {type}</Label>
+          <Col sm={9}>
+            <Input type="select" name={type} id={type} value={selectedItem} onChange={handleItemChange}>
               <option value="">Select {type}</option>
               {listItems[type].map((item, index) => (
                 <option key={index} value={item['id']}>
                   {item['name']}
                 </option>
               ))}
-            </select>
-            <label>Remarks:</label>
-            <input type="text" placeholder="Enter Remarks..." value={remarks} onChange={handleRemarksChange} />
-            <button onClick={(e) => appendPrescription(e)}>Add to Prescription</button>
-            {prescription === [] ? <hr /> : <button onClick={(e) => sendPrescription(e)}>Prescribe</button>}
-          </form>
-        </div>
-      </div>
+            </Input>
+          </Col>
+        </FormGroup>
+        <FormGroup  row>
+          <Label for="remarks" sm={3}>Remarks</Label>
+          <Col sm={9}>
+            <Input type="textarea" name="remarks" id="remarks" placeholder="Enter Remarks..." value={remarks} onChange={handleRemarksChange} />
+          </Col>
+        </FormGroup>
+        <FormGroup  row>
+          <Col sm={{size: 9, offset: 3}}>
+            <Row>
+              <Col sm={3}>
+                <Button onClick={(e) => setPrescription([])}>Clear</Button>
+              </Col>
+              <Col sm={3}>
+                <Button onClick={(e) => appendPrescription(e)}>Add</Button>
+              </Col>
+              <Col sm={2}>
+                {prescription === [] ? <hr /> : <Button onClick={(e) => sendPrescription(e)}>Prescribe</Button>}
+              </Col>
+            </Row>
+          </Col>
+        </FormGroup>
+      </>
     )
   }
 
   return (
     <>
+      <br />
+      <hr />
       <header className="App-header">
         <h1>Prescribe to a Patient</h1>
         <hr />
       </header>
       <div className="App-body">
-        <div className="doctor_dashboard">
-          <div className='form_wrapper'>
-            <form>
-              <label>Type</label>
-              <select value={selectedType} onChange={handleTypeChange}>
-                <option value="">Select a type</option>
-                {types.map((type, index) => (
-                  <option key={index} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </select>
-            </form>
-          </div>
-        </div>
-        {(selectedType === 'Medication' ? <ListItems type="medication" /> : <br></br>)}
-        {(selectedType === 'Test' ? <ListItems type="test" /> : <br></br>)}
-        {(selectedType === 'Treatment' ? <ListItems type="treatment" /> : <br></br>)}
-        {prescription ? <Table data={prescription} /> : console.log('no entry found')}
-      </div >
+        <div className="managedocs">
+          <Form>
+            <FormGroup  row>
+              <Label for="type" sm={3}>Type</Label>
+              <Col sm={9}>
+                <Input type="select" name="type" id="type" value={selectedType} onChange={handleTypeChange}>
+                  <option value="">Select a type</option>
+                  {types.map((type, index) => (
+                    <option key={index} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </Input>
+              </Col>
+            </FormGroup>
+            {(selectedType === 'Medication' ? <ListItems type="medication" /> : <br></br>)}
+            {(selectedType === 'Test' ? <ListItems type="test" /> : <br></br>)}
+            {(selectedType === 'Treatment' ? <ListItems type="treatment" /> : <br></br>)}
+            {prescription ? <Table data={prescription} /> : console.log('no entry found')}
+          </Form>
+        </div >
+      </div>
     </>
   );
 }
