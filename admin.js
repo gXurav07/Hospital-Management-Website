@@ -1,6 +1,7 @@
 // Route for admin
 const express = require('express');
 const { executeQuery } = require('./db');
+const {encrypt} = require('./encryption-handler');
 
 const adminRouter = express.Router();
 
@@ -65,9 +66,10 @@ async function createEntity(req, res){
 
     try{
         if(type == 'user'){
-            const iv = crypto.randomBytes(16).toString('hex');
+            const encription = encrypt(entity.password);
+            const pass = encription.encrypted_password, iv = encription.iv;
             sql_query =  `INSERT INTO User(EmployeeID, Name, Email, Type, Password, Pass_iv) `+
-                            `VALUES('${entity.employeeid}', '${entity.name}', '${entity.email}', ${entity.user_type}, '${entity.password}', '${iv}'); `;
+                            `VALUES('${entity.employeeid}', '${entity.name}', '${entity.email}', ${entity.user_type}, '${pass}', '${iv}'); `;
         }
         else if(type == 'doctor'){
             sql_query =  `INSERT INTO Physician(PhysicianID, Position) `+
