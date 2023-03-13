@@ -51,18 +51,21 @@ async function test(){
     console.log(physicians);
 
     physicians.rows.forEach(async physician => {
-        const {PhysicianID} = physician;
+
         // get physician's email
-        sql_query = `SELECT Email FROM User WHERE EmployeeID=${physician};`;
+        sql_query = `SELECT Email FROM User WHERE EmployeeID='${physician.PhysicianID}';`;
         let doc_email = await executeQuery(sql_query, pool);
 
-        // get all patients of the physician
-        sql_query = `SELECT Patient_Name, Patient.Patient_SSN, Email, Test_instance.Result as Test_Result, Test_instance.Test_image as Test_Image, Test_instance.Date as "Test_Date",Desc_Name as "Treatment_Name",Treatment.Date as "Treatment_Date" `+
-                    `FROM Patient NATURAL JOIN Physician NATURAL JOIN Appointment, Test NATURAL JOIN Test_instance,Treatment NATURAL JOIN Treatment_Description WHERE `+
-                    `Physician.PhysicianID='${PhysicianID}' and Test_instance.Patient_SSN=Patient.Patient_SSN and Treatment.Patient_SSN=Patient.Patient_SSN;`;
+        let act_email=doc_email.rows[0].Email;
+        console.log(act_email);
+
+        //get all patients of the physician
+        sql_query = `SELECT Patient_Name, Patient.Patient_SSN, Email, Appointment.Date`+
+                    ` FROM Patient NATURAL JOIN Physician NATURAL JOIN Appointment WHERE `+
+                    `Physician.PhysicianID='${physician.PhysicianID}';`;
         
         let result = await executeQuery(sql_query, pool);
-        console.log(PhysicianID, "\n\n", result);
+        //console.log(result);
         // Assuming that the result of the SQL query is stored in a variable called 'result'
         
         mailText = `Dear Physician,\n\nHere are the details of your patients:\n\n`;
@@ -72,27 +75,27 @@ async function test(){
         mailText += `Patient Name: ${row.Patient_Name}\n`;
         mailText += `Patient SSN: ${row.Patient_SSN}\n`;
         mailText += `Email: ${row.Email}\n`;
-        mailText += `Test Result: ${row.Test_Result}\n`;
-        mailText += `Test Image: ${row.Test_Image}\n`;
-        mailText += `Test Date: ${row.Test_Date}\n`;
-        mailText += `Treatment Name: ${row.Treatment_Name}\n`;
-        mailText += `Treatment Date: ${row.Treatment_Date}\n\n`;
+        mailText += `Appointment Date: ${row.Date}\n\n`;
+        // mailText += `Test Result: ${row.Test_Result}\n`;
+        // mailText += `Test Image: ${row.Test_Image}\n`;
+        // mailText += `Test Date: ${row.Test_Date}\n`;
+        // mailText += `Treatment Name: ${row.Treatment_Name}\n`;
+        // mailText += `Treatment Date: ${row.Treatment_Date}\n\n`;
         });
         
         // Add closing message to the mailText
         mailText += `Thank you,\nYour Hospital`;
+        console.log(mailText);
+       
         
-        console.log(mailText, '\n\n');
+       
     });
   
 } 
   
 async function testmail()
 {
-    let date = new Date().toISOString().slice(0, 9).replace('T', ' ');
-    let slotid = 3;
-
-    let sql_query=`SELECT Email from Patient NATURAL JOIN Appointment WHERE Appointment.Date='${date}' and Appointment.SlotID=${slotid}`;
+    let sql_query="SELECT Email from Patient NATURAL JOIN Appointment WHERE Appointment.Date='2023-03-22' and Appointment.SlotID=3";
     let result = await executeQuery(sql_query, pool);
     const patient_email=result.rows[0].Email;
     console.log(patient_email);
@@ -105,5 +108,5 @@ async function testmail()
     let mailText2 = `Sorry due to emergency your appointment is changed for 2023-03-22 during 10:20:00 :11:00:00. You can login due to view further details.`;
     console.log(mailText2);
 }
-//test(); 
-testmail();
+test(); 
+//testmail();
