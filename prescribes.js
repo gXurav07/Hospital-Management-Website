@@ -64,8 +64,8 @@ async function addPrescribes(req, res){
                         `VALUES (${Patient_SSN}, ${docID}, '${body.id}', NULL, NULL, NULL, NULL);`;
         }
         else if(body.type == 'Treatment'){
-            sql_query = `INSERT INTO Prescribes_Medication (PhysicianID, Patient_SSN, MedicationID, Date, AppointmentID, Dose ) `+
-                        `VALUES (${docID}, ${Patient_SSN}, ${body.id}, '${body.Date}', ${appointmentID}, ${body.remarks});`;
+            sql_query = `INSERT INTO Treatment (PhysicianID, Patient_SSN,Treatment_DescriptionID ) `+
+                        `VALUES (${docID}, ${Patient_SSN}, ${body.id});`;
         }
 
         let result = await executeQuery(sql_query, req);
