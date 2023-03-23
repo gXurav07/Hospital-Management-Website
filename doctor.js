@@ -41,7 +41,20 @@ async function getDoctorByID(req, res){
         else if(type == 'appointment')
             sql_query = `SELECT AppointmentID as 'Appointment ID', User.Name as 'Physician Name', Date FROM Appointment NATURAL JOIN Patient NATURAL JOIN Physician NATURAL JOIN Slot,User WHERE Patient_SSN=${patient_id} and  User.EmployeeID=PhysicianID;`;
         else if(type == 'test')
-            sql_query = `SELECT Test_Name, Result, Date, Age, Gender FROM Test_instance NATURAL JOIN Test NATURAL JOIN Patient WHERE Patient_SSN=${patient_id};`;   
+            sql_query = `SELECT Test_instanceID as TestID,Test_Name, Result, Date, Age, Gender FROM Test_instance NATURAL JOIN Test NATURAL JOIN Patient WHERE Patient_SSN=${patient_id};`;   
+        else if(type == 'test_image'){
+            //console.log('hi')
+            const test_id=req.query.id;
+            sql_query = `SELECT Test_image from Test_instance WHERE  Test_instanceID=${test_id};`;
+            //console.log("dfjk");
+            let result = await executeQuery(sql_query, req);
+            //console.log("dfjk");
+            result.image = result.rows[0]['Test_image'];
+            result.rows = undefined;
+            //console.log(result);
+            res.status(result.status).send(result);
+            return;
+        }
         else{
             res.status(400).send({message: 'Invalid query type'});
             return;

@@ -36,13 +36,24 @@ async function get_tests(req, res){
 
 async function add_test_result(req, res){
     // convert to string
-    
-    console.log(req.body);
-    const {test_instanceid, test_result} = req.body;
-    let sql_query = `UPDATE Test_instance SET Result='${test_result}' WHERE Test_instanceID=${test_instanceid};`;
+    //console.log(req);
+    // console.log(req.file);
+    // console.log(req.testId);
+    // console.log(req.remarks);
+    // console.log(req.body.file);
+    // console.log(req.body.tesid);
+    const upload_file=req.body.file;
+    // const {test_instanceid, test_result} = req.body;
+    let sql_query = `UPDATE Test_instance SET Result='${req.body.remarks}',Test_image= x'${upload_file}' WHERE Test_instanceID=${req.body.test_id};`;
     let result = await executeQuery(sql_query, req);
-    
+    let sql_query2= `SELECT * from Test_instance WHERE Test_instanceID=${req.body.test_id};`;
+    let result2=await executeQuery(sql_query2, req);
+
+    //console.log(result2.rows); 
+    result.image = result2.rows[0]['Test_image'];
+    //console.log(result.image);
     res.status(result.status).send(result);
+    //res.status(200).send({message: 'Hehe'});
     // res.status(200).send({message: 'Hehe'});
     
 }

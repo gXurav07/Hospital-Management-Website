@@ -11,7 +11,7 @@ appointmentRouter
 .route('/slots')
 .get(getSlots)
 .post(addAppointment);
-
+ 
 async function getDoctorsToSchedule(req, res){
     
     let data = {doctors: [], patients: [], message: 'OK'};
@@ -102,7 +102,7 @@ async function addAppointment(req, res){
         const patient_email=result.rows[0].Email;
 
         console.log(patient_email);
-        let mailText = `Sorry due to an emergency your appointment is cancelled on ${date}. Please contact the hospital for scheduling appointment.`;
+        let mailText = `Sorry due to emergency your appointment is cancelled on ${date}. Please contact the hospital for scheduling appointment.`;
         console.log(mailText);
 
 
@@ -110,7 +110,7 @@ async function addAppointment(req, res){
         let result2 = await executeQuery(second_query, req);
         const physician_email=result2.rows[0].Email;
         console.log(physician_email);
-        let mailText2 = `Sorry due to an emergency your appointment is changed for ${date} during ${slot}. You can login to view further details.`;
+        let mailText2 = `Sorry due to emergency your appointment is changed for 2023-03-22 during 10:20:00 :11:00:00. You can login due to view further details.`;
         console.log(mailText2);
 
         sendMail(patient_email,"Regarding Appointment", mailText);

@@ -7,10 +7,11 @@ const sendMail = require('./send-mail');
   
 // create express app and start server
 const app = express();
-app.use(express.json());
+app.use(express.json({limit: '20mb'}));
 app.use(cors());
 
-const port_no = 3000;
+
+const port_no = 3001;
 
 app.listen(port_no, function(){
     console.log('Server is running on port ', port_no, '...');
@@ -54,7 +55,6 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
 });
-
 
 
 
