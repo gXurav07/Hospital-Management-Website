@@ -41,7 +41,7 @@ function ScheduleTest(props) {
 
     useEffect(() => {
         console.log(['testId:', testId, 'slotId:', slotId]);
-        if (testId !== '') {
+        if (testId !== '' && date !== '') {
             setShowSlots(true);
         }
         else {
@@ -143,15 +143,15 @@ function ScheduleTest(props) {
                     <div className='form_wrapper'>
                         <Col className='my-col' sm={{ offset: 3, size: 6 }}> Select{(testId !== '') ? 'ed' : ''} Test ID: {testId} </Col>
                         {(tests.length > 0) ? <TableContainer columns={testColumns} data={tests} selectedRow={testId} setSelectedRow={(row) => setTestId(row.values['Test_instanceID'])} TableName="Tests" identifierColumn={'Test_instanceID'} /> : <div>No tests to schedule</div>}
+                        <br />
+                        <hr />
+                        <Row className='align-items-center'>
+                            <Col sm={{ offset: 2, size: 3 }} className="my-col justify-content-end"><Label for="app_date"> Select Date: </Label></Col>
+                            <Col className='my-col' sm={4}><Input type="date" min={getMinDate()} max={getMaxDate()} id="app_date" sm="8" value={date} onChange={(e) => setDate(e.target.value)}></Input></Col>
+                        </Row>
                         {
                             showSlots && (
                                 <>
-                                    <br />
-                                    <hr />
-                                    <Row className='align-items-center'>
-                                        <Col sm={{ offset: 2, size: 3 }} className="my-col justify-content-end"><Label for="app_date"> Select Date: </Label></Col>
-                                        <Col className='my-col' sm={4}><Input type="date" min={getMinDate()} max={getMaxDate()} id="app_date" sm="8" value={date} onChange={(e) => setDate(e.target.value)}></Input></Col>
-                                    </Row>
                                     <br />
                                     <hr />
                                     <Col className='my-col' sm={{ offset: 3, size: 6 }}> Select{(slotId !== '') ? 'ed' : ''} Slot ID: {slotId} </Col>

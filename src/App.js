@@ -35,7 +35,7 @@ import PrivateRoute from "./PrivateRoute";
 import { Button } from "reactstrap";
 
 function App() {
-  const server_addr = "10.145.192.224:3000";
+  const server_addr = "10.147.163.194:3000";
   const [ userType, setUserType ] = useState();
   const [ userId, setUserId ] = useState();
   const [ status, setStatus ] = useState(JSON.parse(sessionStorage.getItem('token')));

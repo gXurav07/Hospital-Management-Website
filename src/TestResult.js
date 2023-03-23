@@ -2,6 +2,31 @@ import React, { useState, useEffect } from 'react';
 import { Form, FormGroup, Label, Col, Input, Button, FormText } from 'reactstrap';
 import TableContainer from './TableContainer';
 
+
+let fileToHexString = (file) => {
+    let reader = new FileReader();
+    return new Promise((resolve, reject) => {
+      reader.onload = function (event) {
+        const arrayBuf = event.target.result;
+        let fileArrayBuffer = new Uint8Array(arrayBuf).buffer;
+        let fileHexString = [...new Uint8Array(fileArrayBuffer)]
+          .map((x) => x.toString(16).padStart(2, "0"))
+          .join("");
+        // //try to get back the array buffer
+        // let fileArrayBuffer2 = new Uint8Array(
+        //   fileHexString.match(/.{1,2}/g)!.map((byte) => parseInt(byte, 16))
+        // ).buffer;
+        // //convert to blob and open in new window
+        // let blob = new Blob([fileArrayBuffer2], { type: "application/pdf" });
+        // let url = URL.createObjectURL(blob);
+        // window.open(url);
+        resolve(fileHexString);
+      };
+      reader.readAsArrayBuffer(file);
+    });
+  };
+
+  
 function TestResult(props) {
     const [tests, setTests] = useState([]);
     const [testId, setTestId] = useState('');
@@ -69,30 +94,39 @@ function TestResult(props) {
             Cell: ({ cell: { value } }) => value || "-",
         }
     ];
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(['remarks:', remarks, 'file:', file]);
         if(testId !== '' && remarks !== '' && remarks !== null) {
-            // create FormData object
-            // const formData = new FormData();
-            // formData.append('test_instanceid', testId);
-            // formData.append('test_result', remarks);
-            // formData.append('file', file);
-            // console.log('formData: ', formData);
+            let fileHexString = await fileToHexString(file);
             // post to db
             fetch('http://' + server_addr + '/data-entry/test-result', {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    test_instanceid: testId,
-                    test_result: remarks,
-                    file: file
+                    test_id: testId,
+                    remarks: remarks,
+                    file: fileHexString
                 })
             })
             .then(res => res.json())
             .then(data => {
                 console.log("Test result data: ", data);
+                // DECODE
+                //  const buffer = test.Image.data as ArrayBuffer;
+
+                let binary = [...new Uint8Array(data['file'])]
+                .map((x) => x.toString(16).padStart(2, "0"))
+                .join("");
+                let fileArrayBuffer2 = new Uint8Array(
+                    fileHexString.match(/.{1,2}/g).map((byte) => parseInt(byte, 16))
+                ).buffer;
+                console.log(fileArrayBuffer2);
+                //convert to blob and open in new window
+                let blob = new Blob([fileArrayBuffer2], { type: "image/png" });
+                let url = URL.createObjectURL(blob);
+                window.open(url);
+                return;
                 if (data['message'] == 'OK') {
                     alert('Test result added successfully');
                     const newTests = tests.filter((test) => test['Test_instanceID'] !== testId);
@@ -134,15 +168,15 @@ function TestResult(props) {
                                 <FormGroup row>
                                     <Label for="remarks" sm={3}>Remarks</Label>
                                     <Col sm={9}>
-                                    <Input type="textarea" name="text" id="remarks" style={{ maxHeight: '25vh' }} value={remarks} onChange={handleRemarksChange} />
+                                    <Input type="textarea" name="remarks" id="remarks" style={{ maxHeight: '25vh' }} value={remarks} onChange={handleRemarksChange} />
                                     </Col>
                                 </FormGroup>
                                 <FormGroup row>
-                                    <Label for="fileUpload" sm={3}>Upload File</Label>
+                                    <Label for="fileUpload" sm={3}>Upload Image(png)</Label>
                                     <Col sm={9}>
-                                        <Input type="file" onChange={(e)=>setFile(e.target.files[0])} name="file" id="fileUpload" />
+                                        <Input type="file" onChange={(e)=>setFile(e.target.files[0])} name="file" />
                                         <FormText color="muted">
-                                            max allowed file size is 2MB
+                                            max allowed file size is 100KB
                                         </FormText>
                                     </Col>
                                 </FormGroup>
