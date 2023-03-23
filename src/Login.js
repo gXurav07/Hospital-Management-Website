@@ -32,7 +32,7 @@ export default function Login(props) {
     //     alert("Authentication Failed ", status.message);
     //   }
     // });
-      props.onLogin();
+      props.onLogin(1);
       sessionStorage.setItem('token', JSON.stringify({ logged_in: true, type: type }));
       navigate(`/user${type}`);
     console.log("logging in");
