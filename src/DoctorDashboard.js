@@ -27,7 +27,7 @@ function DoctorDashboard(props) {
   // }, []);
 
   useEffect(() => {
-    // setDid(props.did)
+    setDid(props.did)
     console.log("requesting all patient data");
     fetch('http://' + server_addr + '/doctor/' + did)
       .then(res => {
@@ -63,8 +63,30 @@ function DoctorDashboard(props) {
         return res.json();
       })
       .then(data => {
-        console.log("query result", data['image']);
-        setTestReport(data['image']);
+          // DECODE
+          const buffer = data.image.data;
+          let binary = [...new Uint8Array(buffer)]
+          .map((x) => x.toString(16).padStart(2, "0"))
+          .join("");
+          const binaryData = new Uint8Array(
+          (binary )
+          .match(/[\da-f]{2}/gi)
+          .map(function (h) {
+              return parseInt(h, 16);
+          })
+          ).buffer;
+
+          const blob = new Blob([binaryData], {
+          type: "image/png",
+          });
+          console.log(blob);
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.target = "_blank";
+          link.click();
+          setTimeout(() => URL.revokeObjectURL(url), 5000);
+          return;
       });
       console.log("test request", testReport['image'])
   }
@@ -174,7 +196,7 @@ function DoctorDashboard(props) {
             : 
             console.log('no entry found')
           }
-          {pid ? <Prescribe server_addr={server_addr} pid={pid} did={did} appointmentid={appointmentid} date={date} /> : alert('no patient selected')}
+          {pid ? <Prescribe server_addr={server_addr} pid={pid} did={did} appointmentid={appointmentid} date={date} /> : console.log('no patient selected')}
           {/* <Link to="prescribe"><button align='center'>Prescribe</button></Link> */}
       </div> 
       <br />

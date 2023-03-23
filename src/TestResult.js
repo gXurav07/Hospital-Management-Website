@@ -113,19 +113,28 @@ function TestResult(props) {
             .then(data => {
                 console.log("Test result data: ", data);
                 // DECODE
-                //  const buffer = test.Image.data as ArrayBuffer;
-
-                let binary = [...new Uint8Array(data['file'])]
-                .map((x) => x.toString(16).padStart(2, "0"))
-                .join("");
-                let fileArrayBuffer2 = new Uint8Array(
-                    fileHexString.match(/.{1,2}/g).map((byte) => parseInt(byte, 16))
+                 const buffer = data.image.data;
+                    let binary = [...new Uint8Array(buffer)]
+                    .map((x) => x.toString(16).padStart(2, "0"))
+                    .join("");
+                const binaryData = new Uint8Array(
+                    (binary )
+                    .match(/[\da-f]{2}/gi)
+                    .map(function (h) {
+                        return parseInt(h, 16);
+                    })
                 ).buffer;
-                console.log(fileArrayBuffer2);
-                //convert to blob and open in new window
-                let blob = new Blob([fileArrayBuffer2], { type: "image/png" });
-                let url = URL.createObjectURL(blob);
-                window.open(url);
+
+                const blob = new Blob([binaryData], {
+                    type: "image/png",
+                });
+                console.log(blob);
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.href = url;
+                link.target = "_blank";
+                link.click();
+                setTimeout(() => URL.revokeObjectURL(url), 5000);
                 return;
                 if (data['message'] == 'OK') {
                     alert('Test result added successfully');
