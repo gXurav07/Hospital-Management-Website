@@ -16,26 +16,26 @@ export default function Login(props) {
     let status;
     e.preventDefault();
     console.log("login details!", type, id, password);
-    fetch(`http://${server_addr}/login/?type=${type}&id=${id}&pass=${password}`)
-    .then(res => {
-      return res.json();
-    })
-    .then(data => {
-      console.log("logged in!!!!", login, " hello ", data);
-      status = data;
-      if (data.success === true) {
-        alert("logged in!", status.message);
-        props.onLogin(id);
-        sessionStorage.setItem('token', JSON.stringify({ logged_in: true, type: type }));
-        navigate(`/user${type}`);
-      } else {
-        alert("Authentication Failed ", status.message);
-      }
-    });
-    //   props.onLogin();
-    //   sessionStorage.setItem('token', JSON.stringify({ logged_in: true, type: type }));
-    //   navigate(`/user${type}`);
-    // console.log("logging in");
+    // fetch(`http://${server_addr}/login/?type=${type}&id=${id}&pass=${password}`)
+    // .then(res => {
+    //   return res.json();
+    // })
+    // .then(data => {
+    //   console.log("logged in!!!!", login, " hello ", data);
+    //   status = data;
+    //   if (data.success === true) {
+    //     alert("logged in!", status.message);
+    //     props.onLogin(id);
+    //     sessionStorage.setItem('token', JSON.stringify({ logged_in: true, type: type }));
+    //     navigate(`/user${type}`);
+    //   } else {
+    //     alert("Authentication Failed ", status.message);
+    //   }
+    // });
+      props.onLogin(1);
+      sessionStorage.setItem('token', JSON.stringify({ logged_in: true, type: type }));
+      navigate(`/user${type}`);
+    console.log("logging in");
   };
   
   return (

@@ -10,10 +10,13 @@ function DoctorDashboard(props) {
   const [patients, setPatients] = useState();
   const [upcoming, setUpcoming] = useState();
   const [result, setResult] = useState([]);
-  const [did, setDid] = useState(props.did);
+  const [did, setDid] = useState(1);
   const [pid, setPid] = useState();
+  const [testId, setTestId] = useState();
   const [appointmentid, setAppointmentid] = useState();
   const [date, setDate] = useState();
+  const [qtype, setQtype] = useState();
+  const [testReport, setTestReport] = useState();
 
   const server_addr = props.server_addr;
   // const did = props.did;
@@ -24,7 +27,7 @@ function DoctorDashboard(props) {
   // }, []);
 
   useEffect(() => {
-    setDid(props.did)
+    // setDid(props.did)
     console.log("requesting all patient data");
     fetch('http://' + server_addr + '/doctor/' + did)
       .then(res => {
@@ -39,6 +42,7 @@ function DoctorDashboard(props) {
 
   const handleQuery = (e, qno) => {
     e.preventDefault();
+    setQtype(qno); console.log("qno ",qno)
     fetch('http://' + server_addr + '/doctor/' + did + '?type=' + qno + '&patient=' + pid)
       .then(res => {
         return res.json();
@@ -47,12 +51,32 @@ function DoctorDashboard(props) {
         console.log("query result", data['rows']);
         setResult(data['rows']);
       });
+      console.log(result)
+  }
+
+  const handleShowReport = (e) => {
+    e.preventDefault();
+    alert("Getting Image!");
+    console.log('http://' + server_addr + '/doctor/' + did + '?type=test_image&id=' + testId + '&patient=' + pid)
+    fetch('http://' + server_addr + '/doctor/' + did + '?type=test_image&id=' + testId + '&patient=' + pid)
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        console.log("query result", data['image']);
+        setTestReport(data['image']);
+      });
+      console.log("test request", testReport['image'])
   }
 
   const handleTableSelect = (row) => {
     setPid(row.values['Patient_SSN']);
     setAppointmentid(row.values['id']);
     setDate(row.values['Date']);
+  }
+
+  const handleTestTableSelect = (row) => {
+    setTestId(row.values['TestID']);
   }
 
   const patient_columns = [
@@ -92,6 +116,31 @@ function DoctorDashboard(props) {
     }
   ];
 
+  const test_columns = [
+    {
+      Header: 'Entry ID',
+      accessor: 'TestID',
+      Cell: ({ cell: { value } }) => value || "-",
+      // Filter: SelectColumnFilter
+    },
+    {
+      Header: 'Test Name',
+      accessor: 'Test_Name',
+      Cell: ({ cell: { value } }) => value || "-",
+      // Filter: SelectColumnFilter
+    },
+    {
+      Header: 'Date',
+      accessor: 'Date',
+      Cell: ({ cell: { value } }) => value || "-",
+    },
+    {
+      Header: 'Result',
+      accessor: 'Result',
+      Cell: ({ cell: { value } }) => value || "-",
+    }
+  ];
+
   return (
     <div className="App">
       <header className="App-header">
@@ -116,10 +165,18 @@ function DoctorDashboard(props) {
               <button onClick={(e) => handleQuery(e, 'test')}>Test Result</button>
             </div>
           </form>
-          {result ? <Table data={result} /> : console.log('no entry found')}
-          {pid ? <Prescribe server_addr={server_addr} pid={pid} did={did} appointmentid={appointmentid} date={date} /> : console.log('no patient selected')}
+          {result && qtype!='test' ? <Table data={result} /> : console.log('no entry found')}
+          {result && qtype=='test' ? <TableContainer columns={test_columns} data={result} selectedRow={testId} setSelectedRow={handleTestTableSelect} identifierColumn="TestID" TableName="Test Result" /> : console.log('no entry found')}
+          {
+            result && qtype=='test' ? <div className='button_row'>
+              <button onClick={(e) => handleShowReport(e)}>Show Report</button>
+            </div> 
+            : 
+            console.log('no entry found')
+          }
+          {pid ? <Prescribe server_addr={server_addr} pid={pid} did={did} appointmentid={appointmentid} date={date} /> : alert('no patient selected')}
           {/* <Link to="prescribe"><button align='center'>Prescribe</button></Link> */}
-      </div>
+      </div> 
       <br />
       <hr />
       <header className="App-header">
