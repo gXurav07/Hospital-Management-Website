@@ -11,7 +11,7 @@ admitRouter
 async function get_patient_roomno(req, res){
     let sql_query = '', result = {}, data = {};
     // get non-admitted patients
-    sql_query = `SELECT Patient_SSN AS id, Patient_Name, Address, Age, Gender FROM Patient WHERE Status='not admitted';`;
+    sql_query = `SELECT Patient_SSN AS id, Patient_Name, Address, Age, Gender FROM Patient WHERE Status!='admitted';`;
     result = await executeQuery(sql_query, req);
     if(result.status != 200){
         res.status(result.status).send(result);

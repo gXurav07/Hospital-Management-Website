@@ -91,11 +91,11 @@ async function createEntity(req, res){
                              
         }
         else if(type == 'data-entry'){
-            sql_query =  `INSERT INTO DataEntry(EmployeeID, Name, Address) `+
+            sql_query =  `INSERT INTO Data_entry_operator(EmployeeID, Name, Address) `+
                         `VALUES('${entity.employeeid}', '${entity.name}', '${entity.address}'); `;
         }
         else if(type == 'front-desk'){
-            sql_query =  `INSERT INTO FrontDesk(EmployeeID, Name, Address) `+
+            sql_query =  `INSERT INTO Front_desk_operator(EmployeeID, Name, Address) `+
                         `VALUES('${entity.employeeid}', '${entity.name}', '${entity.address}'); `;
         }
         else if(type=='medication'){
@@ -140,28 +140,28 @@ async function deleteEntity(req, res){
 
     try{
         if(type == 'user'){
-            sql_query =  `DELETE FROM User WHERE EmployeeID = '${entity.employeeid}'; `;
+            sql_query =  `DELETE FROM User WHERE EmployeeID = '${entity.id}'; `;
         }
         else if(type == 'doctor'){
-            sql_query =  `DELETE FROM Physician WHERE PhysicianID = '${entity.physicianid}'; `;
+            sql_query =  `DELETE FROM Physician WHERE PhysicianID = '${entity.id}'; `;
         }
         else if(type == 'data-entry'){
-            sql_query =  `DELETE FROM DataEntry WHERE EmployeeID = '${entity.employeeid}'; `;
+            sql_query =  `DELETE FROM Data_entry_operator WHERE EmployeeID = '${entity.id}'; `;
         }
         else if(type == 'front-desk'){
-            sql_query =  `DELETE FROM FrontDesk WHERE EmployeeID = '${entity.employeeid}'; `;
+            sql_query =  `DELETE FROM Front_desk_operator WHERE EmployeeID = '${entity.id}'; `;
         }
         else if(type=='medication'){
-            sql_query = `DELETE FROM Medication WHERE MedicationID = ${entity.medicationid}; `;
+            sql_query = `DELETE FROM Medication WHERE MedicationID = ${entity.id}; `;
         }
         else if(type=='department'){
-            sql_query = `DELETE FROM Department WHERE DepartmentID = ${entity.departmentid}; `;
+            sql_query = `DELETE FROM Department WHERE DepartmentID = ${entity.id}; `;
         }
         else if(type=='test'){
-            sql_query = `DELETE FROM Test WHERE TestID = '${entity.testid}'; `;
+            sql_query = `DELETE FROM Test WHERE TestID = '${entity.id}'; `;
         }
         else if(type=='treatment'){
-            sql_query = `DELETE FROM Treatment_Description WHERE Treatment_DescriptionID = ${entity.treatmentid}; `;
+            sql_query = `DELETE FROM Treatment_Description WHERE Treatment_DescriptionID = ${entity.id}; `;
         }
         else{
             res.status(400).send({message: 'Invalid type'});
@@ -173,8 +173,13 @@ async function deleteEntity(req, res){
         return;
     }
 
+    
     result = await executeQuery(sql_query, req);
-    res.status(result.status).send(result);
+    if(result.status != 200){
+        res.status(result.status).send(result);
+        return;
+    }
+    res.status(result.status).send({message: 'Deleted successfully!'});
 }
 
 

@@ -42,7 +42,7 @@ async function getMedTestTreatment(req, res){
 async function addPrescribes(req, res){
     console.log(req.body);
 
-    const docID = req.body.did, Patient_SSN = req.body.pssn, appointmentID = req.body.appointmentid;
+    const docID = req.body.did, Patient_SSN = req.body.pid, appointmentID = req.body.appointmentid;
     const date = req.body.date, prescription = req.body.prescription;
     
 

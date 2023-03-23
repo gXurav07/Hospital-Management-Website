@@ -38,13 +38,13 @@ async function add_test_result(req, res){
     // convert to string
     
     console.log(req.body);
-    const {test_instanceid, test_result, file} = req.body;
+    const {test_instanceid, test_result} = req.body;
     let sql_query = `UPDATE Test_instance SET Result='${test_result}' WHERE Test_instanceID=${test_instanceid};`;
     let result = await executeQuery(sql_query, req);
     
     res.status(result.status).send(result);
     // res.status(200).send({message: 'Hehe'});
-    console.log(file);
+    
 }
 
 

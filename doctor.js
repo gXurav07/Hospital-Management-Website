@@ -13,6 +13,10 @@ async function getDoctorByID(req, res){
     let id = req.params.id;
     let query = req.query;
 
+    if(id == undefined){
+        res.status(400).send({message: 'Invalid request'});
+        return;
+    }
 
     let sql_query = '';
 
